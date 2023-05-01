@@ -1,0 +1,75 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.techs {
+  margin: 0 auto;
+  padding: 100px 70px;
+  max-width: calc(var(--max-width-large) - 140px);
+  min-height: calc(625px - 200px);
+  display: flex;
+  flex-direction: column;
+
+  &_bg {
+    background: #272727;
+  }
+
+  &__header {
+    border-bottom: 1px solid #DADADA;
+    padding-bottom: 23px;
+  }
+
+  &__name {
+    font-weight: normal;
+    font-size: 22px;
+    color: #FFF;
+    letter-spacing: -0.04em;
+  }
+
+  &__container {
+    margin: 90px auto 100px;
+    width: 460px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 26px;
+
+    &__header {
+      font-weight: 400;
+      font-size: 50px;
+      line-height: 58px;
+      text-align: center;
+      letter-spacing: -0.04em;
+      color: #FFF;
+    }
+
+    &__text {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      letter-spacing: -0.04em;
+      color: #FFF;
+    }
+  }
+
+  &__list {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    column-gap: 10px;
+    list-style-type: none;
+    max-width: calc(90px * 7 + 60px);
+  }
+
+  &__item {
+    width: 90px;
+    line-height: 60px;
+    text-align: center;
+    background: #303030;
+    border-radius: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+  }
+
+}

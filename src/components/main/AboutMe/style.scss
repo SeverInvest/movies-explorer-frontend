@@ -1,0 +1,83 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.about-me {
+  margin: 0 auto;
+  padding: 110px 70px 61px;
+  max-width: calc(var(--max-width-large) - 140px);
+  min-height: calc(614px - 171px);
+  display: flex;
+  flex-direction: column;
+
+  &_bg {
+    background: #202020;
+  }
+
+  &__header {
+    border-bottom: 1px solid #DADADA;
+    padding-bottom: 23px;
+  }
+
+  &__name {
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 27px;
+    color: #FFFFFF;
+    letter-spacing: -0.04em;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &__up {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    &__my-name {
+      max-width: 660px;
+      margin-top: 66px;
+      font-weight: 400;
+      font-size: 50px;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: #FFF;
+    }
+
+    &__my-position {
+      max-width: 660px;
+      margin-top: 18px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 1.1;
+      color: #FFF;
+      mix-blend-mode: normal;
+    }
+
+    &__my-hystory {
+      max-width: 660px;
+      margin-top: 26px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #FFF;
+      mix-blend-mode: normal;
+    }
+
+    &__my-photo {
+      margin-top: 66px;
+      width: 270px;
+      height: 327px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+  }
+}

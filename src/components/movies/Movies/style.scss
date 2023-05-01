@@ -1,0 +1,15 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.movies {
+  margin: 0 auto;
+  padding: 70px 70px 10px;
+  max-width: calc(var(--max-width-large) - 140px);
+  display: flex;
+  flex-direction: column;
+
+  &_bg {
+    background: #202020;
+  }
+
+}

@@ -1,0 +1,28 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.switch {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  column-gap: 14px;
+
+  &__text {
+    color: var(--color-light);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    transition: var(--transition);
+
+    &:hover {
+      opacity: var(--opacity);
+    }
+  }
+
+  &__img {
+    cursor: pointer;
+    width: 36px;
+    height: 20px;
+  }
+
+}

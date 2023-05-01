@@ -1,0 +1,63 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.card {
+  // margin: 0 auto;
+  padding: 6px;
+  padding-left: 22px;
+  // max-width: calc(var(--max-width-large) - 140px);
+  min-width: calc(1140px - 22px - 6px);
+  height: calc(134px - 12px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #2F2F2F;
+
+
+  &__name {
+    padding-top: 16px;
+    
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFF;
+  }
+
+  &__duration {
+    padding-top: 13px;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    color: #8B8B8B;
+  }
+
+  &__heart {
+    margin-top: 30px;
+    padding: 0;
+    align-self: center;
+    width: 14px;
+    height: 12px;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../../../images/icon_dislike.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    transition: opacity .3s ease-in-out;
+
+    &:hover {
+      opacity: .6;
+    }
+
+    &_active {
+      background-image: url("../../../images/icon_like.svg");
+    }
+  }
+
+&__photo {
+  object-fit: cover;
+}
+
+}

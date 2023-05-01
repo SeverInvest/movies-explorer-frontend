@@ -1,0 +1,17 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.project {
+  margin: 0;
+  padding-bottom: 20px;
+  // max-width: calc(var(--max-width-large) - 140px);
+  min-height: 50px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #424242;;
+
+  &:last-of-type {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}

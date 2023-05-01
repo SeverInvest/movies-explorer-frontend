@@ -1,0 +1,21 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.cards {
+  margin: 0 auto;
+  padding: 70px 0 60px;
+  max-width: calc(1280px - 140px);
+
+  &__list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  &_visible {
+    padding-bottom: 60px;
+  }
+  &_unvisible {
+    padding-bottom: 150px;
+  }
+}

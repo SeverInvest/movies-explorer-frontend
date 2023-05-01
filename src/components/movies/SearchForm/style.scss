@@ -1,0 +1,38 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.search-form {
+  margin: 0 auto;
+  padding: 0 0 44px;
+  max-width: calc(var(--max-width-large) - 140px);
+  min-height: calc(242px - 195px);
+  display: flex;
+  flex-direction: column;
+  row-gap: 27px;
+  border-bottom: 1px solid rgba(170, 170, 170, 0.2);
+
+  &__container {
+    padding: 10px 10px 10px 25px;
+    border: 1.5px solid rgba(170, 170, 170, 0.2);
+    border-radius: 8px;
+    width: calc(var(--max-width-large) - 140px - 35px);
+    height: 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 10px;
+  }
+
+  &__input {
+    background: #202020;
+    border: none;
+    min-width: 70px;
+    min-height: 52px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.1;
+    color: var(--color-light);
+    flex-grow: 1;
+  }
+
+}

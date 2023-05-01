@@ -1,0 +1,29 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.portfolio {
+  margin: 0 auto;
+  padding: 40px 70px 125px;
+  max-width: calc(var(--max-width-large) - 140px);
+  display: flex;
+  flex-direction: column;
+
+  &_bg {
+    background: #202020;
+  }
+
+  &__header {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 1.1;
+    color: #8B8B8B;
+    mix-blend-mode: normal;
+    padding-bottom: 50px;
+  }
+
+  &__list-projects {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+}

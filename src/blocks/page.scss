@@ -1,0 +1,32 @@
+
+@import "../vars";
+@import "../mixins";
+
+
+
+.page {
+  /*background-color: var(--background-dark);*/
+  /*color: var(--color-light);*/
+
+  @include padding-margin-null-auto();
+  // @include theme-dark();
+  
+  box-sizing: border-box;
+  
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  /* Применить к тексту кёрнинг и лигатуры */
+  text-rendering: optimizeLegibility;
+  /* Сглаживание */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Подгонка размера текста */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  font-weight: normal;
+  font-style: normal;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+}
