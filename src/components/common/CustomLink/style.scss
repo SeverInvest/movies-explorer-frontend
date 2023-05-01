@@ -2,87 +2,11 @@
 @import "../../../vars";
 
 .link {
-  @include padding-margin-null-auto();
-
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 1.3;
   cursor: pointer;
   text-decoration: none;
   transition: var(--transition);
 
   &:hover {
     opacity: var(--opacity);
-  }
-
-  &_normal {
-    color: var(--color-light);
-    border: none;
-    font-weight: medium;
-  }
-
-  &_rect {
-    font-weight: medium;
-    padding: 8px 20px;
-    background: var(--color-green);
-    color: #000000;
-    border-radius: 3px;
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  &_big-normal {
-    font-size: 14px;
-    line-height: 1.2;
-    color: var(--color-light);
-    border: none;
-    font-weight: medium;
-    margin: 0;
-  }
-
-  &_big {
-    font-size: 30px;
-    line-height: 50px;
-    letter-spacing: -0.04em;
-    color: var(--color-light);
-    border: none;
-    font-weight: normal;
-    margin: 0;
-  }
-
-  &_arrow {
-    font-size: 30px;
-    line-height: 60px;
-    letter-spacing: -0.04em;
-    color: var(--color-light);
-    border: none;
-    font-weight: normal;
-    margin: 0;
-  }
-
-  &_medium-normal {
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 16px;
-    color: var(--color-light);
-    border: none;
-    font-weight: normal;
-    margin: 0;
-  }
-
-  &_underlined {
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 22px;
-    color: var(--color-light);
-    border-bottom: 1px solid #FFF;
-  }
-
-  &_img {
-    margin: 0;
-    padding: 0;
-    width: 220px;
-    height: 122px;
-    background: #202020;
   }
 }

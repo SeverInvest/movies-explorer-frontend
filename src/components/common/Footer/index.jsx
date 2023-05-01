@@ -20,14 +20,14 @@ function Footer() {
               <CustomLink
                 linkTo="https://practicum.yandex.ru/"
                 textLink="Яндекс.Практикум"
-                option="medium-normal"
+                className="footer__link_medium-normal"
               />
             </li>
             <li className="footer__footer__link">
               <CustomLink
                 linkTo="https://github.com/"
                 textLink="Github"
-                option="medium-normal"
+                className="footer__link_medium-normal"
               />
             </li>
           </ul>

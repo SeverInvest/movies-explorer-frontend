@@ -12,7 +12,25 @@
   &_bg {
     background: #202020;
   }
-
+&__link {
+  &_big-normal {
+    @include padding-margin-null-auto();
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--color-light);
+    border: none;
+    font-weight: medium;
+    margin: 0;
+  }
+  &_underlined {
+    @include padding-margin-null-auto();
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--color-light);
+    border-bottom: 1px solid #FFF;
+  }
+}
   &__header {
     border-bottom: 1px solid #DADADA;
     padding-bottom: 23px;

@@ -11,6 +11,18 @@
     background: #202020;
   }
 
+  &__link {
+    &_medium-normal {
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 16px;
+      color: var(--color-light);
+      border: none;
+      font-weight: normal;
+      margin: 0;
+    }
+  }
+
   &__header {
     border-bottom: 1px solid #424242;
     min-height: 36px;

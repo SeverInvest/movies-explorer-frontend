@@ -1,5 +1,3 @@
-// import listProjects from '../../../utils/list-projects';
-// import SearchForm from '../../movies/SearchForm';
 import { useState } from 'react';
 import "./style.scss";
 import CustomLink from '../../common/CustomLink';
@@ -40,7 +38,8 @@ export default function MoviesCard({
       <CustomLink
         linkTo={card.trailerLink}
         textLink=""
-        option="img">
+        className="card__link_img"
+        >
         <img className="card__photo" src={card.thumbnail} alt={card.nameRU} />
       </CustomLink>
     </li >

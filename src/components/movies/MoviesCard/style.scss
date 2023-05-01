@@ -2,10 +2,8 @@
 @import "../../../vars";
 
 .card {
-  // margin: 0 auto;
   padding: 6px;
   padding-left: 22px;
-  // max-width: calc(var(--max-width-large) - 140px);
   min-width: calc(1140px - 22px - 6px);
   height: calc(134px - 12px);
   display: flex;
@@ -13,10 +11,19 @@
   justify-content: space-between;
   background: #2F2F2F;
 
+  &__link {
+    &_img {
+      margin: 0;
+      padding: 0;
+      width: 220px;
+      height: 122px;
+      background: #202020;
+    }
+  }
 
   &__name {
     padding-top: 16px;
-    
+
     font-weight: 500;
     font-size: 18px;
     line-height: 22px;
@@ -56,8 +63,8 @@
     }
   }
 
-&__photo {
-  object-fit: cover;
-}
+  &__photo {
+    object-fit: cover;
+  }
 
 }
