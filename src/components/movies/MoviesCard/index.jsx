@@ -21,8 +21,8 @@ export default function MoviesCard({
 
   const secondsToHm = (d) => {
     d = Number(d);
-    const h = Math.floor(d / 3600);
-    const m = Math.floor(d % 3600 / 60);
+    const h = Math.floor(d / 60);
+    const m = Math.floor(d % 60);
     const hDisplay = h > 0 ? h + "ч" : "";
     const mDisplay = m > 0 ? m + "м" : "";
     return hDisplay + " " + mDisplay;

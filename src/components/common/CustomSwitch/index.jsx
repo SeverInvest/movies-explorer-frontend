@@ -4,7 +4,7 @@ import "./style.scss";
 // import images from "../../../images";
 
 export default function CustomSwitch({
-  onToggleSwitch,
+  onToggle,
   imgTumbler,
   text = "",
   children,
@@ -12,15 +12,23 @@ export default function CustomSwitch({
 }) {
 
   return (
-    <div
-      className="switch"
-      {...restProps}
-      onClick={onToggleSwitch}
-    >
-      <img className="switch__img" src={imgTumbler} alt="переключатель короткометражек" />
-      <p className="switch__text">{text}</p> 
-      {children}
-    </div>
 
+    <label className="switch__label">
+      <input
+        type="checkbox"
+        className="switch"
+        {...restProps}
+        onClick={onToggle}
+      />
+      <img
+        className="switch__img"
+        src={imgTumbler}
+        alt="переключатель короткометражек"
+      />
+      <p className="switch__text">
+        {text}
+      </p>
+      {children}
+    </label>
   )
 }

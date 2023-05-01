@@ -7,28 +7,29 @@ import images from "../../../images";
 import { useState, useEffect } from 'react';
 
 export default function SearchForm({
-  onSubmit,
+  handleSubmit,
   isLoggedIn = true,
+  onToggleSwitch
 }) {
   const { values, handleChange, resetForm } = useFormAndValidation();
-  const [isToggleSwitch, setIsToggleSwitch] = useState(false);
   const [imgTumbler, setImgTumbler] = useState(images.smalltumboff)
 
-  const handleSubmit = ((e) => {
+  const onSubmit = ((e) => {
     e.preventDefault();
-    onSubmit({
+    handleSubmit({
       name: values.name,
     });
   });
 
-  const handleToggleSwitch = (() => {
-    if (isToggleSwitch) {
-      setIsToggleSwitch(false);
+  const handleToggle = (() => {
+    if (imgTumbler === images.smalltumbon) {
       setImgTumbler(images.smalltumboff);
     } else {
-      setIsToggleSwitch(true);
       setImgTumbler(images.smalltumbon);
     }
+    onToggleSwitch({
+      name: values.name,
+    });
   });
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export default function SearchForm({
       className="search-form"
       name="search-form"
       id="search-form"
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
     >
       <div className="search-form__container">
         <input
@@ -53,6 +54,7 @@ export default function SearchForm({
           onChange={handleChange}
           name="name"
           id="search-form__input"
+          autoFocus
         />
         <CustomButton
           type="submit"
@@ -62,7 +64,7 @@ export default function SearchForm({
         />
       </div>
       <CustomSwitch
-        onToggleSwitch={handleToggleSwitch}
+        onToggle={handleToggle}
         imgTumbler={imgTumbler}
         text="Короткометражки"
       />

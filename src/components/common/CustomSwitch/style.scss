@@ -4,14 +4,18 @@
 .switch {
   padding: 0;
   margin: 0;
+  display: none;
+
+  &__label {
   display: flex;
   column-gap: 14px;
+  align-items: center;
+  }
 
-  &__text {
-    color: var(--color-light);
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
+  &__img {
+    cursor: pointer;
+    width: 36px;
+    height: 20px;
     transition: var(--transition);
 
     &:hover {
@@ -19,10 +23,11 @@
     }
   }
 
-  &__img {
-    cursor: pointer;
-    width: 36px;
-    height: 20px;
+  &__text {
+    color: var(--color-light);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
   }
 
 }

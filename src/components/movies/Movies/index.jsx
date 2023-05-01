@@ -6,6 +6,7 @@ import "./style.scss";
 import CustomButton from "../../common/CustomButton";
 import Preloader from "../Preloader";
 import { useState, useEffect } from 'react';
+import { useResize } from "../../../hooks/useResize";
 
 
 export default function Movies() {
@@ -16,15 +17,67 @@ export default function Movies() {
   const [cardsFinded, setCardsFinded] = useState([]);
   const [cardsFindedVisible, setCardsFindedVisible] = useState([]);
   const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
+  const [isSuccessfulSearch, setIsSuccessfulSearch] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [isToggleSwitch, setIsToggleSwitch] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(true);
+  const [searchText, setSearchText] = useState("");
+  const { typeScreen } = useResize();
 
-  const onSubmit = ((data) => {
-    setIsPreloaderVisible(true);
-    setCardsFinded(cards.filter((item) => item.nameRU.includes(data.name)));
+  useEffect(() => {
+    if (typeScreen === "desktop") {
+      setPagination(7);
+    } else {
+      setPagination(5);
+    }
+  }, [typeScreen])
+
+  const handleSearch = (() => {
+    const _arg1Filter = ((itemName, searchText) => {
+      return searchText ? itemName.toLowerCase().includes(searchText.toLowerCase()) : true
+    });
+    const _arg2Filter = ((duration) => {
+      return isToggleSwitch ? duration <= 40 : true
+    });
+    setCardsFinded(cards.filter(
+      (item) => {
+        return _arg1Filter(item.nameRU, searchText)
+          && _arg2Filter(item.duration)
+      }
+    ));
     setIsPreloaderVisible(false);
   });
 
+  const handleButtonMore = () => {
+    setCardsCountVisible(cardsCountVisible + pagination);
+  }
+
+  const handleSubmit = ((data) => {
+    setSearchText(data.name);
+    setIsPreloaderVisible(true);
+    setIsSubmit(!isSubmit);
+    setIsFirstLoad(false)
+  });
+
+  const handleToggleSwitch = ((data) => {
+    setSearchText(data.name);
+    setIsToggleSwitch(!isToggleSwitch);
+  });
+
+  useEffect(() => {
+    if (!isFirstLoad) {
+      handleSearch();
+    };
+    // eslint-disable-next-line
+  }, [isSubmit, isToggleSwitch]);
+
   useEffect(() => {
     setCardsCount(cardsFinded.length);
+    if (cardsFinded.length === 0) {
+      setIsSuccessfulSearch(false)
+    } else {
+      setIsSuccessfulSearch(true)
+    }
     setCardsCountVisible(pagination);
   }, [cardsFinded, pagination]);
 
@@ -36,28 +89,28 @@ export default function Movies() {
     }
   }, [cardsCount, cardsCountVisible, pagination]);
 
-  const handleButtonMore = () => {
-    setCardsCountVisible(cardsCountVisible + pagination);
-  }
-
   useEffect(() => {
     setCardsFindedVisible(cardsFinded.slice(0, cardsCountVisible));
   }, [cardsCountVisible, cardsFinded]);
 
-  console.log("cardsCount", cardsCount);
-  console.log("cardsCountVisible", cardsCountVisible);
+  // console.log("isFirstLoad", isFirstLoad)
 
   return (
     <section className="movies_bg">
       <div className="movies">
-        {
-        isPreloaderVisible &&
-        <Preloader />
-        }
         <SearchForm
-          onSubmit={onSubmit}
+          handleSubmit={handleSubmit}
           isLoggedIn={true}
+          onToggleSwitch={handleToggleSwitch}
         />
+        {
+          isPreloaderVisible &&
+          <Preloader />
+        }
+        {
+          !isSuccessfulSearch && !isFirstLoad &&
+          <p className="movies__unsuccess-search"> Ничего не найдено </p>
+        }
         <MoviesCardList cards={cardsFindedVisible} />
         {isVisibleButton &&
           <CustomButton
