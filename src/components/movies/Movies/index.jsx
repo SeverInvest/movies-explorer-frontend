@@ -4,7 +4,7 @@ import MoviesCardList from "../MoviesCardList";
 import cards from "../../../utils/cards";
 import "./style.scss";
 import CustomButton from "../../common/CustomButton";
-
+import Preloader from "../Preloader";
 import { useState, useEffect } from 'react';
 
 
@@ -15,10 +15,12 @@ export default function Movies() {
   const [cardsCountVisible, setCardsCountVisible] = useState(pagination);
   const [cardsFinded, setCardsFinded] = useState([]);
   const [cardsFindedVisible, setCardsFindedVisible] = useState([]);
-
+  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
 
   const onSubmit = ((data) => {
+    setIsPreloaderVisible(true);
     setCardsFinded(cards.filter((item) => item.nameRU.includes(data.name)));
+    setIsPreloaderVisible(false);
   });
 
   useEffect(() => {
@@ -48,6 +50,10 @@ export default function Movies() {
   return (
     <section className="movies_bg">
       <div className="movies">
+        {
+        isPreloaderVisible &&
+        <Preloader />
+        }
         <SearchForm
           onSubmit={onSubmit}
           isLoggedIn={true}
