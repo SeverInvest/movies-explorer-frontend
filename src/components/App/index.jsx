@@ -4,7 +4,10 @@ import { Route, Routes } from 'react-router-dom';
 import Header from '../common/Header';
 import Main from '../main/Main';
 import Movies from '..//movies/Movies';
+import SavedMovies from '..//movies/SavedMovies';
 import Footer from '../common/Footer';
+import Register from '../user/Register';
+
 // import Footer from '../Footer';
 // import ProtectedRoute from '../ProtectedRoute';
 // import Login from '../Login';
@@ -38,9 +41,16 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/movies" element={<Movies />} />
+        <Route path="/saved-movies" element={<SavedMovies />} />
+        <Route path="/signup" element={<Register />} />
         {/* <Main /> */}
+
+        <Route path="/" element={<Footer />} />
+        <Route path="/movies" element={<Footer />} />
+        <Route path="/saved-movies" element={<Footer />} />
       </Routes>
-      <Footer />
+
+      
       {/* <Routes>
           <Route exact path="/" element={
             <ProtectedRoute
@@ -48,7 +58,7 @@ function App() {
               component={Main}
             />}
           />
-          <Route path="/sign-up" element={<Register />} />
+          
           <Route path="/sign-in" element={<Login />} />
         </Routes>
 

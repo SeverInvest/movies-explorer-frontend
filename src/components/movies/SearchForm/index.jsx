@@ -55,6 +55,8 @@ export default function SearchForm({
           name="name"
           id="search-form__input"
           autoFocus
+          autocomplete="off"
+          // type="search"
         />
         <CustomButton
           type="submit"

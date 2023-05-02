@@ -18,20 +18,25 @@
     align-items: center;
     max-width: calc(var(--max-width-large) - 140px);
     min-height: var(--min-height-header-ladge);
+
+    &_signup {
+      width: 396px;
+      padding: 52px 30px 0;
+    }
   }
 
-  &__navigation_right {
+  &__navigation {
     display: grid;
     grid-template-columns: repeat(2, auto);
     align-items: center;
-    column-gap: 30px;
-  }
 
-  &__navigation_middle {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    align-items: center;
-    column-gap: 16px;
+    &_right {
+      column-gap: 30px;
+    }
+
+    &_middle {
+      column-gap: 16px;
+    }
   }
 
   &__text-films {
@@ -80,7 +85,7 @@
       font-weight: medium;
     }
 
-    &_saved-movies {
+    &_movies {
       font-weight: 400;
       font-size: 13px;
       line-height: 1.4;

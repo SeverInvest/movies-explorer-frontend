@@ -40,14 +40,13 @@
     color: #8B8B8B;
   }
 
-  &__heart {
+  &__button {
     margin-top: 30px;
     padding: 0;
     align-self: center;
     width: 14px;
     height: 12px;
     background-color: rgba(0, 0, 0, 0);
-    background-image: url("../../../images/icon_dislike.svg");
     background-repeat: no-repeat;
     background-position: center;
     border: none;
@@ -58,8 +57,16 @@
       opacity: .6;
     }
 
-    &_active {
-      background-image: url("../../../images/icon_like.svg");
+    &_heart {
+      background-image: url("../../../images/icon_dislike.svg");
+
+      &_active {
+        background-image: url("../../../images/icon_like.svg");
+      }
+    }
+
+    &_delete {
+      background-image: url("../../../images/icon_delete.svg");
     }
   }
 

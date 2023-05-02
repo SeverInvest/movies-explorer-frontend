@@ -4,7 +4,7 @@ import CustomLink from '../../common/CustomLink';
 
 export default function MoviesCard({
   card,
-
+  option,
 }) {
 
   const [isLike, setIsLike] = useState(false);
@@ -17,6 +17,11 @@ export default function MoviesCard({
     }
   }
 
+  const handleDeleteClick = () => {
+
+  }
+
+
   const secondsToHm = (d) => {
     d = Number(d);
     const h = Math.floor(d / 60);
@@ -26,20 +31,25 @@ export default function MoviesCard({
     return hDisplay + " " + mDisplay;
   }
 
-  const cardLikeClassName = `card__heart ${isLike ? "card__heart_active" : ""}`;
+  const cardLikeClassName = `card__button card__button_heart ${isLike ? "card__button_heart_active" : ""}`;
 
   return (
     <li className="card">
       <div className="card__container-info">
         <p className="card__name">{card.nameRU}</p>
         <p className="card__duration">{secondsToHm(card.duration)}</p>
-        <button className={cardLikeClassName} type="button" aria-label="Лайк" onClick={handleLikeClick} />
+        {
+          option === "movies" ?
+            <button className={cardLikeClassName} type="button" aria-label="Лайк" onClick={handleLikeClick} />
+            :
+            <button className="card__button card__button_delete" type="button" aria-label="Удалить фильм" onClick={handleDeleteClick} />
+        }
       </div>
       <CustomLink
         linkTo={card.trailerLink}
         textLink=""
         className="card__link_img"
-        >
+      >
         <img className="card__photo" src={card.thumbnail} alt={card.nameRU} />
       </CustomLink>
     </li >

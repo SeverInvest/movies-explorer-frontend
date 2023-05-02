@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import { useResize } from "../../../hooks/useResize";
 
 
-export default function Movies() {
+export default function SavedMovies() {
   const [pagination, setPagination] = useState(7);
   const [isVisibleButton, setIsVisibleButton] = useState(false);
   const [cardsCount, setCardsCount] = useState(0);
@@ -93,8 +93,6 @@ export default function Movies() {
     setCardsFindedVisible(cardsFinded.slice(0, cardsCountVisible));
   }, [cardsCountVisible, cardsFinded]);
 
-  // console.log("isFirstLoad", isFirstLoad)
-
   return (
     <section className="movies_bg">
       <div className="movies">
@@ -112,7 +110,7 @@ export default function Movies() {
           <p className="movies__unsuccess-search"> Ничего не найдено </p>
         }
         <MoviesCardList
-          option="movies"
+          option="saved-movies"
           cards={cardsFindedVisible}
           isVisibleButton={isVisibleButton}
         />

@@ -1,10 +1,18 @@
-input:-webkit-autofill,
+/* input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active{
     -webkit-text-fill-color: white;
-    -webkit-box-shadow: 0 0 0 30px black inset;
+    -webkit-box-shadow: inset 200 200 0 #2F2F2F;
 }
+
+input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-image: none;
+    background-color: -internal-light-dark(rgb(0, 0, 0), rgba(70, 90, 126, 0.4));
+    color: fieldtext;
+} */
+
 
 * {
     padding: 0;

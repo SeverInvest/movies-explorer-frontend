@@ -10,7 +10,6 @@ function Header() {
     <Routes>
 
       <Route
-
         path="/"
         element={
           <header className="header header_background-light">
@@ -22,7 +21,7 @@ function Header() {
               >
                 <img src={images.logo} alt="логотип" className="header__logo" />
               </CustomLink>
-              <nav className="header__navigation_right">
+              <nav className="header__navigation header__navigation_right">
                 <CustomLink
                   linkTo="/signup"
                   textLink="Регистрация"
@@ -37,7 +36,6 @@ function Header() {
             </div>
           </header>
         }
-
       />
 
       <Route
@@ -52,16 +50,16 @@ function Header() {
                 <img src={images.logo} alt="логотип" className="header__logo" />
               </CustomLink>
 
-              <nav className="header__navigation_middle">
+              <nav className="header__navigation header__navigation_middle">
                 <p className="header__text-films"> Фильмы </p>
                 <CustomLink
-                  className="header__link_saved-movies"
+                  className="header__link_movies"
                   linkTo="/saved-movies"
                   textLink="Сохранённые фильмы"
                 />
               </nav>
 
-              <nav className="header__navigation_right">
+              <nav className="header__navigation header__navigation_right">
                 <CustomLink
                   className="header__link_account"
                   linkTo="/profile"
@@ -72,6 +70,57 @@ function Header() {
           </header>
         }
       />
+
+      <Route
+        path="/saved-movies"
+        element={
+          <header className="header header_background-dark">
+            <div className="header__container">
+              <CustomLink
+                linkTo="/"
+                className="header__link_logo"
+              >
+                <img src={images.logo} alt="логотип" className="header__logo" />
+              </CustomLink>
+
+              <nav className="header__navigation header__navigation_middle">
+                <CustomLink
+                  className="header__link_movies"
+                  linkTo="/movies"
+                  textLink="Фильмы"
+                />
+                <p className="header__text-films"> Сохранённые фильмы </p>
+              </nav>
+
+              <nav className="header__navigation header__navigation_right">
+                <CustomLink
+                  className="header__link_account"
+                  linkTo="/profile"
+                  textLink="Аккаунт"
+                />
+              </nav>
+            </div>
+          </header>
+        }
+      />
+
+      <Route
+        path="/signup"
+        element={
+          <header className="header header_background-dark">
+            <div className="header__container header__container_signup">
+              <CustomLink
+                linkTo="/"
+                className="header__link_logo"
+              >
+                <img src={images.logo} alt="логотип" className="header__logo" />
+              </CustomLink>
+            </div>
+          </header>
+        }
+      />
+
+
     </Routes >
   );
 }

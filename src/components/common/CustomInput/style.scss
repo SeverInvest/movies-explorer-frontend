@@ -1,0 +1,45 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.register__form {
+  &__label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 1.2;
+    color: #8B8B8B;
+    width: 100%;
+    margin-top: 13px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &__input {
+    margin-top: 10px;
+    margin-bottom: 7px;
+    box-sizing: border-box;
+    padding: 15px;
+    background: #2F2F2F;
+    border-radius: 8px;
+    border: none;
+    height: 46px;
+    width: 100%;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #FFF;
+    box-shadow: inset 0 0 0 1px rgba(47, 47, 47, 0), inset 0 0 0 100px rgba(47, 47, 47, 1);
+
+    &:focus {
+      outline: none;
+    }
+
+    &_red {
+      color: #EE3465;
+    }
+  }
+}
