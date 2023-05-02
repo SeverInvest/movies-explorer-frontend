@@ -8,6 +8,7 @@ export default function CustomForm({
   buttonText,
   onSubmit,
   blue,
+  option,
   children,
   ...restProps
 }) {
@@ -21,6 +22,10 @@ if (blue) {
 
 if (isEnabled) {
   classNames.push("form__submit_disabled")
+}
+
+if (option === "login") {
+  classNames.push("form__submit_login")
 }
 
   return (

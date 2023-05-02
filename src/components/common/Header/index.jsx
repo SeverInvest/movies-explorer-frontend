@@ -120,6 +120,22 @@ function Header() {
         }
       />
 
+<Route
+        path="/signin"
+        element={
+          <header className="header header_background-dark">
+            <div className="header__container header__container_signup">
+              <CustomLink
+                linkTo="/"
+                className="header__link_logo"
+              >
+                <img src={images.logo} alt="логотип" className="header__logo" />
+              </CustomLink>
+            </div>
+          </header>
+        }
+      />
+
 
     </Routes >
   );

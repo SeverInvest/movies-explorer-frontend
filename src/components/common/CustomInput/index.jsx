@@ -11,10 +11,10 @@ export default function CustomInput({
 }) {
 
   return (
-    <label className="register__form__label">
+    <label className="form__label">
       {textLabel}
       <input
-        className={`register__form__input ${error ? "register__form__input_red" : ""}`}
+        className={`form__input ${error ? "form__input_red" : ""}`}
         autoComplete="off"
         name={name}
         id={name}

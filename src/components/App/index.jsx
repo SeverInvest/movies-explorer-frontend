@@ -7,6 +7,7 @@ import Movies from '..//movies/Movies';
 import SavedMovies from '..//movies/SavedMovies';
 import Footer from '../common/Footer';
 import Register from '../user/Register';
+import Login from '../user/Login';
 
 // import Footer from '../Footer';
 // import ProtectedRoute from '../ProtectedRoute';
@@ -43,7 +44,8 @@ function App() {
         <Route path="/movies" element={<Movies />} />
         <Route path="/saved-movies" element={<SavedMovies />} />
         <Route path="/signup" element={<Register />} />
-        {/* <Main /> */}
+        <Route path="/signin" element={<Login />} />
+       
 
         <Route path="/" element={<Footer />} />
         <Route path="/movies" element={<Footer />} />
