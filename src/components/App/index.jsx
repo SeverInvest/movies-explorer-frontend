@@ -42,14 +42,17 @@ function App() {
         loggedIn={loggedIn}
       />
       <Routes>
+      
         <Route path="/" element={<Main />} />
+        {/* <Route path="/" element={<Footer />} /> */}
+
         <Route path="/movies" element={<Movies />} />
         <Route path="/saved-movies" element={<SavedMovies />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
 
-        <Route path="/" element={<Footer />} />
+        
         <Route path="/movies" element={<Footer />} />
         <Route path="/saved-movies" element={<Footer />} />
         <Route path="/page404" element={<Page404 />} />

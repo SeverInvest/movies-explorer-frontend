@@ -35,7 +35,7 @@
     }
 
     &_middle {
-      margin-left: 65px;
+      margin-left: 62px;
       column-gap: 16px;
     }
   }
@@ -61,6 +61,9 @@
       color: #FFFFFF;
       background: #313131;
       border-radius: 20px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 1.1;
     }
 
     &_rect {
@@ -90,7 +93,6 @@
       font-weight: 400;
       font-size: 13px;
       line-height: 1.4;
-      // text-align: right;
       color: #FFFFFF;
     }
   }

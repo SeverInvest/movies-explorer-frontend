@@ -17,7 +17,7 @@
   }
 
   &__title {
-    margin: 0 0 25px;
+    margin: 0 0 5px;
     font-weight: 400;
     font-size: 140px;
     line-height: 1.2;
@@ -37,6 +37,9 @@
   &__link {
     color: #4285F4;
     text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
 
     &:focus,
     &:active,

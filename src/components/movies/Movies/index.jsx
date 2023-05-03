@@ -7,7 +7,7 @@ import CustomButton from "../../common/CustomButton";
 import Preloader from "../Preloader";
 import { useState, useEffect } from 'react';
 import { usePagination } from "../../../hooks/usePagination";
-
+import Footer from '../../common/Footer';
 
 export default function Movies() {
   const { pagination } = usePagination();
@@ -86,6 +86,7 @@ export default function Movies() {
   }, [cardsCountVisible, cardsFinded]);
 
   return (
+    <div className="movies__common">
     <section className="movies_bg">
       <div className="movies">
         <SearchForm
@@ -116,5 +117,7 @@ export default function Movies() {
         }
       </div>
     </section>
+    <Footer />
+    </div>
   );
 }

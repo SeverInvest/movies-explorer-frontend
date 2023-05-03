@@ -6,11 +6,12 @@ import "./style.scss";
 import CustomButton from "../../common/CustomButton";
 import Preloader from "../Preloader";
 import { useState, useEffect } from 'react';
-import { useResize } from "../../../hooks/useResize";
-
+import { usePagination } from "../../../hooks/usePagination";
+import Footer from '../../common/Footer';
 
 export default function SavedMovies() {
-  const [pagination, setPagination] = useState(7);
+  const { pagination } = usePagination();
+
   const [isVisibleButton, setIsVisibleButton] = useState(false);
   const [cardsCount, setCardsCount] = useState(0);
   const [cardsCountVisible, setCardsCountVisible] = useState(pagination);
@@ -22,15 +23,7 @@ export default function SavedMovies() {
   const [isToggleSwitch, setIsToggleSwitch] = useState(false);
   const [isSubmit, setIsSubmit] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const { typeScreen } = useResize();
 
-  useEffect(() => {
-    if (typeScreen === "desktop") {
-      setPagination(7);
-    } else {
-      setPagination(5);
-    }
-  }, [typeScreen])
 
   const handleSearch = (() => {
     const _arg1Filter = ((itemName, searchText) => {
@@ -94,8 +87,9 @@ export default function SavedMovies() {
   }, [cardsCountVisible, cardsFinded]);
 
   return (
-    <section className="movies_bg">
-      <div className="movies">
+    <div className="saved-movies__common">
+    <section className="saved-movies_bg">
+      <div className="saved-movies">
         <SearchForm
           handleSubmit={handleSubmit}
           isLoggedIn={true}
@@ -107,7 +101,7 @@ export default function SavedMovies() {
         }
         {
           !isSuccessfulSearch && !isFirstLoad &&
-          <p className="movies__unsuccess-search"> Ничего не найдено </p>
+          <p className="saved-movies__unsuccess-search"> Ничего не найдено </p>
         }
         <MoviesCardList
           option="saved-movies"
@@ -118,11 +112,13 @@ export default function SavedMovies() {
           <CustomButton
             type="button"
             text="Ещё"
-            className="movies__more-button"
+            className="saved-movies__more-button"
             onClick={handleButtonMore}
           />
         }
       </div>
     </section>
+     <Footer />
+     </div>
   );
 }

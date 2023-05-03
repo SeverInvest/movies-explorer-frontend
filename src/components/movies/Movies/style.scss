@@ -3,7 +3,7 @@
 
 .movies {
   margin: 0 auto;
-  padding: 70px 70px 10px;
+  padding: 70px 70px 0;
   max-width: calc(var(--max-width-large) - 140px);
   display: flex;
   flex-direction: column;
@@ -28,5 +28,12 @@
     background: #2F2F2F;
     border-radius: 6px;
     margin-bottom: 80px;
+  }
+
+  &__common {
+    height: calc(100vh - 74px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }

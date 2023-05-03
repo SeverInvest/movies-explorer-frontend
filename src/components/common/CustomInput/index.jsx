@@ -7,7 +7,7 @@ export default function CustomInput({
   textLabel,
   error,
   children,
-  option="",
+  option = "",
   ...restProps
 }) {
 
