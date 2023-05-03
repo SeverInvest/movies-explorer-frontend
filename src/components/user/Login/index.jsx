@@ -12,12 +12,14 @@ export default function Login(
 
 ) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, resetForm, setValues, setIsValid } = useFormAndValidation();
+  const { handleChange, errors, resetForm, setIsValid } = useFormAndValidation();
   const navigate = useNavigate();
 
   function handleSubmit(evt) {
+    evt.preventDefault();
+    // TODO: 
     // changeButtonText(true);
-    // evt.preventDefault();
+    // 
     // onUpdateUser({
     //   name: values.name,
     //   about: values.description,
@@ -27,7 +29,7 @@ export default function Login(
 
   useEffect(() => {
     resetForm();
-    // setValues({ "name": currentUser.name, "description": currentUser.about });
+    // TODO: сброс стейтов до дефолтного состояния
     setIsValid(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
@@ -41,7 +43,6 @@ export default function Login(
         </div>
         <div className="login__form__container">
           <CustomForm
-            // className="register__form"
             nameForm="form-login"
             isEnabled={true}
             buttonText="Войти"

@@ -1,15 +1,9 @@
-// import listProjects from '../../../utils/list-projects';
-// import SearchForm from '../../movies/SearchForm';
 import MoviesCard from "../MoviesCard";
-
-
 import "./style.scss";
 
 export default function MoviesCardList({
   cards, isVisibleButton, option
 }) {
-
-
 
   return (
     <section aria-label="Раздел с карточками фильмов" className="cards">
@@ -19,13 +13,9 @@ export default function MoviesCardList({
             key={card._id}
             card={card}
             option={option}
-          // onCardClick={onCardClick}
-          // onCardLike={onCardLike}
-          // onCardDeleteConfirm={onCardDeleteConfirm}
           />
         ))}
       </ul>
-
     </section>
   );
 }

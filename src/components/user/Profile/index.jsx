@@ -5,26 +5,31 @@ import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import { useEffect, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
 export default function Profile(
 
 ) {
-  const { values, handleChange, errors, isValid, resetForm, setValues, setIsValid } = useFormAndValidation();
+  const { handleChange, errors, resetForm, setIsValid } = useFormAndValidation();
   const currentUser = useContext(CurrentUserContext);
+  const navigate = useNavigate();
 
   function handleSubmit(evt) {
+    evt.preventDefault();
+    // TODO:
     // changeButtonText(true);
-    // evt.preventDefault();
+    //
     // onUpdateUser({
     //   name: values.name,
     //   about: values.description,
     // });
+    navigate("/movies");
   }
 
   useEffect(() => {
     resetForm();
-    // setValues({ "name": currentUser.name, "description": currentUser.about });
+     // TODO: сброс стейтов до дефолтного состояния
     setIsValid(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
@@ -38,7 +43,6 @@ export default function Profile(
         </div>
         <div className="profile__form__container">
           <CustomForm
-            // className="register__form"
             nameForm="form-profile"
             isEnabled={true}
             buttonText="Редактировать"

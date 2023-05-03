@@ -6,11 +6,12 @@ import "./style.scss";
 import CustomButton from "../../common/CustomButton";
 import Preloader from "../Preloader";
 import { useState, useEffect } from 'react';
-import { useResize } from "../../../hooks/useResize";
+import { usePagination } from "../../../hooks/usePagination";
 
 
 export default function Movies() {
-  const [pagination, setPagination] = useState(7);
+  const { pagination } = usePagination();
+
   const [isVisibleButton, setIsVisibleButton] = useState(false);
   const [cardsCount, setCardsCount] = useState(0);
   const [cardsCountVisible, setCardsCountVisible] = useState(pagination);
@@ -22,15 +23,6 @@ export default function Movies() {
   const [isToggleSwitch, setIsToggleSwitch] = useState(false);
   const [isSubmit, setIsSubmit] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const { typeScreen } = useResize();
-
-  useEffect(() => {
-    if (typeScreen === "desktop") {
-      setPagination(7);
-    } else {
-      setPagination(5);
-    }
-  }, [typeScreen])
 
   const handleSearch = (() => {
     const _arg1Filter = ((itemName, searchText) => {
@@ -92,8 +84,6 @@ export default function Movies() {
   useEffect(() => {
     setCardsFindedVisible(cardsFinded.slice(0, cardsCountVisible));
   }, [cardsCountVisible, cardsFinded]);
-
-  // console.log("isFirstLoad", isFirstLoad)
 
   return (
     <section className="movies_bg">

@@ -34,7 +34,7 @@ export function useResize() {
         return typeScr;
       };
       setTypeScreen(() => defineScreen());
-    }, [width])
+    }, [width]);
 
   return { typeScreen };
 };

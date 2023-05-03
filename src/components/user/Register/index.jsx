@@ -12,12 +12,13 @@ export default function Register(
 
 ) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, resetForm, setValues, setIsValid } = useFormAndValidation();
+  const { handleChange, errors, resetForm, setIsValid } = useFormAndValidation();
   const navigate = useNavigate();
 
   function handleSubmit(evt) {
+    // TODO: 
     // changeButtonText(true);
-    // evt.preventDefault();
+    evt.preventDefault();
     // onUpdateUser({
     //   name: values.name,
     //   about: values.description,
@@ -27,7 +28,7 @@ export default function Register(
 
   useEffect(() => {
     resetForm();
-    // setValues({ "name": currentUser.name, "description": currentUser.about });
+    // TODO: сброс стейтов до дефолтного состояния
     setIsValid(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
@@ -41,7 +42,6 @@ export default function Register(
         </div>
         <div className="register__form__container">
           <CustomForm
-            // className="register__form"
             nameForm="form-register"
             isEnabled={true}
             buttonText="Зарегистрироваться"
