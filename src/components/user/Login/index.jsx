@@ -5,6 +5,7 @@ import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import { useEffect, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
 export default function Login(
@@ -12,6 +13,7 @@ export default function Login(
 ) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetForm, setValues, setIsValid } = useFormAndValidation();
+  const navigate = useNavigate();
 
   function handleSubmit(evt) {
     // changeButtonText(true);
@@ -20,6 +22,7 @@ export default function Login(
     //   name: values.name,
     //   about: values.description,
     // });
+    navigate("/movies");
   }
 
   useEffect(() => {
@@ -31,10 +34,10 @@ export default function Login(
 
 
   return (
-    <section className="logn_bg">
+    <section className="login_bg">
       <div className="login">
         <div className="login__header">
-          <h2 className="login__title">Добро пожаловать!</h2>
+          <h2 className="login__title">Рады видеть!</h2>
         </div>
         <div className="login__form__container">
           <CustomForm
@@ -69,7 +72,7 @@ export default function Login(
                 errorMessage={errors.password}
               />
             </div>
-            
+
           </CustomForm>
         </div>
         <div className="login__footer">

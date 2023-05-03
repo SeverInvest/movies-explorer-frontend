@@ -28,6 +28,10 @@ if (option === "login") {
   classNames.push("form__submit_login")
 }
 
+if (option === "profile") {
+  classNames.push("form__submit_profile")
+}
+
   return (
 
     <form

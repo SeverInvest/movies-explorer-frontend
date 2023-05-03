@@ -55,13 +55,13 @@ export default function SearchForm({
           name="name"
           id="search-form__input"
           autoFocus
-          autocomplete="off"
+          autoComplete="off"
           // type="search"
         />
         <CustomButton
           type="submit"
           text="Поиск"
-          option="search"
+          className="search-form__search-button"
           ariaLabel="поиск фильма"
         />
       </div>

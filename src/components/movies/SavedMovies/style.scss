@@ -17,4 +17,16 @@
     color: #FFF;
   }
 
+  &__more-button {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--color-light);
+    border: none;
+    width: 1140px;
+    height: 36px;
+    background: #2F2F2F;
+    border-radius: 6px;
+    margin-bottom: 80px;
+  }
 }

@@ -8,7 +8,9 @@ import SavedMovies from '..//movies/SavedMovies';
 import Footer from '../common/Footer';
 import Register from '../user/Register';
 import Login from '../user/Login';
-
+import Profile from '../user/Profile';
+import Page404 from '../Page404';
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 // import Footer from '../Footer';
 // import ProtectedRoute from '../ProtectedRoute';
 // import Login from '../Login';
@@ -20,7 +22,7 @@ import Login from '../user/Login';
 // import { CurrentUserContext } from "../../context/CurrentUserContext.js";
 
 function App() {
-  // const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({userName: "Николай"});
   const [loggedIn, setLoggedIn] = useState(false);
 
   // const navigate = useNavigate();
@@ -33,7 +35,7 @@ function App() {
   // }
 
   return (
-    // <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
       <Header
         // onSignOut={handleSingOut}
@@ -45,11 +47,12 @@ function App() {
         <Route path="/saved-movies" element={<SavedMovies />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/signin" element={<Login />} />
-       
+        <Route path="/profile" element={<Profile />} />
 
         <Route path="/" element={<Footer />} />
         <Route path="/movies" element={<Footer />} />
         <Route path="/saved-movies" element={<Footer />} />
+        <Route path="/page404" element={<Page404 />} />
       </Routes>
 
       
@@ -69,7 +72,7 @@ function App() {
         } */}
 
     </div>
-    // </CurrentUserContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 

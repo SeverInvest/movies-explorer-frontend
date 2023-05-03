@@ -3,21 +3,14 @@ import "./style.scss";
 
 export default function CustomButton({
   type,
-  text,
-  option,
+  text="",
+  className,
   ariaLabel,
   children,
   ...restProps
 }) {
-  const classNames = ["button"];
-
-  if (option === "search") {
-    classNames.push("button_search");
-  }
-
-  if (option === "more") {
-    classNames.push("button_more");
-  }
+  const isText = text ? true : false;
+  const classNames = ["button", className];
 
   return (
     <button
@@ -26,7 +19,7 @@ export default function CustomButton({
       className={classNames.join(" ")}
       {...restProps}
     >
-      {text}
+      {isText && text}
       {children}
     </button>
 

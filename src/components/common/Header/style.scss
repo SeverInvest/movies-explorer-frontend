@@ -35,6 +35,7 @@
     }
 
     &_middle {
+      margin-left: 65px;
       column-gap: 16px;
     }
   }
@@ -91,6 +92,32 @@
       line-height: 1.4;
       // text-align: right;
       color: #FFFFFF;
+    }
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .header {
+
+    &__nav-top {
+      margin: 0 auto;
+      padding: 21px 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      row-gap: 10px;
+    }
+
+    &__nav-btn {
+      background: #202020;
+      border: none;
+      // height: 40px;
+      // width: 40px;
+    }
+
+    &__nav-btn-img {
+      height: 40px;
+      width: 40px;
     }
   }
 }

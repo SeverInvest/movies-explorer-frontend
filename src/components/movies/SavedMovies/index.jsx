@@ -118,7 +118,7 @@ export default function SavedMovies() {
           <CustomButton
             type="button"
             text="Ещё"
-            option="more"
+            className="movies__more-button"
             onClick={handleButtonMore}
           />
         }

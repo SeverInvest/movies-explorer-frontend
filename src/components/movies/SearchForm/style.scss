@@ -42,4 +42,16 @@
     }
   }
 
+  &__search-button {
+    width: 100px;
+    height: 52px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.3;
+    background: #4285F4;
+    border-radius: 5px;
+    color: var(--color-light);
+    border: none;
+  }
+
 }

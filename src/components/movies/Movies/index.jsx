@@ -120,7 +120,7 @@ export default function Movies() {
           <CustomButton
             type="button"
             text="Ещё"
-            option="more"
+            className="movies__more-button"
             onClick={handleButtonMore}
           />
         }

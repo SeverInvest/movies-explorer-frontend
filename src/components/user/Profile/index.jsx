@@ -5,15 +5,13 @@ import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import { useEffect, useContext } from 'react';
-import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
-export default function Register(
+export default function Profile(
 
 ) {
-  const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetForm, setValues, setIsValid } = useFormAndValidation();
-  const navigate = useNavigate();
+  const currentUser = useContext(CurrentUserContext);
 
   function handleSubmit(evt) {
     // changeButtonText(true);
@@ -22,7 +20,6 @@ export default function Register(
     //   name: values.name,
     //   about: values.description,
     // });
-    navigate("/signin");
   }
 
   useEffect(() => {
@@ -34,21 +31,22 @@ export default function Register(
 
 
   return (
-    <section className="register_bg">
-      <div className="register">
-        <div className="register__header">
-          <h2 className="register__title">Добро пожаловать!</h2>
+    <section className="profile_bg">
+      <div className="profile">
+        <div className="profile__header">
+          <h2 className="profile__title">Привет, {currentUser.userName}!</h2>
         </div>
-        <div className="register__form__container">
+        <div className="profile__form__container">
           <CustomForm
             // className="register__form"
-            nameForm="form-register"
+            nameForm="form-profile"
             isEnabled={true}
-            buttonText="Зарегистрироваться"
+            buttonText="Редактировать"
             onSubmit={handleSubmit}
-            blue={true}
+            blue={false}
+            option="profile"
           >
-            <div className="register__form__inputs">
+            <div className="profile__form__inputs">
               <CustomInput
                 textLabel="Имя"
                 onChange={handleChange}
@@ -58,6 +56,7 @@ export default function Register(
                 minLength="2"
                 maxLength="30"
                 error={errors.name}
+                option="profile"
               />
               <Validation
                 errorMessage={errors.name}
@@ -68,31 +67,20 @@ export default function Register(
                 name="email"
                 type="email"
                 error={errors.email}
+                option="profile"
               />
               <Validation
                 errorMessage={errors.email}
               />
-              <CustomInput
-                textLabel="Пароль"
-                onChange={handleChange}
-                name="password"
-                type="password"
-                minLength="8"
-                error={errors.password}
-              />
-              <Validation
-                errorMessage={errors.password}
-              />
             </div>
-            
+
           </CustomForm>
         </div>
-        <div className="register__footer">
-          <p className="register__text">Уже зарегистрированы? &nbsp;</p>
+        <div className="profile__footer">
           <CustomLink
-            className="register__link_blue"
+            className="profile__link_red"
             linkTo="/signin"
-            textLink="Войти"
+            textLink="Выйти из аккаунта"
           />
         </div>
       </div>
