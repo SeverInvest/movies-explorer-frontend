@@ -39,63 +39,6 @@
       column-gap: 16px;
     }
   }
-
-  &__text-films {
-    font-weight: 600;
-    font-size: 13px;
-    line-height: 1.4;
-    color: #FFFFFF;
-    border-bottom: 1px solid #DADADA;
-  }
-
-  &__link {
-
-    &_logo {
-      width: 38px;
-      height: 38px;
-    }
-
-    &_account {
-      padding: 8px 20px;
-      text-align: center;
-      color: #FFFFFF;
-      background: #313131;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 1.1;
-    }
-
-    &_rect {
-      @include padding-margin-null-auto();
-      font-weight: medium;
-      font-size: 12px;
-      line-height: 1.3;
-      padding: 8px 20px;
-      background: var(--color-green);
-      color: #000000;
-      border-radius: 3px;
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    &_normal {
-      @include padding-margin-null-auto();
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 1.3;
-      color: var(--color-light);
-      border: none;
-      font-weight: medium;
-    }
-
-    &_movies {
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 1.4;
-      color: #FFFFFF;
-    }
-  }
 }
 
 @media screen and (max-width: 1280px) {
@@ -113,8 +56,6 @@
     &__nav-btn {
       background: #202020;
       border: none;
-      // height: 40px;
-      // width: 40px;
     }
 
     &__nav-btn-img {

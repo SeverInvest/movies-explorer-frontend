@@ -5,102 +5,35 @@ import CustomLink from "../CustomLink";
 import { useState, useEffect } from 'react';
 import { useResize } from "../../../hooks/useResize";
 import CustomButton from '../CustomButton';
-
+import HeaderMovies from '../HeaderMovies';
+import HeaderSavedMovies from '../HeaderSavedMovies';
+import HeaderAccount from "../HeaderAccount";
+import SideBar from '../SideBar';
+import Logo from '../Logo';
 
 function Header() {
 
   const [hamburgerOn, setHamburgerOn] = useState(false);
-  const [showHeaderUp, setShowHeaderUp] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { typeScreen } = useResize();
 
-  function handleMenuBtnClick() {
-    hamburgerOn ? setHamburgerOn(false) : setHamburgerOn(true);
+  function handleHamburgerOn() {
+    setHamburgerOn(true);
   }
+
+  function handleHamburgerOff() {
+    setHamburgerOn(false);
+  }
+
 
   useEffect(() => {
     if (typeScreen !== "desktop" && hamburgerOn) {
-      setShowHeaderUp(true);
+      setIsOpen(true);
     } else {
-      setShowHeaderUp(false);
+      setIsOpen(false);
+      setHamburgerOn(false);
     }
   }, [typeScreen, hamburgerOn]);
-
-  // component Logo
-  function Logo() {
-    return (
-      <CustomLink
-        linkTo="/"
-        className="header__link_logo"
-      >
-        <img src={images.logo} alt="логотип" className="header__logo" />
-      </CustomLink>
-    )
-  };
-
-  //Component HeaderMovies
-  function HeaderMovies({ option }) {
-    return (
-      <>
-        {(option === "movies") ?
-          <p className="header__text-films"> Фильмы </p>
-          :
-          <CustomLink
-            className="header__link_movies"
-            linkTo="/movies"
-            textLink="Фильмы"
-          />
-        }
-      </>
-    )
-  };
-
-  //Component HeaderSavedMovies
-  function HeaderSavedMovies({ option }) {
-    return (
-      <>
-        {(option === "saved-movies") ?
-          <p className="header__text-films"> Сохранённые фильмы </p>
-          :
-          <CustomLink
-            className="header__link_movies"
-            linkTo="/saved-movies"
-            textLink="Сохранённые фильмы"
-          />
-        }
-      </>
-    )
-  };
-
-  // Component Верхнее меню (открывется по бургеру)
-  function HeaderUpMenu({
-    option,
-  }) {
-    return (
-      <>
-        {showHeaderUp &&
-
-          <nav className="header__nav-top">
-            <CustomLink
-              className="header__link_movies"
-              linkTo="/"
-              textLink="Главная"
-            />
-            <HeaderMovies option={option} />
-            <HeaderSavedMovies option={option} />
-            {(option === "profile") ?
-              <p className="header__text-films"> Аккаунт </p>
-              :
-              <CustomLink
-                className="header__link_movies"
-                linkTo="/profile"
-                textLink="Аккаунт"
-              />
-            }
-          </nav>
-        }
-      </>
-    )
-  };
 
   // Компонент Меню или бургер
   function MenuOrBurger({
@@ -117,32 +50,20 @@ function Header() {
             </nav>
 
             <nav className="header__navigation">
-              <CustomLink
-                className="header__link_account"
-                linkTo="/profile"
-                textLink="Аккаунт"
-              />
+              <HeaderAccount />
             </nav>
           </>
           :
           <CustomButton
             className="header__nav-btn"
             type="button"
-            onClick={handleMenuBtnClick}
+            onClick={handleHamburgerOn}
           >
-            {hamburgerOn ?
-              <img
-                src={images.icon_delete}
-                alt="закрыть верхнее меню"
-                className="header__nav-btn-img"
-              />
-              :
-              <img
-                src={images.burger}
-                alt="открыть верхнее меню"
-                className="header__nav-btn-img"
-              />
-            }
+            <img
+              src={images.burger}
+              alt="открыть сайдбар"
+              className="header__nav-btn-img"
+            />
           </CustomButton>
         }
       </>
@@ -163,12 +84,12 @@ function Header() {
                 <CustomLink
                   linkTo="/signup"
                   textLink="Регистрация"
-                  className="header__link_normal"
+                  className="menu__link_normal"
                 />
                 <CustomLink
                   linkTo="/signin"
                   textLink="Войти"
-                  className="header__link_rect"
+                  className="menu__link_rect"
                 />
               </nav>
             </div>
@@ -180,7 +101,7 @@ function Header() {
         path="/movies"
         element={
           <header className="header header_background-dark">
-            <HeaderUpMenu option="movies" />
+            <SideBar option="movies" handleHamburgerOff={handleHamburgerOff} isOpen={isOpen}/>
             <div className="header__container">
               <Logo />
               <MenuOrBurger option="movies" />
@@ -193,7 +114,7 @@ function Header() {
         path="/saved-movies"
         element={
           <header className="header header_background-dark">
-            <HeaderUpMenu option="saved-movies" />
+            <SideBar option="saved-movies" handleHamburgerOff={handleHamburgerOff} isOpen={isOpen}/>
             <div className="header__container">
               <Logo />
               <MenuOrBurger option="saved-movies" />
@@ -207,12 +128,7 @@ function Header() {
         element={
           <header className="header header_background-dark">
             <div className="header__container header__container_signup">
-              <CustomLink
-                linkTo="/"
-                className="header__link_logo"
-              >
-                <img src={images.logo} alt="логотип" className="header__logo" />
-              </CustomLink>
+              <Logo />
             </div>
           </header>
         }
@@ -223,12 +139,7 @@ function Header() {
         element={
           <header className="header header_background-dark">
             <div className="header__container header__container_signup">
-              <CustomLink
-                linkTo="/"
-                className="header__link_logo"
-              >
-                <img src={images.logo} alt="логотип" className="header__logo" />
-              </CustomLink>
+              <Logo />
             </div>
           </header>
         }
@@ -238,7 +149,7 @@ function Header() {
         path="/profile"
         element={
           <header className="header header_background-dark">
-            <HeaderUpMenu option="profile" />
+            <SideBar option="profile" handleHamburgerOff={handleHamburgerOff} isOpen={isOpen}/>
             <div className="header__container">
               <Logo />
               <MenuOrBurger option="profile" />

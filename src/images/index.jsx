@@ -8,6 +8,7 @@ import smalltumbon from "./smalltumbon.svg";
 import smalltumboff from "./smalltumboff.svg";
 import me from "./me.jpg";
 import film_poster_test from "./film_poster_test.png";
+import button_close from "./button-close.svg";
 
 const images = {
     burger,
@@ -19,7 +20,8 @@ const images = {
     smalltumbon,
     smalltumboff,
     me,
-    film_poster_test
+    film_poster_test,
+    button_close
   };
   
   export default images;
