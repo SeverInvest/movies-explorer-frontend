@@ -2,10 +2,11 @@
 @import "../../../vars";
 
 .about-project {
+  box-sizing: border-box;
   margin: 0 auto;
   padding: 110px 70px;
-  max-width: calc(var(--max-width-large) - 140px);
-  min-height: calc(608px - 220px);
+  max-width: var(--max-width-large);
+  // min-height: calc(608px - 220px);
   display: flex;
   flex-direction: column;
 
@@ -16,6 +17,7 @@
   &__header {
     border-bottom: 1px solid #DADADA;
     padding-bottom: 23px;
+    width: 100%;
   }
 
   &__name {
@@ -27,11 +29,15 @@
 
   &__table-up {
     margin-top: 70px;
-    display: grid;
-    grid-template-columns: repeat(2, 550px);
-    grid-template-rows: repeat(2, auto);
-    gap: 26px 40px;
+    display: flex;
+    column-gap: 40px;
     color: #fff;
+
+    &__column {
+      display: flex;
+      flex-direction: column;
+      row-gap: 26px;
+    }
 
     &__header {
       font-size: 20px;
@@ -77,8 +83,76 @@
     &__text {
       font-weight: 500;
       font-size: 14px;
+      line-height: 1.2;
       text-align: center;
       color: #8B8B8B;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about-project {
+    padding: 90px 50px;
+
+    &__table-up {
+      column-gap: 30px;
+
+      &__column {
+        row-gap: 22px;
+      }
+
+      &__text {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+    }
+
+    &__table-down {
+      margin-top: 93px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about-project {
+    padding: 70px 18px;
+
+    &__table-up {
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 56px;
+
+      &__column {
+        row-gap: 16px;
+      }
+
+      &__header {
+        font-size: 18px;
+        line-height: 1.2;
+      }
+
+      &__text {
+        font-size: 11px;
+        line-height: 1.5;
+      }
+    }
+
+    &__table-down {
+      margin-top: 60px;
+      gap: 10px 0;
+
+      &__header {
+
+        font-size: 11px;
+        line-height: 35px;
+        text-align: center;
+      }
+
+      &__text {
+        font-size: 11px;
+        line-height: 1.2;
+      }
     }
   }
 }

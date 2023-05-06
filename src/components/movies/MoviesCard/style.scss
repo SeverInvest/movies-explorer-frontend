@@ -2,9 +2,11 @@
 @import "../../../vars";
 
 .card {
+  box-sizing: border-box;
   padding: 6px;
   padding-left: 22px;
-  min-width: calc(1140px - 22px - 6px);
+  // min-width: calc(1140px - 22px - 6px);
+  width: 100%;
   height: calc(134px - 12px);
   display: flex;
   flex-direction: row;

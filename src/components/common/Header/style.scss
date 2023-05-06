@@ -11,12 +11,13 @@
   }
 
   &__container {
+    box-sizing: border-box;
     margin: 0 auto;
     padding: 0px 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: calc(var(--max-width-large) - 140px);
+    max-width: var(--max-width-large);
     min-height: var(--min-height-header-ladge);
 
     &_signup {
@@ -41,26 +42,46 @@
   }
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 768px) {
   .header {
 
-    &__nav-top {
-      margin: 0 auto;
-      padding: 21px 70px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      row-gap: 10px;
+    &__container {
+      padding: 0px 30px;
+
+      &__nav-top {
+        margin: 0 auto;
+        padding: 21px 70px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 10px;
+      }
+
+      &__nav-btn {
+        background: #202020;
+        border: none;
+      }
+
+      &__nav-btn-img {
+        height: 40px;
+        width: 40px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+
+    &__container {
+      padding: 0px 14px;
     }
 
-    &__nav-btn {
-      background: #202020;
-      border: none;
-    }
+    &__navigation {
 
-    &__nav-btn-img {
-      height: 40px;
-      width: 40px;
+      &_right {
+        column-gap: 14px;
+      }
     }
   }
 }

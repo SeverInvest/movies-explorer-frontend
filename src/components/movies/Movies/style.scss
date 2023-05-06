@@ -4,9 +4,11 @@
 .movies {
   margin: 0 auto;
   padding: 70px 70px 0;
-  max-width: calc(var(--max-width-large) - 140px);
+  max-width: var(--max-width-large);
+  width: 100%;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 
   &_bg {
     background: #202020;
@@ -23,11 +25,13 @@
     line-height: 1.3;
     color: var(--color-light);
     border: none;
-    width: 1140px;
+    max-width: calc(var(--max-width-large) - 140px);
+    width: 100%;
     height: 36px;
     background: #2F2F2F;
     border-radius: 6px;
     margin-bottom: 80px;
+    box-sizing: border-box;
   }
 
   &__common {

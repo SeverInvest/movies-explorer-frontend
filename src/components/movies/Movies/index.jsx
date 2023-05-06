@@ -87,37 +87,37 @@ export default function Movies() {
 
   return (
     <div className="movies__common">
-    <section className="movies_bg">
-      <div className="movies">
-        <SearchForm
-          handleSubmit={handleSubmit}
-          isLoggedIn={true}
-          onToggleSwitch={handleToggleSwitch}
-        />
-        {
-          isPreloaderVisible &&
-          <Preloader />
-        }
-        {
-          !isSuccessfulSearch && !isFirstLoad &&
-          <p className="movies__unsuccess-search"> Ничего не найдено </p>
-        }
-        <MoviesCardList
-          option="movies"
-          cards={cardsFindedVisible}
-          isVisibleButton={isVisibleButton}
-        />
-        {isVisibleButton &&
-          <CustomButton
-            type="button"
-            text="Ещё"
-            className="movies__more-button"
-            onClick={handleButtonMore}
+      <section className="movies_bg">
+        <div className="movies">
+          <SearchForm
+            handleSubmit={handleSubmit}
+            isLoggedIn={true}
+            onToggleSwitch={handleToggleSwitch}
           />
-        }
-      </div>
-    </section>
-    <Footer />
+          {
+            isPreloaderVisible &&
+            <Preloader />
+          }
+          {
+            !isSuccessfulSearch && !isFirstLoad &&
+            <p className="movies__unsuccess-search"> Ничего не найдено </p>
+          }
+          <MoviesCardList
+            option="movies"
+            cards={cardsFindedVisible}
+            isVisibleButton={isVisibleButton}
+          />
+          {isVisibleButton &&
+            <CustomButton
+              type="button"
+              text="Ещё"
+              className="movies__more-button"
+              onClick={handleButtonMore}
+            />
+          }
+        </div>
+      </section>
+      <Footer />
     </div>
   );
 }

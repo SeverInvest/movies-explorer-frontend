@@ -4,13 +4,15 @@
 .cards {
   margin: 0 auto;
   padding: 77px 0 60px;
-  max-width: calc(1280px - 140px);
+  // max-width: calc(1280px - 140px);
+  width: 100%;
 
   &__list {
     list-style: none;
     display: grid;
     grid-template-columns: 1fr;
     gap: 40px;
+    width: 100%;
   }
   &_visible {
     padding-bottom: 60px;
