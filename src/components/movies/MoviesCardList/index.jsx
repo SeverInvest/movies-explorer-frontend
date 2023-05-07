@@ -7,7 +7,7 @@ export default function MoviesCardList({
 
   return (
     <section aria-label="Раздел с карточками фильмов" className="cards">
-      <ul className={`cards__list ${isVisibleButton ? "cards__list_visible" : "cards__list_unvisible"}`}>
+      <ul className="cards__list">
         {cards.map((card) => (
           <MoviesCard
             key={card._id}

@@ -3,7 +3,7 @@
 
 .cards {
   margin: 0 auto;
-  padding: 77px 0 60px;
+  padding: 70px 0 0;
   // max-width: calc(1280px - 140px);
   width: 100%;
 
@@ -14,10 +14,16 @@
     gap: 40px;
     width: 100%;
   }
-  &_visible {
-    padding-bottom: 60px;
-  }
-  &_unvisible {
-    padding-bottom: 150px;
+}
+
+// @media screen and (max-width: 768px) {
+//   .cards {
+//     padding: 70px 0 80px;
+//   }}
+
+@media screen and (max-width: 480px) {
+  .cards {
+    gap: 20px;
+    padding: 50px 0 0;
   }
 }

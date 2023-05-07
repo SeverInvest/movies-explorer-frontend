@@ -18,7 +18,7 @@
   &__link {
     &_arrow {
       font-size: 30px;
-      line-height: 60px;
+      line-height: 50px;
       letter-spacing: -0.04em;
       color: var(--color-light);
       border: none;
@@ -35,7 +35,37 @@
       font-weight: normal;
       margin: 0;
     }
-
   }
+}
 
+@media screen and (max-width: 768px) {
+  .project {
+    &__link {
+      &_arrow {
+        font-size: 28px;
+      }
+
+      &_big {
+        font-size: 28px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .project {
+    min-height: 28px;
+
+    &__link {
+      &_arrow {
+        font-size: 18px;
+        line-height: 28px;
+      }
+
+      &_big {
+        font-size: 18px;
+        line-height: 28px;
+      }
+    }
+  }
 }

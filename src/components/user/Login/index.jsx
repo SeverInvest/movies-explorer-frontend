@@ -4,6 +4,7 @@ import CustomForm from "../../common/CustomForm";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
+import Logo from "../../common/Logo";
 import { useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
@@ -36,55 +37,59 @@ export default function Login(
 
 
   return (
-    <section className="login_bg">
-      <div className="login">
-        <div className="login__header">
-          <h2 className="login__title">Рады видеть!</h2>
-        </div>
-        <div className="login__form__container">
-          <CustomForm
-            nameForm="form-login"
-            isEnabled={true}
-            buttonText="Войти"
-            onSubmit={handleSubmit}
-            blue={true}
-            option="login"
-          >
-            <div className="login__form__inputs">
-              <CustomInput
-                textLabel="E-mail"
-                onChange={handleChange}
-                name="email"
-                type="email"
-                error={errors.email}
-              />
-              <Validation
-                errorMessage={errors.email}
-              />
-              <CustomInput
-                textLabel="Пароль"
-                onChange={handleChange}
-                name="password"
-                type="password"
-                minLength="8"
-                error={errors.password}
-              />
-              <Validation
-                errorMessage={errors.password}
-              />
-            </div>
+    <section className="login">
+      <div className="login__container">
+        <Logo />
+        <div className="login__info__container">
+          <div className="login__header">
+            <h2 className="login__title">Рады видеть!</h2>
+          </div>
+          <div className="login__form__container">
+            <CustomForm
+              nameForm="form-login"
+              isEnabled={true}
+              buttonText="Войти"
+              onSubmit={handleSubmit}
+              blue={true}
+              option="login"
+            >
+              <div className="login__form__inputs">
+                <CustomInput
+                  textLabel="E-mail"
+                  onChange={handleChange}
+                  name="email"
+                  type="email"
+                  autoFocus
+                  error={errors.email}
+                />
+                <Validation
+                  errorMessage={errors.email}
+                />
+                <CustomInput
+                  textLabel="Пароль"
+                  onChange={handleChange}
+                  name="password"
+                  type="password"
+                  minLength="8"
+                  error={errors.password}
+                />
+                <Validation
+                  errorMessage={errors.password}
+                />
+              </div>
 
-          </CustomForm>
-        </div>
-        <div className="login__footer">
-          <p className="login__text">Еще на зарегистрированы? &nbsp;</p>
-          <CustomLink
-            className="login__link_blue"
-            linkTo="/signup"
-            textLink="Регистрация"
-          />
+            </CustomForm>
+          </div>
+          <div className="login__footer">
+            <p className="login__text">Еще на зарегистрированы? &nbsp;</p>
+            <CustomLink
+              className="login__link_blue"
+              linkTo="/signup"
+              textLink="Регистрация"
+            />
+          </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }

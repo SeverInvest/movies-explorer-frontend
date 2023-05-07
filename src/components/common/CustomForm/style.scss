@@ -23,7 +23,7 @@
     }
 
     &_login {
-      margin-top: 70px;
+      margin-top: 100px;
     }
 
     &_profile {
@@ -57,6 +57,21 @@
       height: 16px;
     }
   }
+}
 
 
+@media screen and (max-width: 480px) {
+  .form {
+    justify-content: space-between;
+
+    &__submit {
+      &_profile {
+        font-size: 12px;
+      }
+
+      &_blue {
+        font-size: 12px;
+      }
+    }
+  }
 }

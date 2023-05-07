@@ -123,7 +123,7 @@ function Header() {
         }
       />
 
-      <Route
+      {/* <Route
         path="/signup"
         element={
           <header className="header header_background-dark">
@@ -143,7 +143,7 @@ function Header() {
             </div>
           </header>
         }
-      />
+      /> */}
 
       <Route
         path="/profile"

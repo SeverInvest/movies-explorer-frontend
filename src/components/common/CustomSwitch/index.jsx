@@ -4,6 +4,7 @@ import "./style.scss";
 // import images from "../../../images";
 
 export default function CustomSwitch({
+  className = "",
   onToggle,
   imgTumbler,
   text = "",
@@ -25,7 +26,7 @@ export default function CustomSwitch({
         src={imgTumbler}
         alt="переключатель короткометражек"
       />
-      <p className="switch__text">
+      <p className={className}>
         {text}
       </p>
       {children}

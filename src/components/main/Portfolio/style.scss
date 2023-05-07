@@ -27,3 +27,21 @@
     row-gap: 20px;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .portfolio {
+    padding: 40px 50px 90px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .portfolio {
+    padding: 40px 14px 70px;
+
+    &__header {
+      font-size: 14px;
+      line-height: 1.4;
+      padding-bottom: 40px;
+    }
+  }
+}

@@ -29,56 +29,58 @@ export default function Profile(
 
   useEffect(() => {
     resetForm();
-     // TODO: сброс стейтов до дефолтного состояния
+    // TODO: сброс стейтов до дефолтного состояния
     setIsValid(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
 
   return (
-    <section className="profile_bg">
-      <div className="profile">
-        <div className="profile__header">
-          <h2 className="profile__title">Привет, {currentUser.userName}!</h2>
-        </div>
-        <div className="profile__form__container">
-          <CustomForm
-            nameForm="form-profile"
-            isEnabled={true}
-            buttonText="Редактировать"
-            onSubmit={handleSubmit}
-            blue={false}
-            option="profile"
-          >
-            <div className="profile__form__inputs">
-              <CustomInput
-                textLabel="Имя"
-                onChange={handleChange}
-                name="name"
-                type="text"
-                autoFocus
-                minLength="2"
-                maxLength="30"
-                error={errors.name}
-                option="profile"
-              />
-              <Validation
-                errorMessage={errors.name}
-              />
-              <CustomInput
-                textLabel="E-mail"
-                onChange={handleChange}
-                name="email"
-                type="email"
-                error={errors.email}
-                option="profile"
-              />
-              <Validation
-                errorMessage={errors.email}
-              />
-            </div>
+    <section className="profile">
+      <div className="profile__container">
+        <div className="profile__info__container">
+          <div className="profile__header">
+            <h2 className="profile__title">Привет, {currentUser.userName}!</h2>
+          </div>
+          <div className="profile__form__container">
+            <CustomForm
+              nameForm="form-profile"
+              isEnabled={true}
+              buttonText="Редактировать"
+              onSubmit={handleSubmit}
+              blue={false}
+              option="profile"
+            >
+              <div className="profile__form__inputs">
+                <CustomInput
+                  textLabel="Имя"
+                  onChange={handleChange}
+                  name="name"
+                  type="text"
+                  autoFocus
+                  minLength="2"
+                  maxLength="30"
+                  error={errors.name}
+                  option="profile"
+                />
+                <Validation
+                  errorMessage={errors.name}
+                />
+                <CustomInput
+                  textLabel="E-mail"
+                  onChange={handleChange}
+                  name="email"
+                  type="email"
+                  error={errors.email}
+                  option="profile"
+                />
+                <Validation
+                  errorMessage={errors.email}
+                />
+              </div>
 
-          </CustomForm>
+            </CustomForm>
+          </div>
         </div>
         <div className="profile__footer">
           <CustomLink

@@ -56,7 +56,6 @@ export default function SearchForm({
           id="search-form__input"
           autoFocus
           autoComplete="off"
-          // type="search"
         />
         <CustomButton
           type="submit"
@@ -69,6 +68,7 @@ export default function SearchForm({
         onToggle={handleToggle}
         imgTumbler={imgTumbler}
         text="Короткометражки"
+        className="search-form__switch-text"
       />
     </form>
   );

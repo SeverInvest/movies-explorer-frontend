@@ -8,7 +8,7 @@
 
   &__label {
   display: flex;
-  column-gap: 14px;
+  column-gap: 13px;
   align-items: center;
   }
 
@@ -22,12 +22,4 @@
       opacity: var(--opacity);
     }
   }
-
-  &__text {
-    color: var(--color-light);
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 18px;
-  }
-
 }
