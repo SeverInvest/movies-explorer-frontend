@@ -11,7 +11,7 @@ export default function Promo() {
           </h1>
         </div>
         <div className="promo__container">
-          <img src={images.picture_main} className="promo__abstraction" alt="абстрактная картинка" />
+          <img src={images.pictureMain} className="promo__abstraction" alt="абстрактная картинка" />
         </div>
       </div>
     </section>

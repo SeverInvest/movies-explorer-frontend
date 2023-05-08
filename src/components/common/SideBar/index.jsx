@@ -47,7 +47,7 @@ export default function SideBar({
           onClick={onClose}
           aria-label="убрать сайдбар"
         >
-          <img src={images.button_close} alt="убрать сайдбар" className="side-bar__icon-close" />
+          <img src={images.buttonClose} alt="убрать сайдбар" className="side-bar__icon-close" />
         </CustomButton>
         <div className="side-bar__group-menu">
           <CustomLink
