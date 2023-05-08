@@ -19,11 +19,6 @@
     align-items: center;
     max-width: var(--max-width-large);
     min-height: var(--min-height-header-ladge);
-
-    &_signup {
-      width: 396px;
-      padding: 52px 30px 0;
-    }
   }
 
   &__navigation {
@@ -47,28 +42,21 @@
 
     &__container {
       padding: 0px 30px;
+    }
 
-      &__nav-top {
-        margin: 0 auto;
-        padding: 21px 70px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        row-gap: 10px;
-      }
+    &__nav-btn {
+      background: #202020;
+      border: none;
+    }
 
-      &__nav-btn {
-        background: #202020;
-        border: none;
-      }
-
-      &__nav-btn-img {
-        height: 40px;
-        width: 40px;
-      }
+    &__nav-btn-img {
+      background: #202020;
+      height: 40px;
+      width: 40px;
     }
   }
 }
+
 
 @media screen and (max-width: 480px) {
   .header {

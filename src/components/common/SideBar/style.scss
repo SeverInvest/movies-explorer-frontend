@@ -54,5 +54,35 @@
     row-gap: 28px;
   }
 
+  &__text {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.2;
+    color: #FFF;
+    border-bottom: 1px solid #DADADA;
+  }
 
+  &__link {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.2;
+    color: #FFF;
+
+    &:focus,
+    &:active,
+    &:visited {
+      color: #FFF;
+    }
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .side-bar {
+    min-width: 320px;
+    
+    &__menu {
+      min-width: 320px;
+      width: 100%;
+    }
+  }
 }

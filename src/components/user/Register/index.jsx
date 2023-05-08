@@ -5,7 +5,7 @@ import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
@@ -15,9 +15,11 @@ export default function Register(
   const currentUser = useContext(CurrentUserContext);
   const { handleChange, errors, resetForm, setIsValid } = useFormAndValidation();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   function handleSubmit(evt) {
     // TODO: 
+    // вызывается функция API (аргументом передать setErrorMessage)
     // changeButtonText(true);
     evt.preventDefault();
     // onUpdateUser({
@@ -33,6 +35,12 @@ export default function Register(
     setIsValid(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
+
+  // при изменении полей формы - сбрасывается ошибка, пришедшая из API
+  function handleChangeAndClearErrorMessage(e) {
+    setErrorMessage("");
+    handleChange(e);
+  }
 
 
   return (
@@ -54,7 +62,7 @@ export default function Register(
               <div className="register__form__inputs">
                 <CustomInput
                   textLabel="Имя"
-                  onChange={handleChange}
+                  onChange={handleChangeAndClearErrorMessage}
                   name="name"
                   type="text"
                   autoFocus
@@ -67,7 +75,7 @@ export default function Register(
                 />
                 <CustomInput
                   textLabel="E-mail"
-                  onChange={handleChange}
+                  onChange={handleChangeAndClearErrorMessage}
                   name="email"
                   type="email"
                   error={errors.email}
@@ -77,7 +85,7 @@ export default function Register(
                 />
                 <CustomInput
                   textLabel="Пароль"
-                  onChange={handleChange}
+                  onChange={handleChangeAndClearErrorMessage}
                   name="password"
                   type="password"
                   minLength="8"
@@ -87,7 +95,11 @@ export default function Register(
                   errorMessage={errors.password}
                 />
               </div>
-
+              <div className="register__error-message">
+                <Validation
+                  errorMessage={errorMessage}
+                />
+              </div>
             </CustomForm>
           </div>
           <div className="register__footer">

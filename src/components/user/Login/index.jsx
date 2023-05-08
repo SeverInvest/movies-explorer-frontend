@@ -5,7 +5,7 @@ import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
@@ -15,10 +15,12 @@ export default function Login(
   const currentUser = useContext(CurrentUserContext);
   const { handleChange, errors, resetForm, setIsValid } = useFormAndValidation();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   function handleSubmit(evt) {
     evt.preventDefault();
     // TODO: 
+    // вызывается функция API (аргументом передать setErrorMessage)
     // changeButtonText(true);
     // 
     // onUpdateUser({
@@ -35,6 +37,11 @@ export default function Login(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
+  // при изменении полей формы - сбрасывается ошибка, пришедшая из API
+  function handleChangeAndClearErrorMessage(e) {
+    setErrorMessage("");
+    handleChange(e);
+  }
 
   return (
     <section className="login">
@@ -56,7 +63,7 @@ export default function Login(
               <div className="login__form__inputs">
                 <CustomInput
                   textLabel="E-mail"
-                  onChange={handleChange}
+                  onChange={handleChangeAndClearErrorMessage}
                   name="email"
                   type="email"
                   autoFocus
@@ -67,7 +74,7 @@ export default function Login(
                 />
                 <CustomInput
                   textLabel="Пароль"
-                  onChange={handleChange}
+                  onChange={handleChangeAndClearErrorMessage}
                   name="password"
                   type="password"
                   minLength="8"
@@ -77,7 +84,11 @@ export default function Login(
                   errorMessage={errors.password}
                 />
               </div>
-
+              <div className="login__error-message">
+                <Validation
+                  errorMessage={errorMessage}
+                />
+              </div>
             </CustomForm>
           </div>
           <div className="login__footer">

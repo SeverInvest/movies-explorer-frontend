@@ -2,10 +2,10 @@
 import "./style.scss";
 
 export default function CustomButton({
-  type,
+  type="button",
   text="",
-  className,
-  ariaLabel,
+  className="",
+  ariaLabel="",
   children,
   ...restProps
 }) {

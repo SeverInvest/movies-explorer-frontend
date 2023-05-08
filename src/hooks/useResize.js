@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
-  SCREEN_MOB, SCREEN_TAB, SCREEN_DES
+  SCREEN_MOB, SCREEN_TAB
 } from "../utils/constants";
 
 export function useResize() {
@@ -21,10 +21,10 @@ export function useResize() {
       const defineScreen = () => {
         let typeScr;
         switch (true) {
-          case (width >= SCREEN_MOB) && (width < SCREEN_TAB):
+          case (width <= SCREEN_MOB) :
             typeScr = "mobile";
             break;
-          case (width >= SCREEN_TAB) && (width < SCREEN_DES):
+          case (width > SCREEN_MOB) && (width <= SCREEN_TAB):
             typeScr = "tablet";
             break;
           default:

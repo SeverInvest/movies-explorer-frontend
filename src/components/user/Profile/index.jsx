@@ -4,7 +4,7 @@ import CustomForm from "../../common/CustomForm";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
@@ -14,10 +14,12 @@ export default function Profile(
   const { handleChange, errors, resetForm, setIsValid } = useFormAndValidation();
   const currentUser = useContext(CurrentUserContext);
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   function handleSubmit(evt) {
     evt.preventDefault();
     // TODO:
+    // вызывается функция API (аргументом передать setErrorMessage)
     // changeButtonText(true);
     //
     // onUpdateUser({
@@ -34,6 +36,11 @@ export default function Profile(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
+  // при изменении полей формы - сбрасывается ошибка, пришедшая из API
+  function handleChangeAndClearErrorMessage(e) {
+    setErrorMessage("");
+    handleChange(e);
+  }
 
   return (
     <section className="profile">
@@ -54,7 +61,7 @@ export default function Profile(
               <div className="profile__form__inputs">
                 <CustomInput
                   textLabel="Имя"
-                  onChange={handleChange}
+                  onChange={handleChangeAndClearErrorMessage}
                   name="name"
                   type="text"
                   autoFocus
@@ -68,7 +75,7 @@ export default function Profile(
                 />
                 <CustomInput
                   textLabel="E-mail"
-                  onChange={handleChange}
+                  onChange={handleChangeAndClearErrorMessage}
                   name="email"
                   type="email"
                   error={errors.email}
@@ -78,7 +85,11 @@ export default function Profile(
                   errorMessage={errors.email}
                 />
               </div>
-
+              <div className="profile__error-message">
+                <Validation
+                  errorMessage={errorMessage}
+                />
+              </div>
             </CustomForm>
           </div>
         </div>

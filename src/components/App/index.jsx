@@ -5,11 +5,12 @@ import Header from '../common/Header';
 import Main from '../main/Main';
 import Movies from '..//movies/Movies';
 import SavedMovies from '..//movies/SavedMovies';
-import Footer from '../common/Footer';
+// import Footer from '../common/Footer';
 import Register from '../user/Register';
 import Login from '../user/Login';
 import Profile from '../user/Profile';
-import Page404 from '../Page404';
+import PageError from '../PageError';
+// import PopupAlarm from '../common/PopupAlarm';
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 // import Footer from '../Footer';
 // import ProtectedRoute from '../ProtectedRoute';
@@ -53,9 +54,10 @@ function App() {
         <Route path="/profile" element={<Profile />} />
 
         
-        <Route path="/movies" element={<Footer />} />
-        <Route path="/saved-movies" element={<Footer />} />
-        <Route path="/page404" element={<Page404 />} />
+        {/* <Route path="/movies" element={<Footer />} /> */}
+        {/* <Route path="/saved-movies" element={<Footer />} /> */}
+        <Route path="/page-error" element={<PageError />} />
+
       </Routes>
 
       

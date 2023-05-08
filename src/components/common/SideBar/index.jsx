@@ -51,16 +51,14 @@ export default function SideBar({
         </CustomButton>
         <div className="side-bar__group-menu">
           <CustomLink
-            className="menu__link_movies"
+            className="side-bar__link"
             linkTo="/"
             textLink="Главная"
           />
-          <HeaderMovies option={option} />
-          <HeaderSavedMovies option={option} />
+          <HeaderMovies option={option} sideBar={true} onClick={onClose}/>
+          <HeaderSavedMovies option={option} sideBar={true} onClick={onClose}/>
         </div>
-        <div className="side-bar__account">
           <HeaderAccount />
-        </div>
       </nav>
     </section>
   );
