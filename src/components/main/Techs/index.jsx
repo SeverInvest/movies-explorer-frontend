@@ -2,7 +2,7 @@ import "./style.scss"
 
 export default function Techs() {
   return (
-    <section className="techs_bg">
+    <section className="techs_bg" aria-label="Используемые технологии">
       <div className="techs">
         <div className="techs__header">
           <h2 className="techs__name">Технологии</h2>

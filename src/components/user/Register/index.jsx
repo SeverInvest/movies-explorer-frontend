@@ -44,7 +44,7 @@ export default function Register(
 
 
   return (
-    <section className="register">
+    <section className="register" aria-label="Форма регистрации">
       <div className="register__container">
         <Logo />
         <div className="register__info__container">

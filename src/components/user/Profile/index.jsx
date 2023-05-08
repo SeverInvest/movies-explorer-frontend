@@ -43,7 +43,7 @@ export default function Profile(
   }
 
   return (
-    <section className="profile">
+    <section className="profile" aria-label="Форма изменения личных данных">
       <div className="profile__container">
         <div className="profile__info__container">
           <div className="profile__header">

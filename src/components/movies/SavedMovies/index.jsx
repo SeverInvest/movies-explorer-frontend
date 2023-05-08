@@ -88,37 +88,37 @@ export default function SavedMovies() {
 
   return (
     <div className="saved-movies__common">
-    <section className="saved-movies_bg">
-      <div className="saved-movies">
-        <SearchForm
-          handleSubmit={handleSubmit}
-          isLoggedIn={true}
-          onToggleSwitch={handleToggleSwitch}
-        />
-        {
-          isPreloaderVisible &&
-          <Preloader />
-        }
-        {
-          !isSuccessfulSearch && !isFirstLoad &&
-          <p className="saved-movies__unsuccess-search"> Ничего не найдено </p>
-        }
-        <MoviesCardList
-          option="saved-movies"
-          cards={cardsFindedVisible}
-          isVisibleButton={isVisibleButton}
-        />
-        {isVisibleButton &&
-          <CustomButton
-            type="button"
-            text="Ещё"
-            className="saved-movies__more-button"
-            onClick={handleButtonMore}
+      <section className="saved-movies_bg" aria-label="Сохраненные фильмы">
+        <div className="saved-movies">
+          <SearchForm
+            handleSubmit={handleSubmit}
+            isLoggedIn={true}
+            onToggleSwitch={handleToggleSwitch}
           />
-        }
-      </div>
-    </section>
-     <Footer />
-     </div>
+          {
+            isPreloaderVisible &&
+            <Preloader />
+          }
+          {
+            !isSuccessfulSearch && !isFirstLoad &&
+            <p className="saved-movies__unsuccess-search"> Ничего не найдено </p>
+          }
+          <MoviesCardList
+            option="saved-movies"
+            cards={cardsFindedVisible}
+            isVisibleButton={isVisibleButton}
+          />
+          {isVisibleButton &&
+            <CustomButton
+              type="button"
+              text="Ещё"
+              className="saved-movies__more-button"
+              onClick={handleButtonMore}
+            />
+          }
+        </div>
+      </section>
+      <Footer />
+    </div>
   );
 }

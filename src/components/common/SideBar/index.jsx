@@ -39,7 +39,7 @@ export default function SideBar({
   }
 
   return (
-    <section className={`side-bar ${isOpen ? "side-bar_visible" : ""}`} onClick={clickPass}>
+    <section className={`side-bar ${isOpen ? "side-bar_visible" : ""}`} onClick={clickPass} aria-label="Боковое меню">
       <nav className="side-bar__menu">
         <CustomButton
           type="button"

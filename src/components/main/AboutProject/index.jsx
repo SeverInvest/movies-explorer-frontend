@@ -4,7 +4,7 @@ import "./style.scss";
 
 export default function AboutProject() {
   return (
-    <section className="about-project_bg">
+    <section className="about-project_bg" aria-label="О проекте">
       <div className="about-project">
         <div className="about-project__header">
           <h2 className="about-project__name">О проекте</h2>

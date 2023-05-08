@@ -87,7 +87,7 @@ export default function Movies() {
 
   return (
     <div className="movies__common">
-      <section className="movies_bg">
+      <section className="movies_bg" aria-label="Фильмы">
         <div className="movies">
           <SearchForm
             handleSubmit={handleSubmit}

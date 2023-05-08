@@ -44,7 +44,7 @@ export default function Login(
   }
 
   return (
-    <section className="login">
+    <section className="login" aria-label="Форма авторизации">
       <div className="login__container">
         <Logo />
         <div className="login__info__container">

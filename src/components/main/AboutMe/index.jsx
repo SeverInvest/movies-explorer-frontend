@@ -5,7 +5,7 @@ import "./style.scss";
 
 export default function AboutMe() {
   return (
-    <section className="about-me_bg">
+    <section className="about-me_bg" aria-label="Обо мне">
       <div className="about-me">
         <div className="about-me__header">
           <h2 className="about-me__name">Студент</h2>

@@ -4,7 +4,7 @@ import "./style.scss";
 
 export default function Portfolio() {
   return (
-    <section className="portfolio_bg">
+    <section className="portfolio_bg" aria-label="Портфолио">
       <div className="portfolio">
         <div className="portfolio__header">
           Портфолио
