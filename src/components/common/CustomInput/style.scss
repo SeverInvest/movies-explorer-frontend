@@ -18,6 +18,17 @@
     }
 
     &_profile {
+
+      /* убираю желтый фон в инпутах и делаю цвет текста по макету*/
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #202020 inset;
+        transition: background-color 5500s ease-in-out 0s;
+        -webkit-text-fill-color: white;
+      }
+
       flex-direction: row;
       align-items: center;
       padding-top: 17px;
@@ -42,16 +53,6 @@
     }
   }
 
-  &__wrapper {
-    margin: 0;
-    padding: 0;
-    border: none;
-    box-sizing: border-box;
-    border-radius: 100px;
-    background: #202020;
-    width: 100%;
-  }
-
   &__input {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -67,6 +68,7 @@
     line-height: 1.2;
     color: #FFF;
 
+
     &:focus {
       outline: auto;
     }
@@ -81,6 +83,7 @@
       font-size: 11px;
       line-height: 1.1;
       background: #202020;
+
     }
   }
 }

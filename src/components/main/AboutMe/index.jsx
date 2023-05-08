@@ -29,6 +29,8 @@ export default function AboutMe() {
                 linkTo="https://dzen.ru/a/ZA9XNU-2z3QTK9tX" 
                 textLink=" как стать программистом в 50 лет" 
                 className="about-me__link_underlined" 
+                target="_blank" 
+                rel="noopener noreferrer"
                 />
               </p>
             </div>
@@ -36,6 +38,8 @@ export default function AboutMe() {
               linkTo="https://github.com/SeverInvest"
               textLink="Github"
               className="about-me__link_big-normal"
+              target="_blank" 
+              rel="noopener noreferrer"
             />
           </div>
           <img src={images.me} className="about-me__profile__my-photo" alt="моя фотография" />

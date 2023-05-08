@@ -51,6 +51,8 @@ export default function MoviesCard({
         linkTo={card.trailerLink}
         textLink=""
         className="card__link__img"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         <img className="card__photo" src={card.thumbnail} alt={card.nameRU} />
       </CustomLink>

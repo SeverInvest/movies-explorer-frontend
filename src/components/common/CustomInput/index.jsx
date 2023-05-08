@@ -14,15 +14,13 @@ export default function CustomInput({
   return (
     <label className={`form__label ${option === "profile" ? "form__label_profile" : ""}`}>
       <p className={option === "profile" ? "form__label-text_profile" : ""}>{textLabel}</p>
-      <div className="form__wrapper">
-        <input
-          className={`form__input ${error ? "form__input_red" : ""} ${option === "profile" ? "form__input_profile" : ""}`}
-          name={name}
-          id={name}
-          required
-          {...restProps}
-        />
-      </div>
+      <input
+        className={`form__input ${error ? "form__input_red" : ""} ${option === "profile" ? "form__input_profile" : ""}`}
+        name={name}
+        id={name}
+        required
+        {...restProps}
+      />
     </label>
 
 

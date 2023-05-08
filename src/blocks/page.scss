@@ -29,6 +29,7 @@
   min-width: 320px;
   min-height: 100vh;
 
+  /* убираю желтый фон в инпутах и делаю цвет текста по макету*/
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -37,6 +38,5 @@
     transition: background-color 5500s ease-in-out 0s;
     -webkit-text-fill-color: white;
   }
-
 
 }

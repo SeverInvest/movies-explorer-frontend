@@ -9,11 +9,15 @@ export default function Project( { project }) {
           linkTo={project.link_to_github}
           textLink={project.name}
           className="project__link_big"
+          target="_blank" 
+          rel="noopener noreferrer"
         />
         <CustomLink
           linkTo={project.link_to_server || project.link_to_github}
           textLink='↗'
           className="project__link_arrow"
+          target="_blank" 
+          rel="noopener noreferrer"
         />
     </li>
   );

@@ -21,6 +21,8 @@ function Footer() {
                 linkTo="https://practicum.yandex.ru/"
                 textLink="Яндекс.Практикум"
                 className="footer__link_medium-normal"
+                target="_blank" 
+                rel="noopener noreferrer"
               />
             </li>
             <li className="footer__footer__link">
@@ -28,6 +30,8 @@ function Footer() {
                 linkTo="https://github.com/"
                 textLink="Github"
                 className="footer__link_medium-normal"
+                target="_blank" 
+                rel="noopener noreferrer"
               />
             </li>
           </ul>
