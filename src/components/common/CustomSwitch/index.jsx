@@ -1,34 +1,49 @@
-// import { Link } from "react-router-dom";
-// import { useState } from 'react';
 import "./style.scss";
-// import images from "../../../images";
+import images from "../../../images";
+import { useState } from 'react';
 
 export default function CustomSwitch({
   className = "",
-  onToggle,
-  imgTumbler,
+  onToggle = null,
   text = "",
+  isDefaultOn = false,
   children,
   ...restProps
 }) {
 
+  let defaultImgButton = null;
+  if (isDefaultOn) {
+    defaultImgButton = images.smalltumbon
+  } else {
+    defaultImgButton = images.smalltumboff
+  }
+
+  const [imgTumbler, setImgTumbler] = useState(defaultImgButton)
+
+  const handleToggle = (() => {
+    if (imgTumbler === images.smalltumbon) {
+      setImgTumbler(images.smalltumboff);
+    } else {
+      setImgTumbler(images.smalltumbon);
+    }
+    onToggle();
+  });
+
   return (
 
-    <label className="switch__label">
+    <label className={`switch ${className}`}>
       <input
         type="checkbox"
-        className="switch"
+        className="switch__input"
         {...restProps}
-        onClick={onToggle}
+        onClick={handleToggle}
       />
       <img
         className="switch__img"
         src={imgTumbler}
-        alt="переключатель короткометражек"
+        alt={text}
       />
-      <p className={className}>
-        {text}
-      </p>
+      {text}
       {children}
     </label>
   )

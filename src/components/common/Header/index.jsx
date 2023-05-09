@@ -35,11 +35,10 @@ function Header() {
     }
   }, [typeScreen, hamburgerOn]);
 
-  // Компонент Меню или бургер
+  // Компонент: Меню-или-бургер
   function MenuOrBurger({
     option,
   }) {
-    // console.log(option);
     return (
       <>
         {(typeScreen === "desktop") ?
@@ -84,12 +83,12 @@ function Header() {
                 <CustomLink
                   linkTo="/signup"
                   textLink="Регистрация"
-                  className="menu__link_normal"
+                  className="header__link header__link_normal"
                 />
                 <CustomLink
                   linkTo="/signin"
                   textLink="Войти"
-                  className="menu__link_rect"
+                  className="header__link header__link_rect"
                 />
               </nav>
             </div>
@@ -122,28 +121,6 @@ function Header() {
           </header>
         }
       />
-
-      {/* <Route
-        path="/signup"
-        element={
-          <header className="header header_background-dark">
-            <div className="header__container header__container_signup">
-              <Logo />
-            </div>
-          </header>
-        }
-      />
-
-      <Route
-        path="/signin"
-        element={
-          <header className="header header_background-dark">
-            <div className="header__container header__container_signup">
-              <Logo />
-            </div>
-          </header>
-        }
-      /> */}
 
       <Route
         path="/profile"

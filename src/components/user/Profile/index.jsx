@@ -11,7 +11,7 @@ import "./style.scss";
 export default function Profile(
 
 ) {
-  const { handleChange, errors, resetForm, setIsValid } = useFormAndValidation();
+  const { handleChange, errors, resetForm } = useFormAndValidation();
   const currentUser = useContext(CurrentUserContext);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,9 +30,16 @@ export default function Profile(
   }
 
   useEffect(() => {
+ // TODO: сброс стейтов до дефолтного состояния
+    // resetForm(
+    //   {
+    //     name: { currentUser.name },
+    //     email: { currentUser.email }
+    //   }
+    // );
     resetForm();
-    // TODO: сброс стейтов до дефолтного состояния
-    setIsValid(true);
+
+    // setIsValid(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
@@ -45,11 +52,11 @@ export default function Profile(
   return (
     <section className="profile" aria-label="Форма изменения личных данных">
       <div className="profile__container">
-        <div className="profile__info__container">
+        <div className="profile__info">
           <div className="profile__header">
             <h2 className="profile__title">Привет, {currentUser.userName}!</h2>
           </div>
-          <div className="profile__form__container">
+          <div className="profile__form">
             <CustomForm
               nameForm="form-profile"
               isEnabled={true}
@@ -58,7 +65,7 @@ export default function Profile(
               blue={false}
               option="profile"
             >
-              <div className="profile__form__inputs">
+              <div className="profile__inputs">
                 <CustomInput
                   textLabel="Имя"
                   onChange={handleChangeAndClearErrorMessage}
@@ -95,7 +102,7 @@ export default function Profile(
         </div>
         <div className="profile__footer">
           <CustomLink
-            className="profile__link_red"
+            className="profile__link-red"
             linkTo="/signin"
             textLink="Выйти из аккаунта"
           />

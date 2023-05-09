@@ -47,11 +47,11 @@ export default function Register(
     <section className="register" aria-label="Форма регистрации">
       <div className="register__container">
         <Logo />
-        <div className="register__info__container">
+        <div className="register__info">
           <div className="register__header">
             <h2 className="register__title">Добро пожаловать!</h2>
           </div>
-          <div className="register__form__container">
+          <div className="register__form">
             <CustomForm
               nameForm="form-register"
               isEnabled={true}
@@ -59,7 +59,7 @@ export default function Register(
               onSubmit={handleSubmit}
               blue={true}
             >
-              <div className="register__form__inputs">
+              <div className="register__inputs">
                 <CustomInput
                   textLabel="Имя"
                   onChange={handleChangeAndClearErrorMessage}
@@ -105,7 +105,7 @@ export default function Register(
           <div className="register__footer">
             <p className="register__text">Уже зарегистрированы? &nbsp;</p>
             <CustomLink
-              className="register__link_blue"
+              className="register__link-blue"
               linkTo="/signin"
               textLink="Войти"
             />

@@ -2,16 +2,16 @@ import "./style.scss"
 
 export default function Techs() {
   return (
-    <section className="techs_bg" aria-label="Используемые технологии">
-      <div className="techs">
+    <section className="techs" aria-label="Используемые технологии">
+      <div className="techs__section">
         <div className="techs__header">
           <h2 className="techs__name">Технологии</h2>
         </div>
         <div className="techs__container">
-          <h2 className="techs__container__header">
+          <h2 className="techs__container-header">
             7 технологий
           </h2>
-          <p className="techs__container__text">
+          <p className="techs__container-text">
             На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.
           </p>
         </div>

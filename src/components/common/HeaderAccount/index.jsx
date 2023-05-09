@@ -1,11 +1,19 @@
 import CustomLink from "../CustomLink";
 
-export default function HeaderAccount() {
+export default function HeaderAccount(
+  {
+    children,
+    ...restProps
+  }
+) {
   return (
     <CustomLink
-      className="menu__link_account"
+      className="header__link-account"
       linkTo="/profile"
       textLink="Аккаунт"
-    />
+      {...restProps}
+    >
+      {children}
+    </CustomLink>
   )
 }

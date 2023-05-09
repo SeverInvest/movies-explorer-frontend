@@ -2,14 +2,14 @@
 @import "../../../vars";
 
 .portfolio {
-  margin: 0 auto;
-  padding: 40px 70px 125px;
-  max-width: calc(var(--max-width-large) - 140px);
-  display: flex;
-  flex-direction: column;
+  background: #202020;
 
-  &_bg {
-    background: #202020;
+  &__section {
+    margin: 0 auto;
+    padding: 40px 70px 125px;
+    max-width: calc(var(--max-width-large) - 140px);
+    display: flex;
+    flex-direction: column;
   }
 
   &__header {
@@ -30,13 +30,17 @@
 
 @media screen and (max-width: 768px) {
   .portfolio {
-    padding: 40px 50px 90px;
+    &__section {
+      padding: 40px 50px 90px;
+    }
   }
 }
 
 @media screen and (max-width: 480px) {
   .portfolio {
-    padding: 40px 14px 70px;
+    &__section {
+      padding: 40px 14px 70px;
+    }
 
     &__header {
       font-size: 14px;

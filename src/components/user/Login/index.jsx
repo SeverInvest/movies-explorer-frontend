@@ -47,11 +47,11 @@ export default function Login(
     <section className="login" aria-label="Форма авторизации">
       <div className="login__container">
         <Logo />
-        <div className="login__info__container">
+        <div className="login__info">
           <div className="login__header">
             <h2 className="login__title">Рады видеть!</h2>
           </div>
-          <div className="login__form__container">
+          <div className="login__form">
             <CustomForm
               nameForm="form-login"
               isEnabled={true}
@@ -60,7 +60,7 @@ export default function Login(
               blue={true}
               option="login"
             >
-              <div className="login__form__inputs">
+              <div className="login__inputs">
                 <CustomInput
                   textLabel="E-mail"
                   onChange={handleChangeAndClearErrorMessage}
@@ -94,7 +94,7 @@ export default function Login(
           <div className="login__footer">
             <p className="login__text">Еще на зарегистрированы? &nbsp;</p>
             <CustomLink
-              className="login__link_blue"
+              className="login__link-blue"
               linkTo="/signup"
               textLink="Регистрация"
             />

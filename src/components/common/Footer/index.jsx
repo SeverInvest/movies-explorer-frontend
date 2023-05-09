@@ -1,36 +1,35 @@
 import "./style.scss";
 import CustomLink from "../../common/CustomLink"
 
-function Footer() {
+export default function Footer() {
   return (
-    <footer className="footer_bg">
-      <div className="footer">
-        <div className="footer__header">
-          <p className="footer__header__text">
+    <footer className="footer">
+      <div className="footer__section">
+        <div className="footer__group-header">
+          <p className="footer__text">
             Учебный проект Яндекс.Практикум х BeatFilm.
           </p>
         </div>
-
-        <div className="footer__footer">
-          <p className="footer__footer__year">
+        <div className="footer__group-footer">
+          <p className="footer__year">
             &copy; {new Date().getFullYear()}
           </p>
-          <ul className="footer__footer__list-links">
-            <li className="footer__footer__link">
+          <ul className="footer__list-links">
+            <li>
               <CustomLink
                 linkTo="https://practicum.yandex.ru/"
                 textLink="Яндекс.Практикум"
-                className="footer__link_medium-normal"
-                target="_blank" 
+                className="footer__link"
+                target="_blank"
                 rel="noopener noreferrer"
               />
             </li>
-            <li className="footer__footer__link">
+            <li>
               <CustomLink
                 linkTo="https://github.com/"
                 textLink="Github"
-                className="footer__link_medium-normal"
-                target="_blank" 
+                className="footer__link"
+                target="_blank"
                 rel="noopener noreferrer"
               />
             </li>
@@ -40,4 +39,3 @@ function Footer() {
     </footer >
   );
 }
-export default Footer;

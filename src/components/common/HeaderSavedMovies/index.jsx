@@ -5,8 +5,8 @@ export default function HeaderSavedMovies(
     option, sideBar = false, onClick = null,
   }
 ) {
-  const classNameText = `${sideBar ? "side-bar__text" : "menu__text"}`;
-  const classNameLink = `${sideBar ? "side-bar__link" : "menu__link_movies"}`;
+  const classNameText = `${sideBar ? "side-bar__text" : "header__text"}`;
+  const classNameLink = `${sideBar ? "side-bar__link" : "header__link-movies"}`;
 
   return (
     <>

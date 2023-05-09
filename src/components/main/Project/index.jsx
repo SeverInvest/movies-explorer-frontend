@@ -8,14 +8,14 @@ export default function Project( { project }) {
         <CustomLink
           linkTo={project.link_to_github}
           textLink={project.name}
-          className="project__link_big"
+          className="project__link"
           target="_blank" 
           rel="noopener noreferrer"
         />
         <CustomLink
           linkTo={project.link_to_server || project.link_to_github}
           textLink='↗'
-          className="project__link_arrow"
+          className="project__link"
           target="_blank" 
           rel="noopener noreferrer"
         />

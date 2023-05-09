@@ -86,9 +86,9 @@ export default function Movies() {
   }, [cardsCountVisible, cardsFinded]);
 
   return (
-    <div className="movies__common">
-      <section className="movies_bg" aria-label="Фильмы">
-        <div className="movies">
+    <div className="movies">
+      <section className="movies__section" aria-label="Фильмы">
+        <div className="movies__container">
           <SearchForm
             handleSubmit={handleSubmit}
             isLoggedIn={true}

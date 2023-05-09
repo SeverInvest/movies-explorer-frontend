@@ -3,8 +3,8 @@ import "./style.scss"
 
 export default function Promo() {
   return (
-    <section className="promo_bg" aria-label="Промо страница">
-      <div className="promo">
+    <section className="promo" aria-label="Промо страница">
+      <div className="promo__section">
         <div>
           <h1 className="promo__name-project">
             Учебный проект студента факультета Веб-разработки.

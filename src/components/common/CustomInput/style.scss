@@ -30,6 +30,7 @@
       }
 
       flex-direction: row;
+      justify-content: space-between;
       align-items: center;
       padding-top: 17px;
       border-top: 1px solid #424242;
@@ -37,19 +38,14 @@
       font-size: 11px;
       line-height: 1.1;
       margin-top: 5px;
-
+      width:100%;
+      white-space: nowrap;
 
       &:first-child {
         margin: 0;
         padding: 0;
         border-top: none;
       }
-    }
-  }
-
-  &__label-text {
-    &_profile {
-      width: 50px;
     }
   }
 
@@ -68,7 +64,6 @@
     line-height: 1.2;
     color: #FFF;
 
-
     &:focus {
       outline: auto;
     }
@@ -80,10 +75,10 @@
     &_profile {
       text-align: right;
       margin: 0;
+      margin-left: 10px;
       font-size: 11px;
       line-height: 1.1;
       background: #202020;
-
     }
   }
 }

@@ -5,9 +5,7 @@
   box-sizing: border-box;
   padding: 6px;
   padding-left: 22px;
-  // min-width: calc(1140px - 22px - 6px);
   width: 100%;
-  // height: 134px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -16,26 +14,15 @@
   &__container {
     display: flex;
     flex-direction: column;
-
-    &__info {
-      display: flex;
-      flex-direction: column;
-    }
   }
 
-  &__link {
-    &__img {
-      margin: 0;
-      padding: 0;
-      width: 220px;
-      height: 122px;
-      background: #202020;
-    }
+  &__info {
+    display: flex;
+    flex-direction: column;
   }
 
   &__name {
     padding-top: 16px;
-
     font-weight: 500;
     font-size: 18px;
     line-height: 1.2;
@@ -68,7 +55,7 @@
       opacity: .6;
     }
 
-    &__heart {
+    &_heart {
       background-image: url("../../../images/icon_dislike.svg");
 
       &_active {
@@ -76,9 +63,17 @@
       }
     }
 
-    &__delete {
+    &_delete {
       background-image: url("../../../images/icon_delete.svg");
     }
+  }
+
+  &__link-img {
+    margin: 0;
+    padding: 0;
+    width: 220px;
+    height: 122px;
+    background: #202020;
   }
 
   &__photo {
@@ -91,8 +86,6 @@
   .card {
     margin: 0 auto;
     padding: 0 0 14px;
-    // width: 100%;
-    // height: 134px;
     display: flex;
     flex-direction: column;
     row-gap: 20px;
@@ -120,13 +113,11 @@
       margin-right: 4px;
     }
 
-    &__link {
-      &__img {
-        width: 300px;
-        height: 168px;
-        order: -1;
-        margin: 0 auto;
-      }
+    &__link-img {
+      width: 300px;
+      height: 168px;
+      order: -1;
+      margin: 0 auto;
     }
   }
 }

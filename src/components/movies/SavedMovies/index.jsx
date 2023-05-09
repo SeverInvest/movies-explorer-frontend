@@ -87,9 +87,9 @@ export default function SavedMovies() {
   }, [cardsCountVisible, cardsFinded]);
 
   return (
-    <div className="saved-movies__common">
-      <section className="saved-movies_bg" aria-label="Сохраненные фильмы">
-        <div className="saved-movies">
+    <div className="saved-movies">
+      <section className="saved-movies__section" aria-label="Сохраненные фильмы">
+        <div className="saved-movies__container">
           <SearchForm
             handleSubmit={handleSubmit}
             isLoggedIn={true}

@@ -6,14 +6,14 @@ export default function CustomInput({
   name,
   textLabel,
   error,
-  children,
   option = "",
+  children,
   ...restProps
 }) {
 
   return (
     <label className={`form__label ${option === "profile" ? "form__label_profile" : ""}`}>
-      <p className={option === "profile" ? "form__label-text_profile" : ""}>{textLabel}</p>
+        {textLabel}
       <input
         className={`form__input ${error ? "form__input_red" : ""} ${option === "profile" ? "form__input_profile" : ""}`}
         name={name}

@@ -31,12 +31,12 @@ export default function MoviesCard({
     return hDisplay + " " + mDisplay;
   }
 
-  const cardLikeClassName = `card__button card__button__heart ${isLike ? "card__button__heart_active" : ""}`;
+  const cardLikeClassName = `card__button card__button_heart ${isLike ? "card__button_heart_active" : ""}`;
 
   return (
     <li className="card">
       <div className="card__container">
-        <div className="card__container__info">
+        <div className="card__info">
           <p className="card__name">{card.nameRU}</p>
           <p className="card__duration">{secondsToHm(card.duration)}</p>
         </div>
@@ -44,13 +44,13 @@ export default function MoviesCard({
           option === "movies" ?
             <button className={cardLikeClassName} type="button" aria-label="Лайк" onClick={handleLikeClick} />
             :
-            <button className="card__button card__button__delete" type="button" aria-label="Удалить фильм" onClick={handleDeleteClick} />
+            <button className="card__button card__button_delete" type="button" aria-label="Удалить фильм" onClick={handleDeleteClick} />
         }
       </div>
       <CustomLink
         linkTo={card.trailerLink}
         textLink=""
-        className="card__link__img"
+        className="card__link-img"
         target="_blank"
         rel="noopener noreferrer"
       >

@@ -2,16 +2,15 @@
 @import "../../../vars";
 
 .about-project {
-  box-sizing: border-box;
-  margin: 0 auto;
-  padding: 110px 70px;
-  max-width: var(--max-width-large);
-  // min-height: calc(608px - 220px);
-  display: flex;
-  flex-direction: column;
+  background: #202020;
 
-  &_bg {
-    background: #202020;
+  &__section {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 110px 70px;
+    max-width: var(--max-width-large);
+    display: flex;
+    flex-direction: column;
   }
 
   &__header {
@@ -33,23 +32,24 @@
     column-gap: 40px;
     color: #fff;
 
-    &__column {
+
+    &-column {
       display: flex;
       flex-direction: column;
       row-gap: 26px;
     }
 
-    &__header {
+    &-header {
       font-size: 20px;
       font-weight: normal;
       line-height: 1.2;
       letter-spacing: -0.04em;
     }
 
-    &__text {
+    &-text {
       font-size: 14px;
       font-weight: normal;
-      line-height: 20px;
+      line-height: 1.4;
     }
   }
 
@@ -63,7 +63,7 @@
     font-weight: 400;
     color: #fff;
 
-    &__header {
+    &-header {
       font-weight: 400;
       font-size: 14px;
       line-height: 36px;
@@ -80,7 +80,7 @@
       }
     }
 
-    &__text {
+    &-text {
       font-weight: 500;
       font-size: 14px;
       line-height: 1.2;
@@ -88,20 +88,23 @@
       color: #8B8B8B;
     }
   }
+
 }
 
 @media screen and (max-width: 768px) {
   .about-project {
-    padding: 90px 50px;
+    &__section {
+      padding: 90px 50px;
+    }
 
     &__table-up {
       column-gap: 30px;
 
-      &__column {
+      &-column {
         row-gap: 22px;
       }
 
-      &__text {
+      &-text {
         font-size: 12px;
         line-height: 1.5;
       }
@@ -115,7 +118,9 @@
 
 @media screen and (max-width: 480px) {
   .about-project {
-    padding: 70px 18px;
+    &__section {
+      padding: 70px 18px;
+    }
 
     &__table-up {
       margin-top: 60px;
@@ -123,16 +128,16 @@
       flex-direction: column;
       row-gap: 56px;
 
-      &__column {
+      &-column {
         row-gap: 16px;
       }
 
-      &__header {
+      &-header {
         font-size: 18px;
         line-height: 1.2;
       }
 
-      &__text {
+      &-text {
         font-size: 11px;
         line-height: 1.5;
       }
@@ -142,14 +147,14 @@
       margin-top: 60px;
       gap: 10px 0;
 
-      &__header {
+      &-header {
 
         font-size: 11px;
         line-height: 35px;
         text-align: center;
       }
 
-      &__text {
+      &-text {
         font-size: 11px;
         line-height: 1.2;
       }

@@ -58,7 +58,7 @@ export default function SideBar({
           <HeaderMovies option={option} sideBar={true} onClick={onClose}/>
           <HeaderSavedMovies option={option} sideBar={true} onClick={onClose}/>
         </div>
-          <HeaderAccount />
+          <HeaderAccount onClick={onClose}/>
       </nav>
     </section>
   );

@@ -2,19 +2,18 @@
 @import "../../../vars";
 
 .promo {
-  margin: 0 auto;
-  box-sizing: border-box;
-  max-width: var(--max-width-large);
-  width: 100%;
-  padding: 0px 70px 40px;
-  // min-height: 560px;
-  display: flex;
-  flex-direction: column;
-  min-width: 320px;
-  row-gap: 102px;
+  background: #073042;
 
-  &_bg {
-    background: #073042;
+  &__section {
+    margin: 0 auto;
+    box-sizing: border-box;
+    max-width: var(--max-width-large);
+    width: 100%;
+    padding: 0px 70px 40px;
+    display: flex;
+    flex-direction: column;
+    min-width: 320px;
+    row-gap: 102px;
   }
 
   &__name-project {
@@ -35,7 +34,6 @@
   }
 
   &__abstraction {
-    // margin: 102px 0 0;
     max-width: 722px;
     width: 100%;
     min-height: 244px;
@@ -46,8 +44,10 @@
 
 @media screen and (max-width: 768px) {
   .promo {
-    padding: 0px 30px 70px;
-    row-gap: 140px;
+    &__section {
+      padding: 0px 30px 70px;
+      row-gap: 140px;
+    }
 
     &__name-project {
       margin: 300px auto 0;
@@ -67,19 +67,21 @@
   }
 }
 
-  @media screen and (max-width: 480px) {
-    .promo {
+@media screen and (max-width: 480px) {
+  .promo {
+    &__section {
       padding: 0 0 40px;
       row-gap: 40px;
+    }
 
-      &__name-project {
-        margin: 183px auto 0;
-        font-size: 31px;
-        padding: 0 10px;
-      }
+    &__name-project {
+      margin: 183px auto 0;
+      font-size: 31px;
+      padding: 0 10px;
+    }
 
-      &__container {
-        padding: 0;
-      }
+    &__container {
+      padding: 0;
     }
   }
+}

@@ -2,15 +2,15 @@
 @import "../../../vars";
 
 .techs {
-  margin: 0 auto;
-  padding: 100px 70px;
-  max-width: calc(var(--max-width-large) - 140px);
-  min-height: calc(625px - 200px);
-  display: flex;
-  flex-direction: column;
+  background: #272727;
 
-  &_bg {
-    background: #272727;
+  &__section {
+    margin: 0 auto;
+    padding: 100px 70px;
+    max-width: calc(var(--max-width-large) - 140px);
+    min-height: calc(625px - 200px);
+    display: flex;
+    flex-direction: column;
   }
 
   &__header {
@@ -34,7 +34,7 @@
     flex-direction: column;
     row-gap: 26px;
 
-    &__header {
+    &-header {
       font-weight: 400;
       font-size: 50px;
       line-height: 1.2;
@@ -43,7 +43,7 @@
       color: #FFF;
     }
 
-    &__text {
+    &-text {
       font-weight: 400;
       font-size: 14px;
       line-height: 1.4;
@@ -80,13 +80,15 @@
 
 @media screen and (max-width: 768px) {
   .techs {
-    padding: 90px 50px;
+    &__section {
+      padding: 90px 50px;
+    }
 
     &__container {
       margin: 80px auto 83px;
       row-gap: 22px;
 
-      &__text {
+      &-text {
         font-size: 12px;
         line-height: 1.5;
       }
@@ -106,7 +108,9 @@
 
 @media screen and (max-width: 480px) {
   .techs {
-    padding: 70px 18px;
+    &__section {
+      padding: 70px 18px;
+    }
 
     &__header {
       padding-bottom: 28px;
@@ -121,11 +125,11 @@
       row-gap: 24px;
       max-width: 292px;
 
-      &__header {
+      &-header {
         font-size: 36px;
       }
 
-      &__text {
+      &-text {
         font-size: 11px;
         line-height: 1.5;
       }
