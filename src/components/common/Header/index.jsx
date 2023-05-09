@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import images from '../../../images';
+import images from "../../../images";
 import "./style.scss";
 import CustomLink from "../CustomLink";
 import { useState, useEffect } from 'react';
