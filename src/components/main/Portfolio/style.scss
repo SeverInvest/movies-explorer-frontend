@@ -1,0 +1,51 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.portfolio {
+  background: #202020;
+
+  &__section {
+    margin: 0 auto;
+    padding: 40px 70px 125px;
+    max-width: calc(var(--max-width-large) - 140px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 1.1;
+    color: #8B8B8B;
+    mix-blend-mode: normal;
+    padding-bottom: 50px;
+  }
+
+  &__list-projects {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .portfolio {
+    &__section {
+      padding: 40px 50px 90px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .portfolio {
+    &__section {
+      padding: 40px 14px 70px;
+    }
+
+    &__header {
+      font-size: 14px;
+      line-height: 1.4;
+      padding-bottom: 40px;
+    }
+  }
+}

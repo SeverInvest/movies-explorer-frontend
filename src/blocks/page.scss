@@ -1,0 +1,42 @@
+@import "../vars";
+@import "../mixins";
+
+
+
+.page {
+  background-color: #202020;
+  /*color: var(--color-light);*/
+
+  @include padding-margin-null-auto();
+  // @include theme-dark();
+
+  box-sizing: border-box;
+
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  /* Применить к тексту кёрнинг и лигатуры */
+  text-rendering: optimizeLegibility;
+  /* Сглаживание */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Подгонка размера текста */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  font-weight: normal;
+  font-style: normal;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+
+  /* убираю желтый фон в инпутах и делаю цвет текста по макету*/
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #2F2F2F inset;
+    transition: background-color 5500s ease-in-out 0s;
+    -webkit-text-fill-color: white;
+  }
+
+}

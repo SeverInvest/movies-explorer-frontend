@@ -1,0 +1,163 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.about-project {
+  background: #202020;
+
+  &__section {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 110px 70px;
+    max-width: var(--max-width-large);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    border-bottom: 1px solid #DADADA;
+    padding-bottom: 23px;
+    width: 100%;
+  }
+
+  &__name {
+    font-weight: normal;
+    font-size: 22px;
+    color: #FFFFFF;
+    letter-spacing: -0.04em;
+  }
+
+  &__table-up {
+    margin-top: 70px;
+    display: flex;
+    column-gap: 40px;
+    color: #fff;
+
+
+    &-column {
+      display: flex;
+      flex-direction: column;
+      row-gap: 26px;
+    }
+
+    &-header {
+      font-size: 20px;
+      font-weight: normal;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+    }
+
+    &-text {
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 1.4;
+    }
+  }
+
+  &__table-down {
+    margin-top: 110px;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: repeat(2, auto);
+    justify-items: stretch;
+    gap: 14px 0;
+    font-weight: 400;
+    color: #fff;
+
+    &-header {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 36px;
+      text-align: center;
+
+      &_left {
+        background: #3DDC84;
+        color: #000000;
+      }
+
+      &_right {
+        background: #303030;
+        color: #fff;
+      }
+    }
+
+    &-text {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 1.2;
+      text-align: center;
+      color: #8B8B8B;
+    }
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .about-project {
+    &__section {
+      padding: 90px 50px;
+    }
+
+    &__table-up {
+      column-gap: 30px;
+
+      &-column {
+        row-gap: 22px;
+      }
+
+      &-text {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+    }
+
+    &__table-down {
+      margin-top: 93px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about-project {
+    &__section {
+      padding: 70px 18px;
+    }
+
+    &__table-up {
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 56px;
+
+      &-column {
+        row-gap: 16px;
+      }
+
+      &-header {
+        font-size: 18px;
+        line-height: 1.2;
+      }
+
+      &-text {
+        font-size: 11px;
+        line-height: 1.5;
+      }
+    }
+
+    &__table-down {
+      margin-top: 60px;
+      gap: 10px 0;
+
+      &-header {
+
+        font-size: 11px;
+        line-height: 35px;
+        text-align: center;
+      }
+
+      &-text {
+        font-size: 11px;
+        line-height: 1.2;
+      }
+    }
+  }
+}

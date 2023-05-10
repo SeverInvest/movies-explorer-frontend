@@ -1,0 +1,142 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.techs {
+  background: #272727;
+
+  &__section {
+    margin: 0 auto;
+    padding: 100px 70px;
+    max-width: calc(var(--max-width-large) - 140px);
+    min-height: calc(625px - 200px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    border-bottom: 1px solid #DADADA;
+    padding-bottom: 23px;
+  }
+
+  &__name {
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 1.2;
+    color: #FFF;
+    letter-spacing: -0.04em;
+  }
+
+  &__container {
+    margin: 93px auto 100px;
+    max-width: 460px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 26px;
+
+    &-header {
+      font-weight: 400;
+      font-size: 50px;
+      line-height: 1.2;
+      text-align: center;
+      letter-spacing: -0.04em;
+      color: #FFF;
+    }
+
+    &-text {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: center;
+      letter-spacing: -0.04em;
+      color: #FFF;
+    }
+  }
+
+  &__list {
+    margin: 0 auto;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, 90px);
+    gap: 10px;
+    max-width: 700px;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    width: 90px;
+    line-height: 60px;
+    text-align: center;
+    background: #303030;
+    border-radius: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: -0.04em;
+    color: #FFF;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .techs {
+    &__section {
+      padding: 90px 50px;
+    }
+
+    &__container {
+      margin: 80px auto 83px;
+      row-gap: 22px;
+
+      &-text {
+        font-size: 12px;
+        line-height: 1.5;
+      }
+    }
+
+    &__list {
+      grid-template-columns: repeat(auto-fill, 84px);
+    }
+
+    &__item {
+      width: 84px;
+      line-height: 57px;
+      font-size: 12px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .techs {
+    &__section {
+      padding: 70px 18px;
+    }
+
+    &__header {
+      padding-bottom: 28px;
+    }
+
+    &__name {
+      font-size: 18px;
+    }
+
+    &__container {
+      margin: 60px auto 50px;
+      row-gap: 24px;
+      max-width: 292px;
+
+      &-header {
+        font-size: 36px;
+      }
+
+      &-text {
+        font-size: 11px;
+        line-height: 1.5;
+      }
+    }
+
+    &__list {
+      max-width: 178px;
+    }
+  }
+}

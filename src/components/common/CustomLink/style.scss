@@ -1,0 +1,12 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.link {
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+
+  &:hover {
+    opacity: var(--opacity);
+  }
+}

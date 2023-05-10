@@ -1,0 +1,84 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.form {
+  &__label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 1.2;
+    color: #8B8B8B;
+    width: 100%;
+    margin-top: 11px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &_profile {
+
+      /* убираю желтый фон в инпутах и делаю цвет текста по макету*/
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px #202020 inset;
+        transition: background-color 5500s ease-in-out 0s;
+        -webkit-text-fill-color: white;
+      }
+
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 17px;
+      border-top: 1px solid #424242;
+      color: #FFFFFF;
+      font-size: 11px;
+      line-height: 1.1;
+      margin-top: 5px;
+      width:100%;
+      white-space: nowrap;
+
+      &:first-child {
+        margin: 0;
+        padding: 0;
+        border-top: none;
+      }
+    }
+  }
+
+  &__input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    padding: 15px;
+    background: #2F2F2F;
+    border-radius: 8px;
+    border: none;
+    height: 46px;
+    width: 100%;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #FFF;
+
+    &:focus {
+      outline: auto;
+    }
+
+    &_red {
+      color: #EE3465;
+    }
+
+    &_profile {
+      text-align: right;
+      margin: 0;
+      margin-left: 10px;
+      font-size: 11px;
+      line-height: 1.1;
+      background: #202020;
+    }
+  }
+}
