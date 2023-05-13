@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Main from '../main/Main';
 import Movies from '..//movies/Movies';
@@ -13,7 +13,7 @@ import auth from "../../utils/Auth";
 import ProtectedRoute from '../ProtectedRoute';
 // import api from "../../utils/Api";
 
-function App() {
+export default function App() {
   const [currentUser, setCurrentUser] = useState({ userName: "", userEmail: "" });
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,12 +22,17 @@ function App() {
   // const navigate = useNavigate();
 
   // TODO: 
-  // function handleSingOut() {
-  //   localStorage.removeItem("jwt");
-  //   setCurrentUser({ userName: "", userEmail: "" });
-  //   setLoggedIn(false);
-  //   navigate("/", { replace: true });
-  // }
+  function handleSignOut() {
+    localStorage.removeItem("jwt");
+    setCurrentUser({ userName: "", userEmail: "" });
+    setLoggedIn(false);
+    console.log("I'm here");
+    // navigate("/", { replace: true });
+  }
+
+  useEffect(() => {
+    console.log("up", loggedIn, localStorage.getItem("jwt"), currentUser)
+  }, [loggedIn, currentUser])
 
   async function handleRegister({ name, email, password }) {
     try {
@@ -78,11 +83,8 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-
         <Routes>
-
           <Route path="/" element={<Main loggedIn={loggedIn} />} />
-
           <Route path="movies" element={<ProtectedRoute loggedIn={loggedIn} component={Movies} />} />
           <Route path="saved-movies" element={<ProtectedRoute loggedIn={loggedIn} component={SavedMovies} />} />
           <Route
@@ -113,17 +115,14 @@ function App() {
               handleChangeUserInfo={handleChangeUserInfo}
               errorMessage={errorMessage}
               setErrorMessage={setErrorMessage}
+              onClick={handleSignOut}
             />
             }
           />
-
           <Route path="page-error" element={<PageError />} />
-
         </Routes>
 
       </div>
     </CurrentUserContext.Provider>
   );
 }
-
-export default App;

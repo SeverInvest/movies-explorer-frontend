@@ -1,4 +1,5 @@
 import CustomLink from "../../common/CustomLink"
+// import CustomButton from "../../common/CustomButton"
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import CustomForm from "../../common/CustomForm";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
@@ -10,7 +11,7 @@ import Header from '../../header/Header';
 import "./style.scss";
 
 export default function Profile(
-  { handleChangeUserInfo, errorMessage, setErrorMessage, loggedIn }
+  { handleChangeUserInfo, errorMessage, setErrorMessage, loggedIn, onClick }
 ) {
   const { values, handleChange, errors, resetForm, setIsValid, isValid } = useFormAndValidation();
   const currentUser = useContext(CurrentUserContext);
@@ -140,6 +141,8 @@ export default function Profile(
             className="profile__link-red"
             linkTo="/"
             textLink="Выйти из аккаунта"
+            // text="Выйти из аккаунта"
+            onClick={onClick}
           />
         </div>
       </div>
