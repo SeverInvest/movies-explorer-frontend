@@ -17,6 +17,10 @@
     width: calc(396px + 60px);
   }
 
+  &__menu {
+    display: flex;
+  }
+
   &__info {
     box-sizing: border-box;
     display: flex;
@@ -80,6 +84,7 @@
     height: 12px;
     margin: 0 auto 20px;
   }
+
 }
 
 @media screen and (max-width: 480px) {

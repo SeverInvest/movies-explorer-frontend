@@ -7,11 +7,11 @@ import CustomButton from "../../common/CustomButton";
 import Preloader from "../Preloader";
 import { useState, useEffect } from 'react';
 import { usePagination } from "../../../hooks/usePagination";
+import Header from '../../header/Header';
 import Footer from '../../common/Footer';
 
-export default function Movies() {
+export default function Movies({loggedIn}) {
   const { pagination } = usePagination();
-
   const [isVisibleButton, setIsVisibleButton] = useState(false);
   const [cardsCount, setCardsCount] = useState(0);
   const [cardsCountVisible, setCardsCountVisible] = useState(pagination);
@@ -86,6 +86,8 @@ export default function Movies() {
   }, [cardsCountVisible, cardsFinded]);
 
   return (
+    <>
+    <Header loggedIn={loggedIn} option="movies" />
     <div className="movies">
       <section className="movies__section" aria-label="Фильмы">
         <div className="movies__container">
@@ -119,5 +121,6 @@ export default function Movies() {
       </section>
       <Footer />
     </div>
+    </>
   );
 }

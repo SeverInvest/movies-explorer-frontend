@@ -7,27 +7,27 @@ class Api extends BaseApi {
     super(connect);
   }
 
-  getInitialCards() {
-    return super._requestWithToken(
-      '/cards',
-      {
-        method: "GET"
-      }
-    )
-  }
+  // getInitialCards() {
+  //   return super._requestWithToken(
+  //     '/cards',
+  //     {
+  //       method: "GET"
+  //     }
+  //   )
+  // }
 
-  getUser() {
-    return super._requestWithToken(
-      '/users/me',
-      {
-        method: "GET"
-      }
-    )
-  }
+  // getUser() {
+  //   return super._requestWithToken(
+  //     '/users/me',
+  //     {
+  //       method: "GET"
+  //     }
+  //   )
+  // }
 
-  getInitialData() {
-    return Promise.all([this.getUser(), this.getInitialCards()])
-  }
+  // getInitialData() {
+  //   return Promise.all([this.getUser(), this.getInitialCards()])
+  // }
 
   setUserInfo(info) {
     return super._requestWithToken(
@@ -67,15 +67,15 @@ class Api extends BaseApi {
     )
   }
 
-  setAvatar(info) {
-    return super._requestWithToken(
-      '/users/me/avatar',
-      {
-        method: "PATCH",
-        body: JSON.stringify(info)
-      }
-    )
-  }
+  // setAvatar(info) {
+  //   return super._requestWithToken(
+  //     '/users/me/avatar',
+  //     {
+  //       method: "PATCH",
+  //       body: JSON.stringify(info)
+  //     }
+  //   )
+  // }
 }
 
 const api = new Api(connect);

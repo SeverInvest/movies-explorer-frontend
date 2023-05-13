@@ -1,8 +1,10 @@
-import CustomLink from "../CustomLink";
+import CustomLink from "../../common/CustomLink";
 
 export default function HeaderMovies(
   {
-    option, sideBar = false, onClick = null,
+    option, 
+    sideBar = false,
+    ...restProps
   }
 ) {
   const classNameText = `${sideBar ? "side-bar__text" : "header__text"}`;
@@ -17,7 +19,7 @@ export default function HeaderMovies(
           className={classNameLink}
           linkTo="/movies"
           textLink="Фильмы"
-          onClick={onClick}
+          {...restProps}
         />
       }
     </>

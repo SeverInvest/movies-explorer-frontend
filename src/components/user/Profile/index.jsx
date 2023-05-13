@@ -4,17 +4,18 @@ import CustomForm from "../../common/CustomForm";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
-import { useEffect, useContext, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useEffect, useContext } from 'react';
+import Header from '../../header/Header';
+// import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
 export default function Profile(
-
+  { handleChangeUserInfo, errorMessage, setErrorMessage, loggedIn }
 ) {
-  const { handleChange, errors, resetForm } = useFormAndValidation();
+  const { values, handleChange, errors, resetForm, setIsValid, isValid } = useFormAndValidation();
   const currentUser = useContext(CurrentUserContext);
-  const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
+  // const navigate = useNavigate();
+  // const [errorMessage, setErrorMessage] = useState("");
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -26,22 +27,28 @@ export default function Profile(
     //   name: values.name,
     //   about: values.description,
     // });
-    navigate("/movies");
+    // navigate("/movies");
+    handleChangeUserInfo(values);
   }
 
   useEffect(() => {
- // TODO: сброс стейтов до дефолтного состояния
-    // resetForm(
-    //   {
-    //     name: { currentUser.name },
-    //     email: { currentUser.email }
-    //   }
-    // );
-    resetForm();
-
-    // setIsValid(true);
+    // TODO: сброс стейтов до дефолтного состояния
+    resetForm(
+      {
+        name: currentUser.userName,
+        email: currentUser.userEmail
+      }
+    );
+    setIsValid(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
+
+
+  useEffect(() => {
+    if (values.name === currentUser.userName && values.email === currentUser.userEmail) {
+      setIsValid(false);
+    }
+  }, [values, currentUser, setIsValid])
 
   // при изменении полей формы - сбрасывается ошибка, пришедшая из API
   function handleChangeAndClearErrorMessage(e) {
@@ -49,7 +56,32 @@ export default function Profile(
     handleChange(e);
   }
 
+  // useEffect(() => {
+  //   console.log(values);
+  // }, [values]);
+
+  // function handleCheckValidation(e) {
+  //   setErrorMessage("");
+  //   handleChangeAndClearErrorMessage(e)
+  //   const regex = new RegExp(/^(?!\s)[-A-Za-zА-Яа-яЁё\s]+$/);
+  //   if (!regex.test(e.target.value)) {
+  //     // handleChangeAndClearErrorMessage(e)
+  //     // setValues({ ...values, name: e.target.value });
+  //     // setIsValid(true);
+  //     // } else {
+  //     if (e.target.value[0] === " ") {
+  //       setErrors({ ...errors, name: "Имя не может начинаться с пробела" });
+  //     } else {
+  //       setErrors({ ...errors, name: "Это обязательное поле. Только латиница, кириллица, пробел или дефис" });
+  //     }
+  //     setIsValid(false);
+  //   }
+    
+  // }
+
   return (
+    <>
+    <Header loggedIn={loggedIn} option="profile" />
     <section className="profile" aria-label="Форма изменения личных данных">
       <div className="profile__container">
         <div className="profile__info">
@@ -59,10 +91,10 @@ export default function Profile(
           <div className="profile__form">
             <CustomForm
               nameForm="form-profile"
-              isEnabled={true}
               buttonText="Редактировать"
               onSubmit={handleSubmit}
-              blue={false}
+              isValid={isValid}
+              blue={true}
               option="profile"
             >
               <div className="profile__inputs">
@@ -74,8 +106,10 @@ export default function Profile(
                   autoFocus
                   minLength="2"
                   maxLength="30"
+                  pattern="^(?! )[-A-Za-zА-Яа-яЁё ]+$"
                   error={errors.name}
                   option="profile"
+                  value={values.name || ""}
                 />
                 <Validation
                   errorMessage={errors.name}
@@ -87,6 +121,7 @@ export default function Profile(
                   type="email"
                   error={errors.email}
                   option="profile"
+                  value={values.email || ""}
                 />
                 <Validation
                   errorMessage={errors.email}
@@ -103,11 +138,12 @@ export default function Profile(
         <div className="profile__footer">
           <CustomLink
             className="profile__link-red"
-            linkTo="/signin"
+            linkTo="/"
             textLink="Выйти из аккаунта"
           />
         </div>
       </div>
     </section>
+    </>
   );
 }

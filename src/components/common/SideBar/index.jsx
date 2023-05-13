@@ -1,9 +1,9 @@
 import "./style.scss";
 import CustomLink from "../../common/CustomLink";
 import CustomButton from "../../common/CustomButton";
-import HeaderMovies from "../HeaderMovies";
-import HeaderSavedMovies from "../HeaderSavedMovies";
-import HeaderAccount from "../HeaderAccount";
+import HeaderMovies from "../../header/HeaderMovies";
+import HeaderSavedMovies from "../../header/HeaderSavedMovies";
+import HeaderAccount from "../../header/HeaderAccount";
 import images from "../../../images";
 import { useEffect } from 'react';
 
@@ -50,15 +50,20 @@ export default function SideBar({
           <img src={images.buttonClose} alt="убрать сайдбар" className="side-bar__icon-close" />
         </CustomButton>
         <div className="side-bar__group-menu">
-          <CustomLink
-            className="side-bar__link"
-            linkTo="/"
-            textLink="Главная"
-          />
-          <HeaderMovies option={option} sideBar={true} onClick={onClose}/>
-          <HeaderSavedMovies option={option} sideBar={true} onClick={onClose}/>
+          {(option === "main") ?
+            <p className="side-bar__text"> Главная </p>
+            :
+            <CustomLink
+              className="side-bar__link"
+              linkTo="/"
+              textLink="Главная"
+              onClick={onClose}
+            />
+          }
+          <HeaderMovies option={option} sideBar={true} onClick={onClose} />
+          <HeaderSavedMovies option={option} sideBar={true} onClick={onClose} />
         </div>
-          <HeaderAccount onClick={onClose}/>
+        <HeaderAccount onClick={onClose} />
       </nav>
     </section>
   );

@@ -7,12 +7,12 @@ class Auth extends BaseApi {
     super(connect);
   }
 
-  register(email, password) {
+  register(name, email, password) {
     return super._requestWithoutToken(
       '/signup',
       {
         method: 'POST',
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ name, email, password })
       }
     )
   };
@@ -26,6 +26,26 @@ class Auth extends BaseApi {
       }
     )
   };
+
+  getUser() {
+    return super._requestWithToken(
+      '/users/me',
+      {
+        method: "GET"
+      }
+    )
+  }
+
+    setUserInfo(info) {
+    return super._requestWithToken(
+      '/users/me',
+      {
+        method: 'PATCH',
+        body: JSON.stringify(info)
+      }
+    )
+  }
+
 }
 
 const auth = new Auth(connect);

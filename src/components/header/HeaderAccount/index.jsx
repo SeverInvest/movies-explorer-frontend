@@ -1,4 +1,4 @@
-import CustomLink from "../CustomLink";
+import CustomLink from "../../common/CustomLink";
 
 export default function HeaderAccount(
   {

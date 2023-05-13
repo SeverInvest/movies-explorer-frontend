@@ -105,10 +105,15 @@
     &__nav-btn {
       background: #202020;
       border: none;
+
+      &_main {
+        background: #073042;
+      }
+
     }
 
     &__nav-btn-img {
-      background: #202020;
+      // background: #202020;
       height: 40px;
       width: 40px;
     }

@@ -5,17 +5,17 @@ import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
-import { useEffect, useContext, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useEffect, useContext } from 'react';
+// import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
 export default function Login(
-
+  { handleLogin, errorMessage, setErrorMessage }
 ) {
   const currentUser = useContext(CurrentUserContext);
-  const { handleChange, errors, resetForm, setIsValid } = useFormAndValidation();
-  const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
+  const { values, handleChange, errors, resetForm, setIsValid, isValid } = useFormAndValidation();
+  // const navigate = useNavigate();
+  // const [errorMessage, setErrorMessage] = useState("");
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -27,13 +27,17 @@ export default function Login(
     //   name: values.name,
     //   about: values.description,
     // });
-    navigate("/movies");
+    if (!isValid) {
+      return;
+    };
+    // navigate("/movies");
+    handleLogin(values);
   }
 
   useEffect(() => {
     resetForm();
     // TODO: сброс стейтов до дефолтного состояния
-    setIsValid(true);
+    setIsValid(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
@@ -46,7 +50,9 @@ export default function Login(
   return (
     <section className="login" aria-label="Форма авторизации">
       <div className="login__container">
-        <Logo />
+        <div className="register__menu">
+          <Logo />
+        </div>
         <div className="login__info">
           <div className="login__header">
             <h2 className="login__title">Рады видеть!</h2>
@@ -54,7 +60,7 @@ export default function Login(
           <div className="login__form">
             <CustomForm
               nameForm="form-login"
-              isEnabled={true}
+              isValid={isValid}
               buttonText="Войти"
               onSubmit={handleSubmit}
               blue={true}

@@ -7,9 +7,10 @@ import CustomButton from "../../common/CustomButton";
 import Preloader from "../Preloader";
 import { useState, useEffect } from 'react';
 import { usePagination } from "../../../hooks/usePagination";
+import Header from '../../header/Header';
 import Footer from '../../common/Footer';
 
-export default function SavedMovies() {
+export default function SavedMovies({loggedIn}) {
   const { pagination } = usePagination();
 
   const [isVisibleButton, setIsVisibleButton] = useState(false);
@@ -87,6 +88,8 @@ export default function SavedMovies() {
   }, [cardsCountVisible, cardsFinded]);
 
   return (
+    <>
+    <Header loggedIn={loggedIn} option="saved-movies" />
     <div className="saved-movies">
       <section className="saved-movies__section" aria-label="Сохраненные фильмы">
         <div className="saved-movies__container">
@@ -120,5 +123,6 @@ export default function SavedMovies() {
       </section>
       <Footer />
     </div>
+    </>
   );
 }

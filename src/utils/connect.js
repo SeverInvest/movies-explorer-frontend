@@ -1,6 +1,6 @@
 const connect = {
   "baseUrl":
-    "https://api.sivnv.ru",
+    "https://api.kino-garage.ru",
   "headers": {
     "Accept": "application/json",
     "Content-Type": "application/json"
