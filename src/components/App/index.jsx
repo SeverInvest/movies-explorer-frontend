@@ -21,7 +21,6 @@ function App() {
   const navigate = useNavigate();
   // const navigate = useNavigate();
 
-
   // TODO: 
   // function handleSingOut() {
   //   localStorage.removeItem("jwt");
@@ -30,48 +29,22 @@ function App() {
   //   navigate("/", { replace: true });
   // }
 
-  function onUpdateUser({ userName, userEmail }) {
-    setCurrentUser({ userName, userEmail })
+  async function handleRegister({ name, email, password }) {
+    try {
+      const data = await auth.register(name, email, password);
+      const newCurrentUser = { userName: data.name, userEmail: data.email };
+      setCurrentUser({ ...currentUser, ...newCurrentUser });
+      const { token } = await auth.authorize(email, password);
+      if (token) {
+        localStorage.setItem('jwt', token);
+        setLoggedIn(true);
+        navigate('/movies', { replace: true });
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      console.log(error)
+    }
   }
-
-  function handleRegister({ name, email, password }) {
-    // console.log(name, email, password);
-    auth.register(name, email, password)
-      .then((res) => {
-        onUpdateUser({ userName: res.name, userEmail: res.email });
-      })
-      .then(() => {
-        auth.authorize(email, password)
-          .then(({ token }) => {
-            if (token) {
-              localStorage.setItem('jwt', token);
-              setLoggedIn(true);
-              navigate('/movies', { replace: true });
-            }
-          })
-      })
-      // onSuccess(true);
-      // setIsInfoTooltipPopupOpen(true);
-      // navigate('/sign-in', { replace: true });
-
-      // TODO
-      // createToken() 
-      // .catch(( error ) => {
-      //   throw new Error(error)
-
-      //   // onSuccess(false);
-      //   // setIsInfoTooltipPopupOpen(true);
-      //   // isError(error); 
-      // setErrorMessage(error);
-      // })
-      .catch(({ message }) => {
-        setErrorMessage(message);
-        console.log(message)
-      })
-  }
-  // useEffect(() => {
-  //   console.log(currentUser);
-  // }, [currentUser]);
 
   async function handleLogin({ email, password }) {
     try {
