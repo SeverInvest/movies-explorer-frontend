@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Main from '../main/Main';
 import Movies from '..//movies/Movies';
@@ -26,13 +26,13 @@ export default function App() {
     localStorage.removeItem("jwt");
     setCurrentUser({ userName: "", userEmail: "" });
     setLoggedIn(false);
-    console.log("I'm here");
+    // console.log("I'm here");
     // navigate("/", { replace: true });
   }
 
-  useEffect(() => {
-    console.log("up", loggedIn, localStorage.getItem("jwt"), currentUser)
-  }, [loggedIn, currentUser])
+  // useEffect(() => {
+  //   console.log("up", loggedIn, localStorage.getItem("jwt"), currentUser)
+  // }, [loggedIn, currentUser])
 
   async function handleRegister({ name, email, password }) {
     try {
@@ -84,7 +84,7 @@ export default function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Routes>
-          <Route path="/" element={<Main loggedIn={loggedIn} />} />
+          <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
           <Route path="movies" element={<ProtectedRoute loggedIn={loggedIn} component={Movies} />} />
           <Route path="saved-movies" element={<ProtectedRoute loggedIn={loggedIn} component={SavedMovies} />} />
           <Route
@@ -119,10 +119,9 @@ export default function App() {
             />
             }
           />
-          <Route path="page-error" element={<PageError />} />
+          <Route path="*" element={<PageError status={404}/>} />
         </Routes>
-
       </div>
-    </CurrentUserContext.Provider>
+    </CurrentUserContext.Provider >
   );
 }
