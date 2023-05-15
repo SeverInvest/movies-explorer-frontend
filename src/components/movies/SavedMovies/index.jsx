@@ -1,7 +1,7 @@
 // import listProjects from '../../../utils/list-projects';
 import SearchForm from '../../movies/SearchForm';
 import MoviesCardList from "../MoviesCardList";
-import cards from "../../../utils/cards";
+// import cards from "../../../utils/cards";
 import "./style.scss";
 import CustomButton from "../../common/CustomButton";
 import Preloader from "../Preloader";
@@ -9,8 +9,13 @@ import { useState, useEffect } from 'react';
 import { usePagination } from "../../../hooks/usePagination";
 import Header from '../../header/Header';
 import Footer from '../../common/Footer';
+// import mainApi from "../../../utils/MainApi";
 
-export default function SavedMovies({loggedIn}) {
+export default function SavedMovies({
+  loggedIn,
+  handleGetSavedMovies,
+  savedMovies
+}) {
   const { pagination } = usePagination();
 
   const [isVisibleButton, setIsVisibleButton] = useState(false);
@@ -20,11 +25,30 @@ export default function SavedMovies({loggedIn}) {
   const [cardsFindedVisible, setCardsFindedVisible] = useState([]);
   const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
   const [isSuccessfulSearch, setIsSuccessfulSearch] = useState(true);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
   const [isToggleSwitch, setIsToggleSwitch] = useState(false);
   const [isSubmit, setIsSubmit] = useState(true);
   const [searchText, setSearchText] = useState("");
+  // const [savedCards, setSavedCards] = useState([]);
+  const [errorMessageMovies, setErrorMessgeMovies] = useState("");
 
+  useEffect(() => {
+    handleGetSavedMovies()
+  }, [])
+
+  // async function getSavedCards() {
+  //   try {
+  //     setIsPreloaderVisible(true);
+  //     setErrorMessgeMovies("");
+  //     const data = await mainApi.getAllSavedMovies();
+  //     setSavedCards(data);
+  //     setIsPreloaderVisible(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsPreloaderVisible(false);
+  //     setErrorMessgeMovies(error.message);
+  //   }
+  // };
 
   const handleSearch = (() => {
     const _arg1Filter = ((itemName, searchText) => {
@@ -33,7 +57,7 @@ export default function SavedMovies({loggedIn}) {
     const _arg2Filter = ((duration) => {
       return isToggleSwitch ? duration <= 40 : true
     });
-    setCardsFinded(cards.filter(
+    setCardsFinded(savedMovies.filter(
       (item) => {
         return _arg1Filter(item.nameRU, searchText)
           && _arg2Filter(item.duration)
@@ -46,22 +70,22 @@ export default function SavedMovies({loggedIn}) {
     setCardsCountVisible(cardsCountVisible + pagination);
   }
 
-  const handleSubmit = ((data) => {
-    setSearchText(data.name);
-    setIsPreloaderVisible(true);
-    setIsSubmit(!isSubmit);
-    setIsFirstLoad(false)
-  });
+  // const handleSubmit = ((data) => {
+  //   setSearchText(data.name);
+  //   setIsPreloaderVisible(true);
+  //   setIsSubmit(!isSubmit);
+  //   setIsFirstLoad(false)
+  // });
 
-  const handleToggleSwitch = ((data) => {
-    setSearchText(data.name);
-    setIsToggleSwitch(!isToggleSwitch);
-  });
+  // const handleToggleSwitch = ((data) => {
+  //   setSearchText(data.name);
+  //   setIsToggleSwitch(!isToggleSwitch);
+  // });
 
   useEffect(() => {
-    if (!isFirstLoad) {
-      handleSearch();
-    };
+
+    handleSearch();
+
     // eslint-disable-next-line
   }, [isSubmit, isToggleSwitch]);
 
@@ -89,40 +113,54 @@ export default function SavedMovies({loggedIn}) {
 
   return (
     <>
-    <Header loggedIn={loggedIn} option="saved-movies" />
-    <div className="saved-movies">
-      <section className="saved-movies__section" aria-label="Сохраненные фильмы">
-        <div className="saved-movies__container">
-          <SearchForm
-            handleSubmit={handleSubmit}
-            isLoggedIn={true}
-            onToggleSwitch={handleToggleSwitch}
-          />
-          {
-            isPreloaderVisible &&
-            <Preloader />
-          }
-          {
-            !isSuccessfulSearch && !isFirstLoad &&
-            <p className="saved-movies__unsuccess-search"> Ничего не найдено </p>
-          }
-          <MoviesCardList
-            option="saved-movies"
-            cards={cardsFindedVisible}
-            isVisibleButton={isVisibleButton}
-          />
-          {isVisibleButton &&
-            <CustomButton
-              type="button"
-              text="Ещё"
-              className="saved-movies__more-button"
-              onClick={handleButtonMore}
+      <Header loggedIn={loggedIn} option="saved-movies" />
+      <div className="saved-movies">
+        <section className="saved-movies__section" aria-label="Сохраненные фильмы">
+          <div className="saved-movies__container">
+            <SearchForm
+              setIsFirstLoad={setIsFirstLoad}
+              setIsToggleSwitch={setIsToggleSwitch}
+              setSearchText={setSearchText}
+              isToggleSwitch={isToggleSwitch}
+              setIsPreloaderVisible={setIsPreloaderVisible}
+              isFirstLoad={isFirstLoad}
+              setIsSubmit={setIsSubmit}
+              isSubmit={isSubmit}
+              isLoggedIn={true}
             />
-          }
-        </div>
-      </section>
-      <Footer />
-    </div>
+            {
+              isPreloaderVisible &&
+              <Preloader />
+            }
+            {
+              !isSuccessfulSearch &&
+              <p className="saved-movies__unsuccess-search"> Ничего не найдено </p>
+            }
+            {
+              !!errorMessageMovies &&
+              <p className="movies__unsuccess-search">
+                Во время запроса произошла ошибка. Возможно, проблема с
+                соединением или сервер недоступен. Подождите немного и
+                попробуйте ещё раз
+              </p>
+            }
+            <MoviesCardList
+              option="saved-movies"
+              cards={cardsFindedVisible}
+              isVisibleButton={isVisibleButton}
+            />
+            {isVisibleButton &&
+              <CustomButton
+                type="button"
+                text="Ещё"
+                className="saved-movies__more-button"
+                onClick={handleButtonMore}
+              />
+            }
+          </div>
+        </section>
+        <Footer />
+      </div>
     </>
   );
 }

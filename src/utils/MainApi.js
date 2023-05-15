@@ -1,8 +1,8 @@
 // 'use strict';
-import connect from './connect.js';
+import { connect } from './connect.js';
 import BaseApi from './BaseApi.js';
 
-class Auth extends BaseApi {
+class MainApi extends BaseApi {
   constructor() {
     super(connect);
   }
@@ -36,7 +36,7 @@ class Auth extends BaseApi {
     )
   }
 
-    setUserInfo(info) {
+  setUserInfo(info) {
     return super._requestWithToken(
       '/users/me',
       {
@@ -46,8 +46,35 @@ class Auth extends BaseApi {
     )
   }
 
+  getAllSavedMovies() {
+    return super._requestWithToken(
+      '/movies',
+      {
+        method: "GET"
+      }
+    )
+  }
+
+  saveMovie(data) {
+    return super._requestWithToken(
+      '/movies',
+      {
+        method: "POST",
+        body: JSON.stringify(data)
+      }
+    )
+  }
+
+  deleteMovie(movieId) {
+    return super._requestWithToken(
+      `/movies/${movieId}`,
+      {
+        method: "DELETE"
+      }
+    )
+  }
 }
 
-const auth = new Auth(connect);
+const mainApi = new MainApi(connect);
 
-export default auth;
+export default mainApi;

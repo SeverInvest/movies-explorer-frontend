@@ -7,6 +7,7 @@ export default function CustomSwitch({
   onToggle = null,
   text = "",
   isDefaultOn = false,
+  disabled, 
   children,
   ...restProps
 }) {
@@ -37,9 +38,10 @@ export default function CustomSwitch({
         className="switch__input"
         {...restProps}
         onClick={handleToggle}
+        disabled={disabled}
       />
       <img
-        className="switch__img"
+        className={`switch__img ${disabled ? "switch__img_disabled" : ""}`}
         src={imgTumbler}
         alt={text}
       />

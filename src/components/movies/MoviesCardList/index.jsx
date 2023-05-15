@@ -2,7 +2,7 @@ import MoviesCard from "../MoviesCard";
 import "./style.scss";
 
 export default function MoviesCardList({
-  cards, isVisibleButton, option
+  cards, option, savedMovies, handleSaveMovie, handleDeleteMovie
 }) {
 
   return (
@@ -10,9 +10,12 @@ export default function MoviesCardList({
       <ul className="cards__list">
         {cards.map((card) => (
           <MoviesCard
-            key={card._id}
+            key={card.id}
             card={card}
             option={option}
+            savedMovies={savedMovies}
+            handleSaveMovie={handleSaveMovie}
+            handleDeleteMovie={handleDeleteMovie}
           />
         ))}
       </ul>

@@ -1,24 +1,52 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./style.scss";
 import CustomLink from '../../common/CustomLink';
 
 export default function MoviesCard({
   card,
   option,
+  // like = null,
+  savedMovies,
+  handleSaveMovie = null,
+  handleDeleteMovie = null,
 }) {
 
-  const [isLike, setIsLike] = useState(false);
+  const getLike = () => savedMovies.some(item => item.movieId === card.id)
+  const getMovieId = () => savedMovies.find(item => item.movieId === card.id)
+    
+  // }=> savedMovies.filter(item => item.movieId === card.id)
+
+  const [isLike, setIsLike] = useState(getLike());
+
+  useEffect(() => {
+    setIsLike(getLike())
+  }, [savedMovies])
 
   const handleLikeClick = () => {
     if (isLike) {
+      handleDeleteMovie(getMovieId()._id);
       setIsLike(false);
+
     } else {
+      handleSaveMovie({
+        country: card.country,
+        director: card.director,
+        duration: card.duration,
+        year: card.year,
+        description: card.description,
+        image: card.image.url,
+        trailerLink: card.trailerLink,
+        thumbnail: card.image.formats.thumbnail.url,
+        movieId: card.id,
+        nameRU: card.nameRU,
+        nameEN: card.nameEN
+      })
       setIsLike(true);
     }
   }
 
   const handleDeleteClick = () => {
-
+    // handleDeleteMovie(card.movieId)
   }
 
 
@@ -54,7 +82,11 @@ export default function MoviesCard({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img className="card__photo" src={card.thumbnail} alt={card.nameRU} />
+        <img
+          className="card__photo"
+          // src={`https://api.nomoreparties.co/${card.image.url}`}
+          src={card.image.url}
+          alt={card.nameRU} />
       </CustomLink>
     </li >
   );

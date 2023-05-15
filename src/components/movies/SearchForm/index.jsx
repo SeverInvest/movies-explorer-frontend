@@ -6,23 +6,33 @@ import "./style.scss";
 import { useEffect } from 'react';
 
 export default function SearchForm({
-  handleSubmit,
   isLoggedIn = true,
-  onToggleSwitch
+  setIsFirstLoad,
+  setIsToggleSwitch,
+  setSearchText,
+  isToggleSwitch,
+  setIsPreloaderVisible,
+  isFirstLoad,
+  setIsSubmit,
+  isSubmit
 }) {
   const { values, handleChange, resetForm } = useFormAndValidation();
 
   const onSubmit = ((e) => {
     e.preventDefault();
-    handleSubmit({
-      name: values.name,
-    });
+    setIsPreloaderVisible(true);
+    setSearchText(values.search);
+    if (isFirstLoad) {
+      setIsFirstLoad(false);
+    } else {
+      setIsSubmit(!isSubmit);
+    }
   });
 
   const handleToggle = (() => {
-    onToggleSwitch({
-      name: values.name,
-    });
+    setIsPreloaderVisible(true);
+    setSearchText(values.search);
+    setIsToggleSwitch(!isToggleSwitch);
   });
 
   useEffect(() => {
@@ -45,7 +55,7 @@ export default function SearchForm({
           className="search-form__input"
           placeholder="Фильм"
           onChange={handleChange}
-          name="name"
+          name="search"
           id="search-form__input"
           autoFocus
           autoComplete="off"
@@ -63,6 +73,7 @@ export default function SearchForm({
         isDefaultOn={false}
         text="Короткометражки"
         className="search-form__switch-text"
+        disabled={isFirstLoad}
       />
     </form>
   );
