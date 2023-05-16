@@ -1,46 +1,51 @@
-// import images from '../../../images';
 import CustomButton from "../../common/CustomButton";
 import CustomSwitch from "../../common/CustomSwitch";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import "./style.scss";
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 export default function SearchForm({
   isLoggedIn = true,
-  setIsFirstLoad,
+  requiredSearchInput = false,
+  initialValues = {},
+  setSearchText = null,
+  isGetInfoFromBD = true,
+  setIsGetInfoFromBD = null,
   setIsToggleSwitch,
-  setSearchText,
   isToggleSwitch,
   setIsPreloaderVisible,
-  isFirstLoad,
+  option = "",
   setIsSubmit,
-  isSubmit
-}) {
-  const { values, handleChange, resetForm } = useFormAndValidation();
+  isSubmit,
 
+
+}) {
+  const { values, handleChange } = useFormAndValidation({initialValues});
+  console.log("xxx", values);
   const onSubmit = ((e) => {
     e.preventDefault();
+    // console.log("сработал сабмит поиска")
     setIsPreloaderVisible(true);
     setSearchText(values.search);
-    if (isFirstLoad) {
-      setIsFirstLoad(false);
-    } else {
-      setIsSubmit(!isSubmit);
+    if (option === "movies" && !isGetInfoFromBD) {
+      setIsGetInfoFromBD(true)
     }
+    setIsSubmit(!isSubmit);
   });
 
   const handleToggle = (() => {
+    console.log("handleToggle", values);
     setIsPreloaderVisible(true);
     setSearchText(values.search);
     setIsToggleSwitch(!isToggleSwitch);
   });
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      resetForm();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     resetForm();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isLoggedIn]);
 
   return (
     <form
@@ -59,7 +64,8 @@ export default function SearchForm({
           id="search-form__input"
           autoFocus
           autoComplete="off"
-          required
+          value={values.search}
+          required={requiredSearchInput}
         />
         <CustomButton
           type="submit"
@@ -70,10 +76,10 @@ export default function SearchForm({
       </div>
       <CustomSwitch
         onToggle={handleToggle}
-        isDefaultOn={false}
+        isDefaultOn={isToggleSwitch}
         text="Короткометражки"
         className="search-form__switch-text"
-        disabled={isFirstLoad}
+        disabled={!isGetInfoFromBD}
       />
     </form>
   );

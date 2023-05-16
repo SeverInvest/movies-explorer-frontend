@@ -5,21 +5,18 @@ import CustomLink from '../../common/CustomLink';
 export default function MoviesCard({
   card,
   option,
-  // like = null,
   savedMovies,
   handleSaveMovie = null,
   handleDeleteMovie = null,
 }) {
 
-  const getLike = () => savedMovies.some(item => item.movieId === card.id)
-  const getMovieId = () => savedMovies.find(item => item.movieId === card.id)
-    
-  // }=> savedMovies.filter(item => item.movieId === card.id)
-
+  const getLike = () => savedMovies.some(item => item.movieId === card.id);
+  const getMovieId = () => savedMovies.find(item => item.movieId === card.id);
   const [isLike, setIsLike] = useState(getLike());
 
   useEffect(() => {
     setIsLike(getLike())
+    // eslint-disable-next-line
   }, [savedMovies])
 
   const handleLikeClick = () => {
@@ -46,7 +43,7 @@ export default function MoviesCard({
   }
 
   const handleDeleteClick = () => {
-    // handleDeleteMovie(card.movieId)
+    handleDeleteMovie(card._id);
   }
 
 
@@ -84,8 +81,7 @@ export default function MoviesCard({
       >
         <img
           className="card__photo"
-          // src={`https://api.nomoreparties.co/${card.image.url}`}
-          src={card.image.url}
+          src={option==="movies" ? card.image.url : card.image}
           alt={card.nameRU} />
       </CustomLink>
     </li >

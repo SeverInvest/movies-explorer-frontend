@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Main from '../main/Main';
 import Movies from '..//movies/Movies';
@@ -9,44 +9,56 @@ import Profile from '../user/Profile';
 import PageError from '../PageError';
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
-// import { isError } from "../../utils/utils";
 import ProtectedRoute from '../ProtectedRoute';
-import moviesApi from "../../utils/MoviesApi";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState({ userName: "", userEmail: "" });
+
+  const [currentUser, setCurrentUser] = useState({ userName: "", userEmail: "", userId: "" });
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false); // прелоадер
 
   // states for savedMovies
+  const [errorMessageSavedMovies, setErrorMessageSavedMovies] = useState(""); // ошибка от сервера при запросе фильмов
   const [savedMovies, setSavedMovies] = useState([]); // массив сохраненных фильмов
   // states for movies
-  const [errorMessageMovies, setErrorMessageMovies] = useState(""); // ошибка от сервера при запросе фильмов
-  const [movies, setMovies] = useState([]); // массив фильмов
-  const [isGetInfoFromBD, setIsGetInfoFromBD] = useState(false); // получена ли информация из БД
-  const [isFirstLoad, setIsFirstLoad] = useState(true); // первая загрузка (при первом поиске)
-
+  const [errorMessageMovies, setErrorMessageMovies] = useLocalStorage("errorMessageMovies", ""); // ошибка от сервера при запросе фильмов
+  const [movies, setMovies] = useLocalStorage("movies", []); // массив фильмов
 
   const navigate = useNavigate();
 
+  async function handleGetCurrentUser() {
+    try {
+      const data = await mainApi.getUser()
+      setLoggedIn(true);
+      const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
+      setCurrentUser({ ...currentUser, ...newCurrentUser });
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log(`Токен не соответствует: ${error}`);
+    }
+  };
+
   async function handleGetSavedMovies() {
     try {
+      setErrorMessageSavedMovies("");
       const data = await mainApi.getAllSavedMovies();
       setSavedMovies(data);
     } catch (error) {
       console.log(error.message);
+      setErrorMessageSavedMovies(error.message);
     }
-  }
+  };
 
-async function handleDeleteMovie(moveId) {
-  try {
-    await mainApi.deleteMovie(moveId);
-    handleGetSavedMovies();
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+  async function handleDeleteMovie(moveId) {
+    try {
+      await mainApi.deleteMovie(moveId);
+      handleGetSavedMovies();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
 
   async function handleSaveMovie(data) {
@@ -56,61 +68,41 @@ async function handleDeleteMovie(moveId) {
     } catch (error) {
       console.log(error.message);
     }
-  }
-
-  async function handleGetMovies() {
-      try {
-        setErrorMessageMovies("");
-        const movies = await moviesApi.getAllMovies();
-        const updateMovies = movies.map((item) => {
-          item.image.url = `https://api.nomoreparties.co/${item.image.url}`
-          item.image.formats.thumbnail.url = `https://api.nomoreparties.co/${item.image.formats.thumbnail.url}`
-          return {...item}
-        })
-        setMovies(updateMovies);
-        handleGetSavedMovies();
-        setIsGetInfoFromBD(true);
-      } catch (error) {
-        console.log(error);
-        setIsFirstLoad(true);
-        setIsPreloaderVisible(false);
-        setErrorMessageMovies(error.message);
-      }
   };
 
   async function handleRegister({ name, email, password }) {
     try {
       const data = await mainApi.register(name, email, password);
-      const newCurrentUser = { userName: data.name, userEmail: data.email };
+      const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
       setCurrentUser({ ...currentUser, ...newCurrentUser });
       const { token } = await mainApi.authorize(email, password);
       if (token) {
-        localStorage.setItem('jwt', token);
+        localStorage.setItem("jwt", token);
         setLoggedIn(true);
-        navigate('/movies', { replace: true });
+        navigate("/movies", { replace: true });
       }
     } catch (error) {
       setErrorMessage(error.message);
       console.log(error)
     }
-  }
+  };
 
   async function handleLogin({ email, password }) {
     try {
       const { token } = await mainApi.authorize(email, password);
       if (token) {
-        localStorage.setItem('jwt', token);
+        localStorage.setItem("jwt", token);
         setLoggedIn(true);
         const data = await mainApi.getUser();
-        const newCurrentUser = { userName: data.name, userEmail: data.email };
+        const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
         setCurrentUser({ ...currentUser, ...newCurrentUser });
-        navigate('/movies', { replace: true });
+        navigate("/movies", { replace: true });
       }
     } catch (error) {
       setErrorMessage(error.message);
       console.log(error)
     }
-  }
+  };
 
   async function handleChangeUserInfo(info) {
     try {
@@ -122,18 +114,28 @@ async function handleDeleteMovie(moveId) {
       setErrorMessage(error.message);
       console.log(error)
     }
-  }
+  };
 
   function handleSignOut() {
-    localStorage.removeItem("jwt");
-    setCurrentUser({ userName: "", userEmail: "" });
+    setCurrentUser({ userName: "", userEmail: "", userId: "" });
     setLoggedIn(false);
-    setMovies([]);
+    localStorage.clear();
     setSavedMovies([]);
-    setErrorMessage("");
+    setMovies([]);
+    setErrorMessageSavedMovies("");
     setErrorMessageMovies("");
-    setIsFirstLoad(true);
-  }
+  };
+
+  useEffect(() => {
+    handleGetCurrentUser();
+    // eslint-disable-next-line 
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      handleGetSavedMovies();
+    }
+  }, [loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -145,18 +147,13 @@ async function handleDeleteMovie(moveId) {
             element={
               <ProtectedRoute
                 loggedIn={loggedIn}
-                // handleGetSavedMovies={handleGetSavedMovies}
                 movies={movies}
                 savedMovies={savedMovies}
                 errorMessageMovies={errorMessageMovies}
-                isGetInfoFromBD={isGetInfoFromBD}
-                isFirstLoad={isFirstLoad}
-                isPreloaderVisible={isPreloaderVisible}
-                handleGetMovies={handleGetMovies}
                 handleSaveMovie={handleSaveMovie}
                 handleDeleteMovie={handleDeleteMovie}
-                setIsFirstLoad={setIsFirstLoad}
-                setIsPreloaderVisible={setIsPreloaderVisible}
+                setErrorMessageMovies={setErrorMessageMovies}
+                setMovies={setMovies}
 
                 component={Movies}
               />
@@ -167,8 +164,11 @@ async function handleDeleteMovie(moveId) {
             element={
               <ProtectedRoute
                 loggedIn={loggedIn}
-                handleGetSavedMovies={handleGetSavedMovies}
                 savedMovies={savedMovies}
+                errorMessageSavedMovies={errorMessageSavedMovies}
+                handleGetSavedMovies={handleGetSavedMovies}
+                handleDeleteMovie={handleDeleteMovie}
+
                 component={SavedMovies}
               />
             }

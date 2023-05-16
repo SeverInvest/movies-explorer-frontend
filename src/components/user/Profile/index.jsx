@@ -57,29 +57,6 @@ export default function Profile(
     handleChange(e);
   }
 
-  // useEffect(() => {
-  //   console.log(values);
-  // }, [values]);
-
-  // function handleCheckValidation(e) {
-  //   setErrorMessage("");
-  //   handleChangeAndClearErrorMessage(e)
-  //   const regex = new RegExp(/^(?!\s)[-A-Za-zА-Яа-яЁё\s]+$/);
-  //   if (!regex.test(e.target.value)) {
-  //     // handleChangeAndClearErrorMessage(e)
-  //     // setValues({ ...values, name: e.target.value });
-  //     // setIsValid(true);
-  //     // } else {
-  //     if (e.target.value[0] === " ") {
-  //       setErrors({ ...errors, name: "Имя не может начинаться с пробела" });
-  //     } else {
-  //       setErrors({ ...errors, name: "Это обязательное поле. Только латиница, кириллица, пробел или дефис" });
-  //     }
-  //     setIsValid(false);
-  //   }
-    
-  // }
-
   return (
     <>
     <Header loggedIn={loggedIn} option="profile" />
