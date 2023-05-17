@@ -27,8 +27,6 @@ export default function Movies({
   const [isPreloaderVisible, setIsPreloaderVisible] = useLocalStorage("isPreloaderVisible", false); // прелоадер
 
   const [isGetInfoFromBD, setIsGetInfoFromBD] = useLocalStorage("isGetInfoFromBD", false); // получена ли информация из БД
-  // const [isFirstLoad, setIsFirstLoad] = useLocalStorage("isFirstLoad", !!movies.length); // первая загрузка (при первом поиске)
-
 
   const [cardsCount, setCardsCount] = useLocalStorage("cardsCount", 0);
   const [cardsCountVisible, setCardsCountVisible] = useLocalStorage("cardsCountVisible", pagination);
@@ -40,8 +38,6 @@ export default function Movies({
   const [searchText, setSearchText] = useLocalStorage("searchText", "");
 
   const [isVisibleButton, setIsVisibleButton] = useLocalStorage("isVisibleButton", false);
-  console.log("movies: ", !!movies.length);
-  console.log("isSuccessfulSearch: ", isSuccessfulSearch);
   async function handleGetMovies() {
     try {
       setErrorMessageMovies("");
@@ -53,7 +49,6 @@ export default function Movies({
       })
       setMovies(updateMovies);
       setIsSubmit(!isSubmit);
-      // setIsGetInfoFromBD(true);
     } catch (error) {
       console.log(error);
       setIsGetInfoFromBD(false);
@@ -63,7 +58,6 @@ export default function Movies({
   };
 
   function handleSearch() {
-    console.log(searchText, isToggleSwitch);
     function _arg1Filter(itemName) {
       return !!searchText ? itemName.toLowerCase().includes(searchText.toLowerCase()) : false
     };
@@ -82,12 +76,8 @@ export default function Movies({
     setCardsCountVisible(cardsCountVisible + pagination);
   }
 
-
-
-
   useEffect(() => {
     if (!!movies.length) {
-      console.log("сработал юзэффект");
       setIsSuccessfulSearch(true);
       handleSearch();
       setIsPreloaderVisible(false);
@@ -123,16 +113,10 @@ export default function Movies({
 
   useEffect(() => {
     if (isGetInfoFromBD) {
-      console.log("isGetInfoFromBD: ", isGetInfoFromBD)
       handleGetMovies();
     }
     // eslint-disable-next-line
   }, [isGetInfoFromBD])
-
-  // useEffect(() => {
-  //   setIsGetInfoFromBD(!!movies.length)
-  //   // eslint-disable-next-line
-  // }, [movies])
 
   return (
     <>
@@ -141,22 +125,19 @@ export default function Movies({
         <section className="movies__section" aria-label="Фильмы">
           <div className="movies__container">
             <SearchForm
-              // setIsFirstLoad={setIsFirstLoad}
               option="movies"
               isGetInfoFromBD={isGetInfoFromBD}
               setIsGetInfoFromBD={setIsGetInfoFromBD}
-              // movies={movies}
               setIsToggleSwitch={setIsToggleSwitch}
               setSearchText={setSearchText}
               isToggleSwitch={isToggleSwitch}
               setIsPreloaderVisible={setIsPreloaderVisible}
-              // isFirstLoad={isFirstLoad}
               setIsSubmit={setIsSubmit}
               isSubmit={isSubmit}
               isLoggedIn={true}
               requiredSearchInput={true}
               handleGetMovies={handleGetMovies}
-              initialValues={{search: searchText}}
+              initialValues={{ search: searchText }}
             />
             {
               isPreloaderVisible ?

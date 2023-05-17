@@ -46,7 +46,6 @@ export default function MoviesCard({
     handleDeleteMovie(card._id);
   }
 
-
   const secondsToHm = (d) => {
     d = Number(d);
     const h = Math.floor(d / 60);

@@ -6,7 +6,6 @@ import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
 import { useEffect, useContext } from 'react';
-// import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
 export default function Login(
@@ -14,29 +13,17 @@ export default function Login(
 ) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, resetForm, setIsValid, isValid } = useFormAndValidation();
-  // const navigate = useNavigate();
-  // const [errorMessage, setErrorMessage] = useState("");
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    // TODO: 
-    // вызывается функция API (аргументом передать setErrorMessage)
-    // changeButtonText(true);
-    // 
-    // onUpdateUser({
-    //   name: values.name,
-    //   about: values.description,
-    // });
     if (!isValid) {
       return;
     };
-    // navigate("/movies");
     handleLogin(values);
   }
 
   useEffect(() => {
     resetForm();
-    // TODO: сброс стейтов до дефолтного состояния
     setIsValid(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);

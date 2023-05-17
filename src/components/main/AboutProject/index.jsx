@@ -1,5 +1,3 @@
-// import images from '../../../images';
-
 import "./style.scss";
 
 export default function AboutProject() {

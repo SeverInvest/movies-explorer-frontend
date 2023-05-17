@@ -20,7 +20,7 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState("");
 
   // states for savedMovies
-  const [errorMessageSavedMovies, setErrorMessageSavedMovies] = useState(""); // ошибка от сервера при запросе фильмов
+  const [errorMessageSavedMovies, setErrorMessageSavedMovies] = useState(""); // ошибка от сервера при запросе сохраненных фильмов
   const [savedMovies, setSavedMovies] = useState([]); // массив сохраненных фильмов
   // states for movies
   const [errorMessageMovies, setErrorMessageMovies] = useLocalStorage("errorMessageMovies", ""); // ошибка от сервера при запросе фильмов

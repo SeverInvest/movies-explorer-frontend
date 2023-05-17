@@ -15,6 +15,3 @@ export const connectMovies = {
     "Content-Type": "application/json"
   },
 };
-
-
-// export default connect;

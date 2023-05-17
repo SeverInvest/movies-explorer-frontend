@@ -1,4 +1,3 @@
-// import images from '../../../images';
 import CustomLink from "../../common/CustomLink"
 import images from "../../../images"
 import "./style.scss";

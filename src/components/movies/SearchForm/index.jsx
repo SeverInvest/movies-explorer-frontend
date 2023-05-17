@@ -2,10 +2,8 @@ import CustomButton from "../../common/CustomButton";
 import CustomSwitch from "../../common/CustomSwitch";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import "./style.scss";
-// import { useEffect } from 'react';
 
 export default function SearchForm({
-  isLoggedIn = true,
   requiredSearchInput = false,
   initialValues = {},
   setSearchText = null,
@@ -21,10 +19,8 @@ export default function SearchForm({
 
 }) {
   const { values, handleChange } = useFormAndValidation({initialValues});
-  console.log("xxx", values);
-  const onSubmit = ((e) => {
+   const onSubmit = ((e) => {
     e.preventDefault();
-    // console.log("сработал сабмит поиска")
     setIsPreloaderVisible(true);
     setSearchText(values.search);
     if (option === "movies" && !isGetInfoFromBD) {
@@ -34,18 +30,10 @@ export default function SearchForm({
   });
 
   const handleToggle = (() => {
-    console.log("handleToggle", values);
     setIsPreloaderVisible(true);
     setSearchText(values.search);
     setIsToggleSwitch(!isToggleSwitch);
   });
-
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     resetForm();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isLoggedIn]);
 
   return (
     <form
