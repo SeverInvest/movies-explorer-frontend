@@ -1,3 +1,7 @@
+Ссылка на пул-реквест <br>
+https://github.com/SeverInvest/movies-explorer-frontend/pull/2
+
+
 # movies-explorer-frontend
 Проект является дипломной работой на курсе веб-разработчик [©Яндекс.Практикум](https://practicum.yandex.ru/ "Лучшая команда преподавателей - здесь!!!").
 
