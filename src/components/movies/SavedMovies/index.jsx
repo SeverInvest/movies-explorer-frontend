@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { usePagination } from "../../../hooks/usePagination";
 import Header from '../../header/Header';
 import Footer from '../../common/Footer';
+import { DURATION_FILM } from "../../../utils/constants";
 
 export default function SavedMovies({
   loggedIn = false,
@@ -38,7 +39,7 @@ export default function SavedMovies({
       return !!searchText ? itemName.toLowerCase().includes(searchText.toLowerCase()) : true
     });
     const _arg2Filter = ((duration) => {
-      return isToggleSwitch ? duration <= 40 : true
+      return isToggleSwitch ? duration <= DURATION_FILM : true
     });
     setCardsFinded(savedMovies.filter(
       (item) => {

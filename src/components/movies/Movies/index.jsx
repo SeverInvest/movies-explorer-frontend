@@ -9,6 +9,7 @@ import Header from '../../header/Header';
 import Footer from '../../common/Footer';
 import moviesApi from "../../../utils/MoviesApi";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { DURATION_FILM } from "../../../utils/constants";
 
 export default function Movies({
   loggedIn = false,
@@ -62,7 +63,7 @@ export default function Movies({
       return !!searchText ? itemName.toLowerCase().includes(searchText.toLowerCase()) : false
     };
     function _arg2Filter(duration) {
-      return isToggleSwitch ? duration <= 40 : true;
+      return isToggleSwitch ? duration <= DURATION_FILM : true;
     };
     setCardsFinded(movies.filter(
       (item) => {
