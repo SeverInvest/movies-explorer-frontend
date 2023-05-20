@@ -1,4 +1,4 @@
-import SearchForm from '../../movies/SearchForm';
+import SearchForm from '../SearchForm';
 import MoviesCardList from "../MoviesCardList";
 import "./style.scss";
 import CustomButton from "../../common/CustomButton";
@@ -20,53 +20,37 @@ export default function SavedMovies({
   const [isVisibleButton, setIsVisibleButton] = useState(false);
   const [cardsCount, setCardsCount] = useState(0);
   const [cardsCountVisible, setCardsCountVisible] = useState(pagination);
-  const [cardsFinded, setCardsFinded] = useState([]);
+  const [cardsFinded, setCardsFinded] = useState(savedMovies);
   const [cardsFindedVisible, setCardsFindedVisible] = useState([]);
   const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
-  const [isSuccessfulSearch, setIsSuccessfulSearch] = useState(true);
-  const [isToggleSwitch, setIsToggleSwitch] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(true);
-  const [searchText, setSearchText] = useState("");
 
-
-  useEffect(() => {
-    handleSearch();
-    // eslint-disable-next-line 
-  }, [savedMovies])
-
-  const handleSearch = (() => {
-    const _arg1Filter = ((itemName, searchText) => {
-      return !!searchText ? itemName.toLowerCase().includes(searchText.toLowerCase()) : true
-    });
-    const _arg2Filter = ((duration) => {
-      return isToggleSwitch ? duration <= DURATION_FILM : true
-    });
+  function handleSearch(search, isToggle) {
+    function _arg1Filter(itemName) {
+      return !!search ? itemName.toLowerCase().includes(search.toLowerCase()) : false
+    };
+    function _arg2Filter(duration) {
+      return isToggle ? duration <= DURATION_FILM : true;
+    };
     setCardsFinded(savedMovies.filter(
       (item) => {
-        return _arg1Filter(item.nameRU, searchText)
+        return _arg1Filter(item.nameRU)
           && _arg2Filter(item.duration)
       }
     ));
-  });
+  };
 
   const handleButtonMore = () => {
     setCardsCountVisible(cardsCountVisible + pagination);
-  }
+  };
 
-  useEffect(() => {
-    setIsSuccessfulSearch(true);
-    handleSearch();
+  async function onSearch(search, isToggle) {
+    setIsPreloaderVisible(true);
+    handleSearch(search, isToggle);
     setIsPreloaderVisible(false);
-    // eslint-disable-next-line
-  }, [isSubmit, isToggleSwitch]);
+  };
 
   useEffect(() => {
     setCardsCount(cardsFinded.length);
-    if (cardsFinded.length === 0) {
-      setIsSuccessfulSearch(false)
-    } else {
-      setIsSuccessfulSearch(true)
-    }
     setCardsCountVisible(pagination);
   }, [cardsFinded, pagination]);
 
@@ -75,12 +59,17 @@ export default function SavedMovies({
       setIsVisibleButton(false)
     } else {
       setIsVisibleButton(true)
-    }
+    };
   }, [cardsCount, cardsCountVisible, pagination]);
 
   useEffect(() => {
     setCardsFindedVisible(cardsFinded.slice(0, cardsCountVisible));
   }, [cardsCountVisible, cardsFinded]);
+
+  useEffect(() => {
+    setCardsFinded(savedMovies);
+    // eslint-disable-next-line 
+  }, [savedMovies])
 
   return (
     <>
@@ -89,35 +78,30 @@ export default function SavedMovies({
         <section className="saved-movies__section" aria-label="Сохраненные фильмы">
           <div className="saved-movies__container">
             <SearchForm
-              isLoggedIn={true}
-              setIsToggleSwitch={setIsToggleSwitch}
-              setSearchText={setSearchText}
-              isToggleSwitch={isToggleSwitch}
-              setIsPreloaderVisible={setIsPreloaderVisible}
-              setIsSubmit={setIsSubmit}
-              isSubmit={isSubmit}
-
-              requiredSearchInput={false}
+              onSearch={onSearch}
+              isPreloaderVisible={isPreloaderVisible}
             />
             {
-              isPreloaderVisible ?
-                <Preloader />
+              isPreloaderVisible &&
+              <Preloader />
+            }
+            {
+              cardsCount === 0 ?
+                <p className="saved-movies__unsuccess-search"> Ничего не найдено </p>
                 :
-                !isSuccessfulSearch ?
-                  <p className="saved-movies__unsuccess-search"> Ничего не найдено </p>
+                !!errorMessageSavedMovies ?
+                  <p className="movies__unsuccess-search">
+                    Во время запроса произошла ошибка. Возможно, проблема с
+                    соединением или сервер недоступен. Подождите немного и
+                    попробуйте ещё раз
+                  </p>
                   :
-                  !!errorMessageSavedMovies ?
-                    <p className="movies__unsuccess-search">
-                      Во время запроса произошла ошибка. Возможно, проблема с
-                      соединением или сервер недоступен. Подождите немного и
-                      попробуйте ещё раз
-                    </p>
-                    :
-                    <MoviesCardList
-                      option="saved-movies"
-                      cards={cardsFindedVisible}
-                      handleDeleteMovie={handleDeleteMovie}
-                    />
+                  <MoviesCardList
+                    option="saved-movies"
+                    cards={cardsFindedVisible}
+                    savedMovies={savedMovies}
+                    handleDeleteMovie={handleDeleteMovie}
+                  />
             }
             {isVisibleButton &&
               <CustomButton

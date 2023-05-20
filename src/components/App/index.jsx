@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import Main from '../main/Main';
 import Movies from '..//movies/Movies';
 import SavedMovies from '..//movies/SavedMovies';
@@ -16,9 +16,9 @@ export default function App() {
 
   const [currentUser, setCurrentUser] = useState({ userName: "", userEmail: "", userId: "" });
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("jwt"));
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
   // states for savedMovies
   const [errorMessageSavedMovies, setErrorMessageSavedMovies] = useState(""); // ошибка от сервера при запросе сохраненных фильмов
   const [savedMovies, setSavedMovies] = useState([]); // массив сохраненных фильмов
@@ -34,9 +34,10 @@ export default function App() {
       setLoggedIn(true);
       const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
       setCurrentUser({ ...currentUser, ...newCurrentUser });
-      navigate("/", { replace: true });
+      // navigate("/", { replace: true });
     } catch (error) {
       console.log(`Токен не соответствует: ${error}`);
+      setLoggedIn(false);
     }
   };
 
@@ -51,20 +52,19 @@ export default function App() {
     }
   };
 
-  async function handleDeleteMovie(moveId) {
+  async function handleDeleteMovie(movieId) {
     try {
-      await mainApi.deleteMovie(moveId);
-      handleGetSavedMovies();
+      await mainApi.deleteMovie(movieId);
+      setSavedMovies(savedMovies.filter((item) => item._id !== movieId));
     } catch (error) {
       console.log(error.message);
     }
   };
 
-
   async function handleSaveMovie(data) {
     try {
-      await mainApi.saveMovie(data);
-      handleGetSavedMovies();
+      const res = await mainApi.saveMovie(data);
+      setSavedMovies([...savedMovies, res])
     } catch (error) {
       console.log(error.message);
     }
@@ -84,7 +84,9 @@ export default function App() {
     } catch (error) {
       setErrorMessage(error.message);
       console.log(error)
-    }
+    } finally {
+      setIsPreloaderVisible(false);
+    };
   };
 
   async function handleLogin({ email, password }) {
@@ -101,19 +103,24 @@ export default function App() {
     } catch (error) {
       setErrorMessage(error.message);
       console.log(error)
-    }
+    } finally {
+      setIsPreloaderVisible(false);
+    };
   };
 
   async function handleChangeUserInfo(info) {
     try {
       const data = await mainApi.setUserInfo(info);
-      const newCurrentUser = { userName: data.name, userEmail: data.email };
+      const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
       setCurrentUser({ ...currentUser, ...newCurrentUser });
-      setErrorMessage("Изменения профила сохранены");
+      setErrorMessage("Изменения профиля сохранены");
+      // console.log("профиль");
     } catch (error) {
       setErrorMessage(error.message);
       console.log(error)
-    }
+    } finally {
+      setIsPreloaderVisible(false);
+    };
   };
 
   function handleSignOut() {
@@ -127,14 +134,11 @@ export default function App() {
   };
 
   useEffect(() => {
-    handleGetCurrentUser();
-    // eslint-disable-next-line 
-  }, []);
-
-  useEffect(() => {
     if (loggedIn) {
+      handleGetCurrentUser();
       handleGetSavedMovies();
     }
+    // eslint-disable-next-line 
   }, [loggedIn]);
 
   return (
@@ -176,21 +180,34 @@ export default function App() {
           <Route
             path="signup"
             element={
-              <Register
-                handleRegister={handleRegister}
-                errorMessage={errorMessage}
-                setErrorMessage={setErrorMessage}
-              />
+              loggedIn ? (
+                <Navigate to='/' replace />
+              ) : (
+                <Register
+                  handleRegister={handleRegister}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  setIsPreloaderVisible={setIsPreloaderVisible}
+                  isPreloaderVisible={isPreloaderVisible}
+                />
+              )
             }
           />
+
           <Route
             path="signin"
             element={
-              <Login
-                handleLogin={handleLogin}
-                errorMessage={errorMessage}
-                setErrorMessage={setErrorMessage}
-              />
+              loggedIn ? (
+                <Navigate to='/' replace />
+              ) : (
+                <Login
+                  handleLogin={handleLogin}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  setIsPreloaderVisible={setIsPreloaderVisible}
+                  isPreloaderVisible={isPreloaderVisible}
+                />
+              )
             }
           />
           <Route
@@ -201,7 +218,9 @@ export default function App() {
               handleChangeUserInfo={handleChangeUserInfo}
               errorMessage={errorMessage}
               setErrorMessage={setErrorMessage}
-              onClick={handleSignOut}
+              handleSignOut={handleSignOut}
+              setIsPreloaderVisible={setIsPreloaderVisible}
+              isPreloaderVisible={isPreloaderVisible}
             />
             }
           />

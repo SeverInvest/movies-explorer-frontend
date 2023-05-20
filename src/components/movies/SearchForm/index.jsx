@@ -2,38 +2,30 @@ import CustomButton from "../../common/CustomButton";
 import CustomSwitch from "../../common/CustomSwitch";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import "./style.scss";
+import Validation from "../../common/Validation";
 
 export default function SearchForm({
-  requiredSearchInput = false,
   initialValues = {},
-  setSearchText = null,
-  isGetInfoFromBD = true,
-  setIsGetInfoFromBD = null,
-  setIsToggleSwitch,
-  isToggleSwitch,
-  setIsPreloaderVisible,
-  option = "",
-  setIsSubmit,
-  isSubmit,
-
-
+  onSearch,
+  disabledToggle = false,
+  isPreloaderVisible = false
 }) {
-  const { values, handleChange } = useFormAndValidation({initialValues});
-   const onSubmit = ((e) => {
-    e.preventDefault();
-    setIsPreloaderVisible(true);
-    setSearchText(values.search);
-    if (option === "movies" && !isGetInfoFromBD) {
-      setIsGetInfoFromBD(true)
-    }
-    setIsSubmit(!isSubmit);
-  });
+  const { values, errors, setErrors, handleChange, setValues } = useFormAndValidation({ initialValues });
 
-  const handleToggle = (() => {
-    setIsPreloaderVisible(true);
-    setSearchText(values.search);
-    setIsToggleSwitch(!isToggleSwitch);
-  });
+  const onSubmit =  async (e) => {
+    e.preventDefault();
+    if (values.search) {
+      await onSearch(values.search, values.isToggle);
+    } else {
+      setErrors({ ...errors, search: "Нужно заполнить поле поиска" });
+    }
+
+  };
+
+const setIsToggle = async (newIsToggle) => {
+  setValues({ ...values,  isToggle: newIsToggle });
+  await onSearch(values.search, newIsToggle);
+}
 
   return (
     <form
@@ -42,6 +34,7 @@ export default function SearchForm({
       name="search-form"
       id="search-form"
       onSubmit={onSubmit}
+      noValidate
     >
       <div className="search-form__container">
         <input
@@ -52,8 +45,9 @@ export default function SearchForm({
           id="search-form__input"
           autoFocus
           autoComplete="off"
-          value={values.search}
-          required={requiredSearchInput}
+          value={values.search || ""}
+          required
+          disabled={isPreloaderVisible}
         />
         <CustomButton
           type="submit"
@@ -63,11 +57,14 @@ export default function SearchForm({
         />
       </div>
       <CustomSwitch
-        onToggle={handleToggle}
-        isDefaultOn={isToggleSwitch}
+        setIsToggle={setIsToggle}
+        isToggle={values.isToggle || false}
         text="Короткометражки"
         className="search-form__switch-text"
-        disabled={!isGetInfoFromBD}
+        disabled={disabledToggle}
+      />
+      <Validation
+        errorMessage={errors.search}
       />
     </form>
   );

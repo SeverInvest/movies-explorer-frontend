@@ -7,15 +7,23 @@ import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
 import { useEffect, useContext } from 'react';
 import "./style.scss";
+import Preloader from "../../movies/Preloader";
 
 export default function Login(
-  { handleLogin, errorMessage, setErrorMessage }
+  { 
+    handleLogin = null, 
+    errorMessage = "", 
+    setErrorMessage = null,
+    setIsPreloaderVisible = null,
+    isPreloaderVisible = false
+  }
 ) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, resetForm, setIsValid, isValid } = useFormAndValidation();
+  const { values, handleChange, errors, setErrors, resetForm, setIsValid, isValid } = useFormAndValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    setIsPreloaderVisible(true);
     if (!isValid) {
       return;
     };
@@ -34,6 +42,16 @@ export default function Login(
     handleChange(e);
   }
 
+  function handleChangeEmail(e) {
+    const regex = new RegExp(/^\S+@\S+\.\S+$/)
+    if (regex.test(e.target.value)) {
+      handleChangeAndClearErrorMessage(e);
+    } else {
+      setIsValid(false);
+      setErrors({ ...errors, email: "Проверьте правильность ввода электронной почты" })
+    }
+  }
+
   return (
     <section className="login" aria-label="Форма авторизации">
       <div className="login__container">
@@ -45,6 +63,10 @@ export default function Login(
             <h2 className="login__title">Рады видеть!</h2>
           </div>
           <div className="login__form">
+          {
+              isPreloaderVisible &&
+              <Preloader />
+            }
             <CustomForm
               nameForm="form-login"
               isValid={isValid}
@@ -56,11 +78,12 @@ export default function Login(
               <div className="login__inputs">
                 <CustomInput
                   textLabel="E-mail"
-                  onChange={handleChangeAndClearErrorMessage}
+                  onChange={handleChangeEmail}
                   name="email"
                   type="email"
                   autoFocus
                   error={errors.email}
+                  disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.email}
@@ -72,6 +95,7 @@ export default function Login(
                   type="password"
                   minLength="8"
                   error={errors.password}
+                  disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.password}

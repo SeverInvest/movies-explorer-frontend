@@ -7,15 +7,23 @@ import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
 import { useEffect, useContext } from 'react';
 import "./style.scss";
+import Preloader from "../../movies/Preloader";
 
 export default function Register(
-  { handleRegister, errorMessage, setErrorMessage }
+  { 
+    handleRegister, 
+    errorMessage, 
+    setErrorMessage,
+    setIsPreloaderVisible,
+    isPreloaderVisible 
+  }
 ) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, resetForm, setIsValid, isValid } = useFormAndValidation();
+  const { values, handleChange, errors, setErrors, resetForm, setIsValid, isValid } = useFormAndValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    setIsPreloaderVisible(true);
     if (!isValid) {
       return;
     };
@@ -34,6 +42,26 @@ export default function Register(
     handleChange(e);
   }
 
+  function handleChangeEmail(e) {
+    const regex = new RegExp(/^\S+@\S+\.\S+$/)
+    if (regex.test(e.target.value)) {
+      handleChangeAndClearErrorMessage(e);
+    } else {
+      setIsValid(false);
+      setErrors({ ...errors, email: "Проверьте правильность ввода электронной почты" })
+    }
+  }
+
+  function handleChangeName(e) {
+    const regex = new RegExp(/^(?! )[-A-Za-zА-Яа-яЁё ]+$/)
+    if (regex.test(e.target.value)) {
+      handleChangeAndClearErrorMessage(e);
+    } else {
+      setIsValid(false);
+      setErrors({ ...errors, name: "Длина поля от 2 до 30 символов и только буквы, пробел и дефис" })
+    }
+  }
+
   return (
     <section className="register" aria-label="Форма регистрации">
       <div className="register__container">
@@ -45,6 +73,10 @@ export default function Register(
             <h2 className="register__title">Добро пожаловать!</h2>
           </div>
           <div className="register__form">
+          {
+              isPreloaderVisible &&
+              <Preloader />
+            }
             <CustomForm
               nameForm="form-register"
               isValid={isValid}
@@ -55,24 +87,25 @@ export default function Register(
               <div className="register__inputs">
                 <CustomInput
                   textLabel="Имя"
-                  onChange={handleChangeAndClearErrorMessage}
+                  onChange={handleChangeName}
                   name="name"
                   type="text"
                   autoFocus
                   minLength="2"
                   maxLength="30"
-                  pattern="^(?! )[-A-Za-zА-Яа-яЁё ]+$"
                   error={errors.name}
+                  disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.name}
                 />
                 <CustomInput
                   textLabel="E-mail"
-                  onChange={handleChangeAndClearErrorMessage}
+                  onChange={handleChangeEmail}
                   name="email"
                   type="email"
                   error={errors.email}
+                  disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.email}

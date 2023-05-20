@@ -8,7 +8,8 @@ export default function MoviesCardList({
   handleSaveMovie = null, 
   handleDeleteMovie = null
 }) {
-
+// console.log("savedMovies: ", savedMovies);
+// console.log("cards:", cards);
   return (
     <section aria-label="Раздел с карточками фильмов" className="cards">
       <ul className="cards__list">

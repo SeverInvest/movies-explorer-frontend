@@ -7,6 +7,7 @@ export default function CustomForm({
   onSubmit = null,
   blue = false,
   option = "",
+  buttonDisabled = false,
   children,
   ...restProps
 }) {
@@ -44,6 +45,7 @@ if (option === "profile") {
       {children}
       <button
         className={classNames.join(" ")}
+        disabled={buttonDisabled}
         type="submit"
         aria-label={buttonText}
         name={`button-submit-${nameForm}`}>

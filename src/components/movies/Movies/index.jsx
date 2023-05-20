@@ -1,4 +1,4 @@
-import SearchForm from '../../movies/SearchForm';
+import SearchForm from '../SearchForm';
 import MoviesCardList from "../MoviesCardList";
 import "./style.scss";
 import CustomButton from "../../common/CustomButton";
@@ -22,50 +22,43 @@ export default function Movies({
   setMovies = null,
 
 }) {
-
   const { pagination } = usePagination();
 
   const [isPreloaderVisible, setIsPreloaderVisible] = useLocalStorage("isPreloaderVisible", false); // прелоадер
-
-  const [isGetInfoFromBD, setIsGetInfoFromBD] = useLocalStorage("isGetInfoFromBD", false); // получена ли информация из БД
-
   const [cardsCount, setCardsCount] = useLocalStorage("cardsCount", 0);
   const [cardsCountVisible, setCardsCountVisible] = useLocalStorage("cardsCountVisible", pagination);
   const [cardsFinded, setCardsFinded] = useLocalStorage("cardsFinded", []);
   const [cardsFindedVisible, setCardsFindedVisible] = useLocalStorage("cardsFindedVisible", []);
-  const [isSuccessfulSearch, setIsSuccessfulSearch] = useLocalStorage("isSuccessfulSearch", true);
-  const [isToggleSwitch, setIsToggleSwitch] = useLocalStorage("isToggleSwitch", false);
-  const [isSubmit, setIsSubmit] = useLocalStorage("isSubmit", true);
   const [searchText, setSearchText] = useLocalStorage("searchText", "");
-
+  const [searchToggle, setSearchToggle] = useLocalStorage("searchToggle", false);
   const [isVisibleButton, setIsVisibleButton] = useLocalStorage("isVisibleButton", false);
+
   async function handleGetMovies() {
     try {
       setErrorMessageMovies("");
-      const movies = await moviesApi.getAllMovies();
-      const updateMovies = movies.map((item) => {
+      const newMovies = await moviesApi.getAllMovies();
+      const updateMovies = await newMovies.map((item) => {
         item.image.url = `https://api.nomoreparties.co/${item.image.url}`
         item.image.formats.thumbnail.url = `https://api.nomoreparties.co/${item.image.formats.thumbnail.url}`
         return { ...item }
       })
       setMovies(updateMovies);
-      setIsSubmit(!isSubmit);
+      return (updateMovies);
     } catch (error) {
       console.log(error);
-      setIsGetInfoFromBD(false);
       setIsPreloaderVisible(false);
       setErrorMessageMovies(error.message);
     }
   };
 
-  function handleSearch() {
-    function _arg1Filter(itemName) {
-      return !!searchText ? itemName.toLowerCase().includes(searchText.toLowerCase()) : false
+  function handleSearch(search, isToggle, info) {
+    const _arg1Filter = (itemName) => {
+      return !!search ? itemName.toLowerCase().includes(search.toLowerCase()) : false
     };
     function _arg2Filter(duration) {
-      return isToggleSwitch ? duration <= DURATION_FILM : true;
+      return isToggle ? duration <= DURATION_FILM : true;
     };
-    setCardsFinded(movies.filter(
+    setCardsFinded(info.filter(
       (item) => {
         return _arg1Filter(item.nameRU)
           && _arg2Filter(item.duration)
@@ -77,29 +70,27 @@ export default function Movies({
     setCardsCountVisible(cardsCountVisible + pagination);
   }
 
-  useEffect(() => {
-    if (!!movies.length) {
-      setIsSuccessfulSearch(true);
-      handleSearch();
-      setIsPreloaderVisible(false);
+  async function onSearch(search, isToggle) {
+    setIsPreloaderVisible(true);
+    setSearchText(search);
+    setSearchToggle(isToggle);
+    if (movies.length === 0) {
+      const info = await handleGetMovies();
+      handleSearch(search, isToggle, info);
+    } else {
+      handleSearch(search, isToggle, movies);
     }
-    // eslint-disable-next-line
-  }, [isSubmit, isToggleSwitch])
-
+    setIsPreloaderVisible(false);
+  }
 
   useEffect(() => {
     setCardsCount(cardsFinded.length);
-    if (cardsFinded.length === 0) {
-      setIsSuccessfulSearch(false)
-    } else {
-      setIsSuccessfulSearch(true)
-    }
     setCardsCountVisible(pagination);
     // eslint-disable-next-line
   }, [cardsFinded, pagination]);
 
   useEffect(() => {
-    if (cardsCount <= pagination || cardsCount <= cardsCountVisible) {
+    if (cardsCount <= cardsCountVisible) {
       setIsVisibleButton(false)
     } else {
       setIsVisibleButton(true)
@@ -112,13 +103,6 @@ export default function Movies({
     // eslint-disable-next-line
   }, [cardsCountVisible, cardsFinded]);
 
-  useEffect(() => {
-    if (isGetInfoFromBD) {
-      handleGetMovies();
-    }
-    // eslint-disable-next-line
-  }, [isGetInfoFromBD])
-
   return (
     <>
       <Header loggedIn={loggedIn} option="movies" />
@@ -126,42 +110,33 @@ export default function Movies({
         <section className="movies__section" aria-label="Фильмы">
           <div className="movies__container">
             <SearchForm
-              option="movies"
-              isGetInfoFromBD={isGetInfoFromBD}
-              setIsGetInfoFromBD={setIsGetInfoFromBD}
-              setIsToggleSwitch={setIsToggleSwitch}
-              setSearchText={setSearchText}
-              isToggleSwitch={isToggleSwitch}
-              setIsPreloaderVisible={setIsPreloaderVisible}
-              setIsSubmit={setIsSubmit}
-              isSubmit={isSubmit}
-              isLoggedIn={true}
-              requiredSearchInput={true}
-              handleGetMovies={handleGetMovies}
-              initialValues={{ search: searchText }}
+              disabledToggle={movies.length === 0}
+              onSearch={onSearch}
+              initialValues={{ search: searchText, isToggle: searchToggle }}
+              isPreloaderVisible={isPreloaderVisible}
             />
             {
-              isPreloaderVisible ?
-                <Preloader />
+              isPreloaderVisible &&
+              <Preloader />
+            }
+            {
+              (cardsCount === 0 && movies.length !== 0) ?
+                <p className="movies__unsuccess-search"> Ничего не найдено </p>
                 :
-                (!isSuccessfulSearch && !movies.length) ?
-                  <p className="movies__unsuccess-search"> Ничего не найдено </p>
+                !!errorMessageMovies ?
+                  <p className="movies__unsuccess-search">
+                    Во время запроса произошла ошибка. Возможно, проблема с
+                    соединением или сервер недоступен. Подождите немного и
+                    попробуйте ещё раз
+                  </p>
                   :
-                  !!errorMessageMovies ?
-                    <p className="movies__unsuccess-search">
-                      Во время запроса произошла ошибка. Возможно, проблема с
-                      соединением или сервер недоступен. Подождите немного и
-                      попробуйте ещё раз
-                    </p>
-                    :
-
-                    <MoviesCardList
-                      option="movies"
-                      cards={cardsFindedVisible}
-                      savedMovies={savedMovies}
-                      handleSaveMovie={handleSaveMovie}
-                      handleDeleteMovie={handleDeleteMovie}
-                    />
+                  <MoviesCardList
+                    option="movies"
+                    cards={cardsFindedVisible}
+                    savedMovies={savedMovies}
+                    handleSaveMovie={handleSaveMovie}
+                    handleDeleteMovie={handleDeleteMovie}
+                  />
             }
             {isVisibleButton &&
               <CustomButton

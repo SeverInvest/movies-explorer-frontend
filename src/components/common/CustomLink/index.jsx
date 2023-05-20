@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import "./style.scss";
 
 export default function CustomLink({ 
-  linkTo, 
-  textLink,
-  className,
+  linkTo = "/", 
+  textLink = "",
+  className = "",
   children,
   ...restProps
 }) {

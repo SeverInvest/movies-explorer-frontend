@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 function useFormAndValidation(
   { initialValues = {},
     initialErrors = {},
-    initialValid = true,
+    initialValid = false,
   } = {}) {
 
   const [values, setValues] = useState(initialValues);
@@ -13,7 +13,6 @@ function useFormAndValidation(
   const handleChange = (e) => {
 
     const { name, value } = e.target
-    console.log(name, value);
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: e.target.validationMessage });
     setIsValid(e.target.closest('form').checkValidity());

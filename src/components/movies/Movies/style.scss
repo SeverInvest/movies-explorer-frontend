@@ -12,6 +12,7 @@
   }
 
   &__container {
+    position: relative;
     margin: 0 auto;
     padding: 70px 70px 80px;
     max-width: var(--max-width-large);
