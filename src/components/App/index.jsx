@@ -34,7 +34,6 @@ export default function App() {
       setLoggedIn(true);
       const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
       setCurrentUser({ ...currentUser, ...newCurrentUser });
-      // navigate("/", { replace: true });
     } catch (error) {
       console.log(`Токен не соответствует: ${error}`);
       setLoggedIn(false);
@@ -224,7 +223,7 @@ export default function App() {
             />
             }
           />
-          <Route path="*" element={<PageError status={404} />} />
+          <Route path="*" element={<PageError />} />
         </Routes>
       </div>
     </CurrentUserContext.Provider >

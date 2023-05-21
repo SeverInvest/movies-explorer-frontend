@@ -1,8 +1,6 @@
 @import "../vars";
 @import "../mixins";
 
-
-
 .page {
   background-color: #202020;
   /*color: var(--color-light);*/
@@ -38,5 +36,4 @@
     transition: background-color 5500s ease-in-out 0s;
     -webkit-text-fill-color: white;
   }
-
 }

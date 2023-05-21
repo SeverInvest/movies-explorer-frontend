@@ -1,7 +1,6 @@
 @import "../../../mixins";
 @import "../../../vars";
 
-
 .switch {
   display: flex;
   column-gap: 13px;
@@ -35,6 +34,5 @@
         opacity: 1;
       }
     }
-
   }
 }

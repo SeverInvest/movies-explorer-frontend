@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 export default function PageError({
   errorStatus = "404",
   errorMessage = "Страница по указанному маршруту не найдена.",
-  linkTo = "/"
 }) {
 
   const navigate = useNavigate();
@@ -29,6 +28,5 @@ export default function PageError({
 
       </div>
     </div >
-
   );
 }
