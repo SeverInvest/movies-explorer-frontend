@@ -1,33 +1,17 @@
 import "./style.scss";
 import images from "../../../images";
-import { useState } from 'react';
 
 export default function CustomSwitch({
   className = "",
-  onToggle = null,
+  setIsToggle = null,
   text = "",
-  isDefaultOn = false,
+  isToggle = false,
+  disabled,
   children,
   ...restProps
 }) {
 
-  let defaultImgButton = null;
-  if (isDefaultOn) {
-    defaultImgButton = images.smalltumbon
-  } else {
-    defaultImgButton = images.smalltumboff
-  }
-
-  const [imgTumbler, setImgTumbler] = useState(defaultImgButton)
-
-  const handleToggle = (() => {
-    if (imgTumbler === images.smalltumbon) {
-      setImgTumbler(images.smalltumboff);
-    } else {
-      setImgTumbler(images.smalltumbon);
-    }
-    onToggle();
-  });
+  const imgTumbler = isToggle ? images.smalltumbon : images.smalltumboff
 
   return (
 
@@ -36,10 +20,11 @@ export default function CustomSwitch({
         type="checkbox"
         className="switch__input"
         {...restProps}
-        onClick={handleToggle}
+        onClick={() => setIsToggle(!isToggle)}
+        disabled={disabled}
       />
       <img
-        className="switch__img"
+        className={`switch__img ${disabled ? "switch__img_disabled" : ""}`}
         src={imgTumbler}
         alt={text}
       />

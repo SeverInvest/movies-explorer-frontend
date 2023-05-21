@@ -1,17 +1,17 @@
-// import { Link } from "react-router-dom";
-
 import "./style.scss";
 
 export default function CustomForm({
-  nameForm,
-  isEnabled,
-  buttonText,
-  onSubmit,
-  blue,
-  option,
+  nameForm = "",
+  isValid = true,
+  buttonText = "",
+  onSubmit = null,
+  blue = false,
+  option = "",
+  buttonDisabled = false,
   children,
   ...restProps
 }) {
+
 const classNames=["form__submit"]
 
 if (blue) {
@@ -20,7 +20,7 @@ if (blue) {
   classNames.push("form__submit_normal")
 }
 
-if (isEnabled) {
+if (!isValid) {
   classNames.push("form__submit_disabled")
 }
 
@@ -45,6 +45,7 @@ if (option === "profile") {
       {children}
       <button
         className={classNames.join(" ")}
+        disabled={buttonDisabled}
         type="submit"
         aria-label={buttonText}
         name={`button-submit-${nameForm}`}>

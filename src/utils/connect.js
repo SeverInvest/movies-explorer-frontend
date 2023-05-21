@@ -1,10 +1,17 @@
-const connect = {
+export const connect = {
   "baseUrl":
-    "https://api.sivnv.ru",
+    "https://api.kino-garage.ru",
   "headers": {
     "Accept": "application/json",
     "Content-Type": "application/json"
   },
 };
 
-export default connect;
+export const connectMovies = {
+  "baseUrl":
+    "https://api.nomoreparties.co/beatfilm-movies",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+};

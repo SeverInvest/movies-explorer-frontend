@@ -1,36 +1,31 @@
-// import images from '../../../images';
 import CustomButton from "../../common/CustomButton";
 import CustomSwitch from "../../common/CustomSwitch";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import "./style.scss";
-import { useEffect } from 'react';
+import Validation from "../../common/Validation";
 
 export default function SearchForm({
-  handleSubmit,
-  isLoggedIn = true,
-  onToggleSwitch
+  initialValues = {},
+  onSearch,
+  disabledToggle = false,
+  isPreloaderVisible = false
 }) {
-  const { values, handleChange, resetForm } = useFormAndValidation();
+  const { values, errors, setErrors, handleChange, setValues } = useFormAndValidation({ initialValues });
 
-  const onSubmit = ((e) => {
+  const onSubmit =  async (e) => {
     e.preventDefault();
-    handleSubmit({
-      name: values.name,
-    });
-  });
-
-  const handleToggle = (() => {
-    onToggleSwitch({
-      name: values.name,
-    });
-  });
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      resetForm();
+    if (values.search) {
+      await onSearch(values.search, values.isToggle);
+    } else {
+      setErrors({ ...errors, search: "Нужно заполнить поле поиска" });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);
+
+  };
+
+const setIsToggle = async (newIsToggle) => {
+  setValues({ ...values,  isToggle: newIsToggle });
+  await onSearch(values.search, newIsToggle);
+}
 
   return (
     <form
@@ -39,17 +34,20 @@ export default function SearchForm({
       name="search-form"
       id="search-form"
       onSubmit={onSubmit}
+      noValidate
     >
       <div className="search-form__container">
         <input
           className="search-form__input"
           placeholder="Фильм"
           onChange={handleChange}
-          name="name"
+          name="search"
           id="search-form__input"
           autoFocus
           autoComplete="off"
+          value={values.search || ""}
           required
+          disabled={isPreloaderVisible}
         />
         <CustomButton
           type="submit"
@@ -59,10 +57,14 @@ export default function SearchForm({
         />
       </div>
       <CustomSwitch
-        onToggle={handleToggle}
-        isDefaultOn={false}
+        setIsToggle={setIsToggle}
+        isToggle={values.isToggle || false}
         text="Короткометражки"
         className="search-form__switch-text"
+        disabled={disabledToggle}
+      />
+      <Validation
+        errorMessage={errors.search}
       />
     </form>
   );

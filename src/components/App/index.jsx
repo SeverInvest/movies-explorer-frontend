@@ -1,84 +1,232 @@
-import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-// import Main from '../Main';
-import Header from '../common/Header';
+import React, { useState, useEffect } from 'react';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import Main from '../main/Main';
 import Movies from '..//movies/Movies';
 import SavedMovies from '..//movies/SavedMovies';
-// import Footer from '../common/Footer';
 import Register from '../user/Register';
 import Login from '../user/Login';
 import Profile from '../user/Profile';
 import PageError from '../PageError';
-// import PopupAlarm from '../common/PopupAlarm';
 import { CurrentUserContext } from "../../context/CurrentUserContext";
-// import Footer from '../Footer';
-// import ProtectedRoute from '../ProtectedRoute';
-// import Login from '../Login';
-// import Register from '../Register';
+import mainApi from "../../utils/MainApi";
+import ProtectedRoute from '../ProtectedRoute';
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
-// import api from "../../utils/Api";
-// import auth from "../../utils/Auth";
-// import { isError } from "../../utils/utils";
-// import { CurrentUserContext } from "../../context/CurrentUserContext.js";
+export default function App() {
 
-function App() {
-  const [currentUser, setCurrentUser] = useState({userName: "Николай"});
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({ userName: "", userEmail: "", userId: "" });
 
-  // const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("jwt"));
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
+  // states for savedMovies
+  const [errorMessageSavedMovies, setErrorMessageSavedMovies] = useState(""); // ошибка от сервера при запросе сохраненных фильмов
+  const [savedMovies, setSavedMovies] = useState([]); // массив сохраненных фильмов
+  // states for movies
+  const [errorMessageMovies, setErrorMessageMovies] = useLocalStorage("errorMessageMovies", ""); // ошибка от сервера при запросе фильмов
+  const [movies, setMovies] = useLocalStorage("movies", []); // массив фильмов
 
-  // function handleSingOut() {
-  //   localStorage.removeItem("jwt");
-  //   // setEmail("");
-  //   setLoggedIn(false);
-  //   navigate("/sign-in", { replace: true });
-  // }
+  const navigate = useNavigate();
+
+  async function handleGetCurrentUser() {
+    try {
+      const data = await mainApi.getUser()
+      setLoggedIn(true);
+      const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
+      setCurrentUser({ ...currentUser, ...newCurrentUser });
+      // navigate("/", { replace: true });
+    } catch (error) {
+      console.log(`Токен не соответствует: ${error}`);
+      setLoggedIn(false);
+    }
+  };
+
+  async function handleGetSavedMovies() {
+    try {
+      setErrorMessageSavedMovies("");
+      const data = await mainApi.getAllSavedMovies();
+      setSavedMovies(data);
+    } catch (error) {
+      console.log(error.message);
+      setErrorMessageSavedMovies(error.message);
+    }
+  };
+
+  async function handleDeleteMovie(movieId) {
+    try {
+      await mainApi.deleteMovie(movieId);
+      setSavedMovies(savedMovies.filter((item) => item._id !== movieId));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  async function handleSaveMovie(data) {
+    try {
+      const res = await mainApi.saveMovie(data);
+      setSavedMovies([...savedMovies, res])
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  async function handleRegister({ name, email, password }) {
+    try {
+      const data = await mainApi.register(name, email, password);
+      const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
+      setCurrentUser({ ...currentUser, ...newCurrentUser });
+      const { token } = await mainApi.authorize(email, password);
+      if (token) {
+        localStorage.setItem("jwt", token);
+        setLoggedIn(true);
+        navigate("/movies", { replace: true });
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      console.log(error)
+    } finally {
+      setIsPreloaderVisible(false);
+    };
+  };
+
+  async function handleLogin({ email, password }) {
+    try {
+      const { token } = await mainApi.authorize(email, password);
+      if (token) {
+        localStorage.setItem("jwt", token);
+        setLoggedIn(true);
+        const data = await mainApi.getUser();
+        const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
+        setCurrentUser({ ...currentUser, ...newCurrentUser });
+        navigate("/movies", { replace: true });
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      console.log(error)
+    } finally {
+      setIsPreloaderVisible(false);
+    };
+  };
+
+  async function handleChangeUserInfo(info) {
+    try {
+      const data = await mainApi.setUserInfo(info);
+      const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
+      setCurrentUser({ ...currentUser, ...newCurrentUser });
+      setErrorMessage("Изменения профиля сохранены");
+      // console.log("профиль");
+    } catch (error) {
+      setErrorMessage(error.message);
+      console.log(error)
+    } finally {
+      setIsPreloaderVisible(false);
+    };
+  };
+
+  function handleSignOut() {
+    setCurrentUser({ userName: "", userEmail: "", userId: "" });
+    setLoggedIn(false);
+    localStorage.clear();
+    setSavedMovies([]);
+    setMovies([]);
+    setErrorMessageSavedMovies("");
+    setErrorMessageMovies("");
+  };
+
+  useEffect(() => {
+    if (loggedIn) {
+      handleGetCurrentUser();
+      handleGetSavedMovies();
+    }
+    // eslint-disable-next-line 
+  }, [loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-    <div className="page">
-      <Header
-        // onSignOut={handleSingOut}
-        loggedIn={loggedIn}
-      />
-      <Routes>
-      
-        <Route path="/" element={<Main />} />
-        {/* <Route path="/" element={<Footer />} /> */}
+      <div className="page">
+        <Routes>
+          <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
+          <Route
+            path="movies"
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                movies={movies}
+                savedMovies={savedMovies}
+                errorMessageMovies={errorMessageMovies}
+                handleSaveMovie={handleSaveMovie}
+                handleDeleteMovie={handleDeleteMovie}
+                setErrorMessageMovies={setErrorMessageMovies}
+                setMovies={setMovies}
 
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/saved-movies" element={<SavedMovies />} />
-        <Route path="/signup" element={<Register />} />
-        <Route path="/signin" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-
-        
-        {/* <Route path="/movies" element={<Footer />} /> */}
-        {/* <Route path="/saved-movies" element={<Footer />} /> */}
-        <Route path="/page-error" element={<PageError />} />
-
-      </Routes>
-
-      
-      {/* <Routes>
-          <Route exact path="/" element={
-            <ProtectedRoute
-              loggedIn={loggedIn}
-              component={Main}
-            />}
+                component={Movies}
+              />
+            }
           />
-          
-          <Route path="/sign-in" element={<Login />} />
+          <Route
+            path="saved-movies"
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                savedMovies={savedMovies}
+                errorMessageSavedMovies={errorMessageSavedMovies}
+                handleGetSavedMovies={handleGetSavedMovies}
+                handleDeleteMovie={handleDeleteMovie}
+
+                component={SavedMovies}
+              />
+            }
+          />
+          <Route
+            path="signup"
+            element={
+              loggedIn ? (
+                <Navigate to='/' replace />
+              ) : (
+                <Register
+                  handleRegister={handleRegister}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  setIsPreloaderVisible={setIsPreloaderVisible}
+                  isPreloaderVisible={isPreloaderVisible}
+                />
+              )
+            }
+          />
+
+          <Route
+            path="signin"
+            element={
+              loggedIn ? (
+                <Navigate to='/' replace />
+              ) : (
+                <Login
+                  handleLogin={handleLogin}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  setIsPreloaderVisible={setIsPreloaderVisible}
+                  isPreloaderVisible={isPreloaderVisible}
+                />
+              )
+            }
+          />
+          <Route
+            path="profile"
+            element={<ProtectedRoute
+              loggedIn={loggedIn}
+              component={Profile}
+              handleChangeUserInfo={handleChangeUserInfo}
+              errorMessage={errorMessage}
+              setErrorMessage={setErrorMessage}
+              handleSignOut={handleSignOut}
+              setIsPreloaderVisible={setIsPreloaderVisible}
+              isPreloaderVisible={isPreloaderVisible}
+            />
+            }
+          />
+          <Route path="*" element={<PageError status={404} />} />
         </Routes>
-
-        {loggedIn &&
-          <Footer />
-        } */}
-
-    </div>
-    </CurrentUserContext.Provider>
+      </div>
+    </CurrentUserContext.Provider >
   );
 }
-
-export default App;

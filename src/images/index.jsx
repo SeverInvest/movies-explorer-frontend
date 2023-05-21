@@ -7,7 +7,6 @@ import pictureMain from "./picture_main.svg";
 import smalltumbon from "./smalltumbon.svg";
 import smalltumboff from "./smalltumboff.svg";
 import me from "./me.jpg";
-import filmPosterTest from "./film_poster_test.png";
 import buttonClose from "./button-close.svg";
 import buttonCloseBlack from "./button-close-black.svg";
 
@@ -21,7 +20,6 @@ const images = {
     smalltumbon,
     smalltumboff,
     me,
-    filmPosterTest,
     buttonClose,
     buttonCloseBlack,
   };

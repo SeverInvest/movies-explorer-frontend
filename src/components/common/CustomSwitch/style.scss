@@ -26,5 +26,15 @@
     &:hover {
       opacity: var(--opacity);
     }
+
+    &_disabled {
+      cursor: auto;
+      transition: none;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
   }
 }

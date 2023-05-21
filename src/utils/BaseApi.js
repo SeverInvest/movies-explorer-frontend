@@ -5,11 +5,11 @@ export default class BaselApi {
     this._baseUrl = connect.baseUrl;
     this._headers = connect.headers;
 }
-  _checkResponse(result) {
+  async _checkResponse(result) {
     if (result.ok) {
-      return result.json();
+      return await result.json();
     }
-    return Promise.reject(`Ошибка: ${result.status}`);
+    return Promise.reject(await result.json())
   }
 
   _requestWithToken(url, options) {

@@ -1,123 +1,155 @@
-// import listProjects from '../../../utils/list-projects';
-import SearchForm from '../../movies/SearchForm';
+import SearchForm from '../SearchForm';
 import MoviesCardList from "../MoviesCardList";
-import cards from "../../../utils/cards";
 import "./style.scss";
 import CustomButton from "../../common/CustomButton";
 import Preloader from "../Preloader";
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { usePagination } from "../../../hooks/usePagination";
+import Header from '../../header/Header';
 import Footer from '../../common/Footer';
+import moviesApi from "../../../utils/MoviesApi";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { DURATION_FILM } from "../../../utils/constants";
 
-export default function Movies() {
+export default function Movies({
+  loggedIn = false,
+  movies = [],
+  savedMovies = [],
+  errorMessageMovies = "",
+  handleSaveMovie = null,
+  handleDeleteMovie = null,
+  setErrorMessageMovies = null,
+  setMovies = null,
+
+}) {
   const { pagination } = usePagination();
 
-  const [isVisibleButton, setIsVisibleButton] = useState(false);
-  const [cardsCount, setCardsCount] = useState(0);
-  const [cardsCountVisible, setCardsCountVisible] = useState(pagination);
-  const [cardsFinded, setCardsFinded] = useState([]);
-  const [cardsFindedVisible, setCardsFindedVisible] = useState([]);
-  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
-  const [isSuccessfulSearch, setIsSuccessfulSearch] = useState(true);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const [isToggleSwitch, setIsToggleSwitch] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(true);
-  const [searchText, setSearchText] = useState("");
+  const [isPreloaderVisible, setIsPreloaderVisible] = useLocalStorage("isPreloaderVisible", false); // прелоадер
+  const [cardsCount, setCardsCount] = useLocalStorage("cardsCount", 0);
+  const [cardsCountVisible, setCardsCountVisible] = useLocalStorage("cardsCountVisible", pagination);
+  const [cardsFinded, setCardsFinded] = useLocalStorage("cardsFinded", []);
+  const [cardsFindedVisible, setCardsFindedVisible] = useLocalStorage("cardsFindedVisible", []);
+  const [searchText, setSearchText] = useLocalStorage("searchText", "");
+  const [searchToggle, setSearchToggle] = useLocalStorage("searchToggle", false);
+  const [isVisibleButton, setIsVisibleButton] = useLocalStorage("isVisibleButton", false);
 
-  const handleSearch = (() => {
-    const _arg1Filter = ((itemName, searchText) => {
-      return searchText ? itemName.toLowerCase().includes(searchText.toLowerCase()) : true
-    });
-    const _arg2Filter = ((duration) => {
-      return isToggleSwitch ? duration <= 40 : true
-    });
-    setCardsFinded(cards.filter(
+  async function handleGetMovies() {
+    try {
+      setErrorMessageMovies("");
+      const newMovies = await moviesApi.getAllMovies();
+      const updateMovies = await newMovies.map((item) => {
+        item.image.url = `https://api.nomoreparties.co/${item.image.url}`
+        item.image.formats.thumbnail.url = `https://api.nomoreparties.co/${item.image.formats.thumbnail.url}`
+        return { ...item }
+      })
+      setMovies(updateMovies);
+      return (updateMovies);
+    } catch (error) {
+      console.log(error);
+      setIsPreloaderVisible(false);
+      setErrorMessageMovies(error.message);
+    }
+  };
+
+  function handleSearch(search, isToggle, info) {
+    const _arg1Filter = (itemName) => {
+      return !!search ? itemName.toLowerCase().includes(search.toLowerCase()) : false
+    };
+    function _arg2Filter(duration) {
+      return isToggle ? duration <= DURATION_FILM : true;
+    };
+    setCardsFinded(info.filter(
       (item) => {
-        return _arg1Filter(item.nameRU, searchText)
+        return _arg1Filter(item.nameRU)
           && _arg2Filter(item.duration)
       }
     ));
-    setIsPreloaderVisible(false);
-  });
+  };
 
   const handleButtonMore = () => {
     setCardsCountVisible(cardsCountVisible + pagination);
   }
 
-  const handleSubmit = ((data) => {
-    setSearchText(data.name);
+  async function onSearch(search, isToggle) {
     setIsPreloaderVisible(true);
-    setIsSubmit(!isSubmit);
-    setIsFirstLoad(false)
-  });
-
-  const handleToggleSwitch = ((data) => {
-    setSearchText(data.name);
-    setIsToggleSwitch(!isToggleSwitch);
-  });
-
-  useEffect(() => {
-    if (!isFirstLoad) {
-      handleSearch();
-    };
-    // eslint-disable-next-line
-  }, [isSubmit, isToggleSwitch]);
+    setSearchText(search);
+    setSearchToggle(isToggle);
+    if (movies.length === 0) {
+      const info = await handleGetMovies();
+      handleSearch(search, isToggle, info);
+    } else {
+      handleSearch(search, isToggle, movies);
+    }
+    setIsPreloaderVisible(false);
+  }
 
   useEffect(() => {
     setCardsCount(cardsFinded.length);
-    if (cardsFinded.length === 0) {
-      setIsSuccessfulSearch(false)
-    } else {
-      setIsSuccessfulSearch(true)
-    }
     setCardsCountVisible(pagination);
+    // eslint-disable-next-line
   }, [cardsFinded, pagination]);
 
   useEffect(() => {
-    if (cardsCount <= pagination || cardsCount <= cardsCountVisible) {
+    if (cardsCount <= cardsCountVisible) {
       setIsVisibleButton(false)
     } else {
       setIsVisibleButton(true)
     }
+    // eslint-disable-next-line
   }, [cardsCount, cardsCountVisible, pagination]);
 
   useEffect(() => {
     setCardsFindedVisible(cardsFinded.slice(0, cardsCountVisible));
+    // eslint-disable-next-line
   }, [cardsCountVisible, cardsFinded]);
 
   return (
-    <div className="movies">
-      <section className="movies__section" aria-label="Фильмы">
-        <div className="movies__container">
-          <SearchForm
-            handleSubmit={handleSubmit}
-            isLoggedIn={true}
-            onToggleSwitch={handleToggleSwitch}
-          />
-          {
-            isPreloaderVisible &&
-            <Preloader />
-          }
-          {
-            !isSuccessfulSearch && !isFirstLoad &&
-            <p className="movies__unsuccess-search"> Ничего не найдено </p>
-          }
-          <MoviesCardList
-            option="movies"
-            cards={cardsFindedVisible}
-            isVisibleButton={isVisibleButton}
-          />
-          {isVisibleButton &&
-            <CustomButton
-              type="button"
-              text="Ещё"
-              className="movies__more-button"
-              onClick={handleButtonMore}
+    <>
+      <Header loggedIn={loggedIn} option="movies" />
+      <div className="movies">
+        <section className="movies__section" aria-label="Фильмы">
+          <div className="movies__container">
+            <SearchForm
+              disabledToggle={movies.length === 0}
+              onSearch={onSearch}
+              initialValues={{ search: searchText, isToggle: searchToggle }}
+              isPreloaderVisible={isPreloaderVisible}
             />
-          }
-        </div>
-      </section>
-      <Footer />
-    </div>
+            {
+              isPreloaderVisible &&
+              <Preloader />
+            }
+            {
+              (cardsCount === 0 && movies.length !== 0) ?
+                <p className="movies__unsuccess-search"> Ничего не найдено </p>
+                :
+                !!errorMessageMovies ?
+                  <p className="movies__unsuccess-search">
+                    Во время запроса произошла ошибка. Возможно, проблема с
+                    соединением или сервер недоступен. Подождите немного и
+                    попробуйте ещё раз
+                  </p>
+                  :
+                  <MoviesCardList
+                    option="movies"
+                    cards={cardsFindedVisible}
+                    savedMovies={savedMovies}
+                    handleSaveMovie={handleSaveMovie}
+                    handleDeleteMovie={handleDeleteMovie}
+                  />
+            }
+            {isVisibleButton &&
+              <CustomButton
+                type="button"
+                text="Ещё"
+                className="movies__more-button"
+                onClick={handleButtonMore}
+              />
+            }
+          </div>
+        </section>
+        <Footer />
+      </div>
+    </>
   );
 }

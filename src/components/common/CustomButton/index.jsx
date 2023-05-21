@@ -1,4 +1,3 @@
-// import { Link } from "react-router-dom";
 import "./style.scss";
 
 export default function CustomButton({
@@ -6,6 +5,7 @@ export default function CustomButton({
   text="",
   className="",
   ariaLabel="",
+  disabled=false,
   children,
   ...restProps
 }) {
@@ -16,6 +16,7 @@ export default function CustomButton({
     <button
       type={type}
       aria-label={ariaLabel}
+      disabled={disabled}
       className={classNames.join(" ")}
       {...restProps}
     >

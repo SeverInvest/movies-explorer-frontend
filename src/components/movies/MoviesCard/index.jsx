@@ -1,26 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./style.scss";
 import CustomLink from '../../common/CustomLink';
 
 export default function MoviesCard({
   card,
   option,
+  savedMovies,
+  handleSaveMovie = null,
+  handleDeleteMovie = null,
 }) {
 
-  const [isLike, setIsLike] = useState(false);
+  const getLike = () => savedMovies.some(item => item.movieId === card.id);
+  const getMovieId = () => savedMovies.find(item => item.movieId === card.id);
+  const [isLike, setIsLike] = useState(getLike());
+
+  useEffect(() => {
+    setIsLike(getLike())
+    // eslint-disable-next-line
+  }, [savedMovies])
 
   const handleLikeClick = () => {
     if (isLike) {
+      handleDeleteMovie(getMovieId()._id);
       setIsLike(false);
+
     } else {
+      handleSaveMovie({
+        country: card.country,
+        director: card.director,
+        duration: card.duration,
+        year: card.year,
+        description: card.description,
+        image: card.image.url,
+        trailerLink: card.trailerLink,
+        thumbnail: card.image.formats.thumbnail.url,
+        movieId: card.id,
+        nameRU: card.nameRU,
+        nameEN: card.nameEN
+      })
       setIsLike(true);
     }
   }
 
   const handleDeleteClick = () => {
-
+    handleDeleteMovie(card._id);
   }
-
 
   const secondsToHm = (d) => {
     d = Number(d);
@@ -54,7 +78,10 @@ export default function MoviesCard({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img className="card__photo" src={card.thumbnail} alt={card.nameRU} />
+        <img
+          className="card__photo"
+          src={option==="movies" ? card.image.url : card.image}
+          alt={card.nameRU} />
       </CustomLink>
     </li >
   );
