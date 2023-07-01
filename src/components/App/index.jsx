@@ -11,6 +11,7 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
 import ProtectedRoute from '../ProtectedRoute';
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { useSessionStorage } from "../../hooks/useSessionStorage";
 
 export default function App() {
 
@@ -22,9 +23,9 @@ export default function App() {
   // states for savedMovies
   const [errorMessageSavedMovies, setErrorMessageSavedMovies] = useState(""); // ошибка от сервера при запросе сохраненных фильмов
   const [savedMovies, setSavedMovies] = useState([]); // массив сохраненных фильмов
-  // states for movies
+  // states for videos
   const [errorMessageMovies, setErrorMessageMovies] = useLocalStorage("errorMessageMovies", ""); // ошибка от сервера при запросе фильмов
-  const [movies, setMovies] = useLocalStorage("movies", []); // массив фильмов
+  const [movies, setMovies] = useSessionStorage("movies", []); // массив фильмов
 
   const navigate = useNavigate();
 
@@ -97,7 +98,7 @@ export default function App() {
         const data = await mainApi.getUser();
         const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
         setCurrentUser({ ...currentUser, ...newCurrentUser });
-        navigate("/movies", { replace: true });
+        navigate("/videos", { replace: true });
       }
     } catch (error) {
       setErrorMessage(error.message);
@@ -146,7 +147,7 @@ export default function App() {
         <Routes>
           <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
           <Route
-            path="movies"
+            path="videos"
             element={
               <ProtectedRoute
                 loggedIn={loggedIn}
@@ -163,7 +164,7 @@ export default function App() {
             }
           />
           <Route
-            path="saved-movies"
+            path="movies"
             element={
               <ProtectedRoute
                 loggedIn={loggedIn}

@@ -46,6 +46,15 @@ class MainApi extends BaseApi {
     )
   }
 
+  getAllVideos() {
+    return super._requestWithToken(
+      '/videos',
+      {
+        method: "GET"
+      }
+    )
+  }
+
   getAllSavedMovies() {
     return super._requestWithToken(
       '/movies',

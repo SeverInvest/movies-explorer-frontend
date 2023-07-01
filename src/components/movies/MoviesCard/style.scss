@@ -10,6 +10,7 @@
   flex-direction: row;
   justify-content: space-between;
   background: #2F2F2F;
+  column-gap: 10px;
 
   &__container {
     display: flex;
@@ -24,7 +25,7 @@
   &__name {
     padding-top: 16px;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1.2;
     color: #FFF;
   }
@@ -72,6 +73,7 @@
     margin: 0;
     padding: 0;
     width: 220px;
+    min-width: 220px;
     height: 122px;
     background: #202020;
   }

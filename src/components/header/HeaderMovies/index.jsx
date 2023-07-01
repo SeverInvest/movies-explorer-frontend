@@ -13,12 +13,12 @@ export default function HeaderMovies(
   return (
     <>
       {(option === "movies") ?
-        <p className={classNameText}> Фильмы </p>
+        <p className={classNameText}> Видео </p>
         :
         <CustomLink
           className={classNameLink}
-          linkTo="/movies"
-          textLink="Фильмы"
+          linkTo="/videos"
+          textLink="Видео"
           {...restProps}
         />
       }

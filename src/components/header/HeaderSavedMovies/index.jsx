@@ -13,12 +13,12 @@ export default function HeaderSavedMovies(
   return (
     <>
       {(option === "saved-movies") ?
-        <p className={classNameText}> Сохранённые фильмы </p>
+        <p className={classNameText}> Избранное </p>
         :
         <CustomLink
           className={classNameLink}
-          linkTo="/saved-movies"
-          textLink="Сохранённые фильмы"
+          linkTo="/movies"
+          textLink="Избранное"
           {...restProps}
         />
       }

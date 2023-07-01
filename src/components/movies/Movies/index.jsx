@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { usePagination } from "../../../hooks/usePagination";
 import Header from '../../header/Header';
 import Footer from '../../common/Footer';
-import moviesApi from "../../../utils/MoviesApi";
+import mainApi from "../../../utils/MainApi";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { DURATION_FILM } from "../../../utils/constants";
 
@@ -36,14 +36,14 @@ export default function Movies({
   async function handleGetMovies() {
     try {
       setErrorMessageMovies("");
-      const newMovies = await moviesApi.getAllMovies();
-      const updateMovies = await newMovies.map((item) => {
-        item.image.url = `https://api.nomoreparties.co/${item.image.url}`
-        item.image.formats.thumbnail.url = `https://api.nomoreparties.co/${item.image.formats.thumbnail.url}`
-        return { ...item }
-      })
-      setMovies(updateMovies);
-      return (updateMovies);
+      const newVideos = await mainApi.getAllVideos();
+      // const updateMovies = await newVideos.map((item) => {
+      //   item.image = `https://api.nomoreparties.co/${item.image}`
+      //   item.image.formats.thumbnail.url = `https://api.nomoreparties.co/${item.image.formats.thumbnail.url}`
+      //   return { ...item }
+      // })
+      setMovies(newVideos);
+      return (newVideos);
     } catch (error) {
       console.log(error);
       setIsPreloaderVisible(false);
@@ -60,7 +60,7 @@ export default function Movies({
     };
     setCardsFinded(info.filter(
       (item) => {
-        return _arg1Filter(item.nameRU)
+        return _arg1Filter(item.name)
           && _arg2Filter(item.duration)
       }
     ));

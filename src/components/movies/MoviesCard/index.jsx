@@ -10,8 +10,8 @@ export default function MoviesCard({
   handleDeleteMovie = null,
 }) {
 
-  const getLike = () => savedMovies.some(item => item.movieId === card.id);
-  const getMovieId = () => savedMovies.find(item => item.movieId === card.id);
+  const getLike = () => savedMovies.some(item => item.movieId === card._id);
+  const getMovieId = () => savedMovies.find(item => item.movieId === card._id);
   const [isLike, setIsLike] = useState(getLike());
 
   useEffect(() => {
@@ -26,17 +26,15 @@ export default function MoviesCard({
 
     } else {
       handleSaveMovie({
-        country: card.country,
+        language: card.language,
         director: card.director,
         duration: card.duration,
         year: card.year,
         description: card.description,
-        image: card.image.url,
+        image: card.image,
         trailerLink: card.trailerLink,
-        thumbnail: card.image.formats.thumbnail.url,
-        movieId: card.id,
-        nameRU: card.nameRU,
-        nameEN: card.nameEN
+        movieId: card._id,
+        name: card.name
       })
       setIsLike(true);
     }
@@ -61,7 +59,7 @@ export default function MoviesCard({
     <li className="card">
       <div className="card__container">
         <div className="card__info">
-          <p className="card__name">{card.nameRU}</p>
+          <p className="card__name">{card.name}</p>
           <p className="card__duration">{secondsToHm(card.duration)}</p>
         </div>
         {
@@ -80,8 +78,8 @@ export default function MoviesCard({
       >
         <img
           className="card__photo"
-          src={option==="movies" ? card.image.url : card.image}
-          alt={card.nameRU} />
+          src={card.image}
+          alt={card.name} />
       </CustomLink>
     </li >
   );

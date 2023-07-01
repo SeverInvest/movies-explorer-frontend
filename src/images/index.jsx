@@ -9,6 +9,7 @@ import smalltumboff from "./smalltumboff.svg";
 import me from "./me.jpg";
 import buttonClose from "./button-close.svg";
 import buttonCloseBlack from "./button-close-black.svg";
+import yandexCloud from "./yandex-cloud.png";
 
 const images = {
     burger,
@@ -22,6 +23,7 @@ const images = {
     me,
     buttonClose,
     buttonCloseBlack,
+    yandexCloud
   };
   
   export default images;

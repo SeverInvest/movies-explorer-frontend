@@ -1,4 +1,6 @@
-import "./style.scss"
+import "./style.scss";
+import { TECHS_ITEMS } from "../../../utils/constants";
+import Tech from "./Tech";
 
 export default function Techs() {
   return (
@@ -9,21 +11,21 @@ export default function Techs() {
         </div>
         <div className="techs__container">
           <h2 className="techs__container-header">
-            7 технологий
+            10 технологий
           </h2>
           <p className="techs__container-text">
             На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.
           </p>
         </div>
-          <ul className="techs__list">
-            <li className="techs__item">HTML</li>
-            <li className="techs__item">CSS</li>
-            <li className="techs__item">JS</li>
-            <li className="techs__item">React</li>
-            <li className="techs__item">Git</li>
-            <li className="techs__item">Express.js</li>
-            <li className="techs__item">mongoDB</li>
-          </ul>
+        <ul className="techs__list">
+          {TECHS_ITEMS.map((item) => (
+            <Tech
+              techName={item.techName}
+            >
+              <item.techImage color="white" size="30px"/>
+            </Tech>
+          ))}
+        </ul>
       </div>
     </section>
   );
