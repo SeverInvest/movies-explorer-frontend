@@ -2,30 +2,25 @@ import CustomButton from "../../common/CustomButton";
 import CustomSwitch from "../../common/CustomSwitch";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import "./style.scss";
-import Validation from "../../common/Validation";
+// import Validation from "../../common/Validation";
 
 export default function SearchForm({
   initialValues = {},
   onSearch,
-  disabledToggle = false,
-  isPreloaderVisible = false
+  // disabledToggle = false,
+  // isPreloaderVisible = false
 }) {
-  const { values, errors, setErrors, handleChange, setValues } = useFormAndValidation({ initialValues });
+  const { values, handleChange, setValues } = useFormAndValidation({ initialValues });
 
-  const onSubmit =  async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (values.search) {
-      await onSearch(values.search, values.isToggle);
-    } else {
-      setErrors({ ...errors, search: "Нужно заполнить поле поиска" });
-    }
+    await onSearch(values.search, values.isToggle);
+  }
 
-  };
-
-const setIsToggle = async (newIsToggle) => {
-  setValues({ ...values,  isToggle: newIsToggle });
-  await onSearch(values.search, newIsToggle);
-}
+  const setIsToggle = async (newIsToggle) => {
+    setValues({ ...values, isToggle: newIsToggle });
+    await onSearch(values.search, newIsToggle);
+  }
 
   return (
     <form
@@ -46,8 +41,8 @@ const setIsToggle = async (newIsToggle) => {
           autoFocus
           autoComplete="off"
           value={values.search || ""}
-          required
-          disabled={isPreloaderVisible}
+        // required
+        // disabled={isPreloaderVisible}
         />
         <CustomButton
           type="submit"
@@ -59,13 +54,13 @@ const setIsToggle = async (newIsToggle) => {
       <CustomSwitch
         setIsToggle={setIsToggle}
         isToggle={values.isToggle || false}
-        text="Короткометражки"
+        text="До 40 минут"
         className="search-form__switch-text"
-        disabled={disabledToggle}
+      // disabled={disabledToggle}
       />
-      <Validation
+      {/* <Validation
         errorMessage={errors.search}
-      />
+      /> */}
     </form>
   );
 }

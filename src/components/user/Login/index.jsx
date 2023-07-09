@@ -1,44 +1,48 @@
+import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import "./style.scss";
+
 import CustomLink from "../../common/CustomLink"
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import CustomForm from "../../common/CustomForm";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
-import { useEffect, useContext } from 'react';
-import "./style.scss";
+import { login, me } from "../../../services/fetch";
 import Preloader from "../../movies/Preloader";
+import { fetchUserError } from "../../../store/slices/userSlice";
 
-export default function Login(
-  { 
-    handleLogin = null, 
-    errorMessage = "", 
-    setErrorMessage = null,
-    setIsPreloaderVisible = null,
-    isPreloaderVisible = false
-  }
-) {
-  const currentUser = useContext(CurrentUserContext);
+export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const errorMessage = useSelector(state => state.user.error);
+  const isPreloaderVisible = useSelector(state => state.user.isLoading);
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
   const { values, handleChange, errors, setErrors, resetForm, setIsValid, isValid } = useFormAndValidation();
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    setIsPreloaderVisible(true);
     if (!isValid) {
       return;
     };
-    handleLogin(values);
+    const response = await login(dispatch, values.email, values.password);
+    console.log(response.data.token);
+    localStorage.setItem("jwt", response.data.token);
+    await me(dispatch);
+    navigate("/videos", { replace: true });
   }
 
   useEffect(() => {
     resetForm();
     setIsValid(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
+  }, [isLoggedIn]);
 
   // при изменении полей формы - сбрасывается ошибка, пришедшая из API
   function handleChangeAndClearErrorMessage(e) {
-    setErrorMessage("");
+    dispatch(fetchUserError(""));
+    setErrors("");
     handleChange(e);
   }
 
@@ -63,7 +67,7 @@ export default function Login(
             <h2 className="login__title">Рады видеть!</h2>
           </div>
           <div className="login__form">
-          {
+            {
               isPreloaderVisible &&
               <Preloader />
             }
@@ -83,7 +87,7 @@ export default function Login(
                   type="email"
                   autoFocus
                   error={errors.email}
-                  disabled={isPreloaderVisible}
+                disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.email}
@@ -95,7 +99,7 @@ export default function Login(
                   type="password"
                   minLength="8"
                   error={errors.password}
-                  disabled={isPreloaderVisible}
+                disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.password}

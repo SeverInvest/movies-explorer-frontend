@@ -6,7 +6,7 @@ export default function CustomSwitch({
   setIsToggle = null,
   text = "",
   isToggle = false,
-  disabled,
+  disabled = false,
   children,
   ...restProps
 }) {

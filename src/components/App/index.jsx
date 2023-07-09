@@ -11,35 +11,19 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
 import ProtectedRoute from '../ProtectedRoute';
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { useSessionStorage } from "../../hooks/useSessionStorage";
+// import { useSessionStorage } from "../../hooks/useSessionStorage";
+import { useSelector } from 'react-redux';
 
 export default function App() {
 
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
+
   const [currentUser, setCurrentUser] = useState({ userName: "", userEmail: "", userId: "" });
 
-  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("jwt"));
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
-  // states for savedMovies
   const [errorMessageSavedMovies, setErrorMessageSavedMovies] = useState(""); // ошибка от сервера при запросе сохраненных фильмов
   const [savedMovies, setSavedMovies] = useState([]); // массив сохраненных фильмов
-  // states for videos
-  const [errorMessageMovies, setErrorMessageMovies] = useLocalStorage("errorMessageMovies", ""); // ошибка от сервера при запросе фильмов
-  const [movies, setMovies] = useSessionStorage("movies", []); // массив фильмов
 
   const navigate = useNavigate();
-
-  async function handleGetCurrentUser() {
-    try {
-      const data = await mainApi.getUser()
-      setLoggedIn(true);
-      const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
-      setCurrentUser({ ...currentUser, ...newCurrentUser });
-    } catch (error) {
-      console.log(`Токен не соответствует: ${error}`);
-      setLoggedIn(false);
-    }
-  };
 
   async function handleGetSavedMovies() {
     try {
@@ -61,15 +45,6 @@ export default function App() {
     }
   };
 
-  async function handleSaveMovie(data) {
-    try {
-      const res = await mainApi.saveMovie(data);
-      setSavedMovies([...savedMovies, res])
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   async function handleRegister({ name, email, password }) {
     try {
       const data = await mainApi.register(name, email, password);
@@ -78,33 +53,14 @@ export default function App() {
       const { token } = await mainApi.authorize(email, password);
       if (token) {
         localStorage.setItem("jwt", token);
-        setLoggedIn(true);
+        // setLoggedIn(true);
         navigate("/videos", { replace: true });
       }
     } catch (error) {
-      setErrorMessage(error.message);
+      // setErrorMessage(error.message);
       console.log(error)
     } finally {
-      setIsPreloaderVisible(false);
-    };
-  };
-
-  async function handleLogin({ email, password }) {
-    try {
-      const { token } = await mainApi.authorize(email, password);
-      if (token) {
-        localStorage.setItem("jwt", token);
-        setLoggedIn(true);
-        const data = await mainApi.getUser();
-        const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
-        setCurrentUser({ ...currentUser, ...newCurrentUser });
-        navigate("/videos", { replace: true });
-      }
-    } catch (error) {
-      setErrorMessage(error.message);
-      console.log(error)
-    } finally {
-      setIsPreloaderVisible(false);
+      // setIsPreloaderVisible(false);
     };
   };
 
@@ -113,61 +69,56 @@ export default function App() {
       const data = await mainApi.setUserInfo(info);
       const newCurrentUser = { userName: data.name, userEmail: data.email, userId: data._id };
       setCurrentUser({ ...currentUser, ...newCurrentUser });
-      setErrorMessage("Изменения профиля сохранены");
+      // setErrorMessage("Изменения профиля сохранены");
       // console.log("профиль");
     } catch (error) {
-      setErrorMessage(error.message);
+      // setErrorMessage(error.message);
       console.log(error)
     } finally {
-      setIsPreloaderVisible(false);
+      // setIsPreloaderVisible(false);
     };
   };
 
   function handleSignOut() {
     setCurrentUser({ userName: "", userEmail: "", userId: "" });
-    setLoggedIn(false);
+    // setLoggedIn(false);
     localStorage.clear();
     setSavedMovies([]);
-    setMovies([]);
+    // setMovies([]);
     setErrorMessageSavedMovies("");
-    setErrorMessageMovies("");
+    // setErrorMessageMovies("");
   };
 
-  useEffect(() => {
-    if (loggedIn) {
-      handleGetCurrentUser();
-      handleGetSavedMovies();
-    }
-    // eslint-disable-next-line 
-  }, [loggedIn]);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     handleGetCurrentUser();
+  //     handleGetSavedMovies();
+  //   }
+  //   // eslint-disable-next-line 
+  // }, [loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Routes>
-          <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
+
+          <Route exact path="/" element={<Main loggedIn={isLoggedIn} />} />
+
           <Route
             path="videos"
             element={
               <ProtectedRoute
-                loggedIn={loggedIn}
-                movies={movies}
-                savedMovies={savedMovies}
-                errorMessageMovies={errorMessageMovies}
-                handleSaveMovie={handleSaveMovie}
-                handleDeleteMovie={handleDeleteMovie}
-                setErrorMessageMovies={setErrorMessageMovies}
-                setMovies={setMovies}
-
+                loggedIn={isLoggedIn}
                 component={Movies}
               />
             }
           />
+
           <Route
             path="movies"
             element={
               <ProtectedRoute
-                loggedIn={loggedIn}
+                loggedIn={isLoggedIn}
                 savedMovies={savedMovies}
                 errorMessageSavedMovies={errorMessageSavedMovies}
                 handleGetSavedMovies={handleGetSavedMovies}
@@ -180,15 +131,11 @@ export default function App() {
           <Route
             path="signup"
             element={
-              loggedIn ? (
+              isLoggedIn ? (
                 <Navigate to='/' replace />
               ) : (
                 <Register
                   handleRegister={handleRegister}
-                  errorMessage={errorMessage}
-                  setErrorMessage={setErrorMessage}
-                  setIsPreloaderVisible={setIsPreloaderVisible}
-                  isPreloaderVisible={isPreloaderVisible}
                 />
               )
             }
@@ -197,30 +144,20 @@ export default function App() {
           <Route
             path="signin"
             element={
-              loggedIn ? (
+              isLoggedIn ? (
                 <Navigate to='/' replace />
               ) : (
-                <Login
-                  handleLogin={handleLogin}
-                  errorMessage={errorMessage}
-                  setErrorMessage={setErrorMessage}
-                  setIsPreloaderVisible={setIsPreloaderVisible}
-                  isPreloaderVisible={isPreloaderVisible}
-                />
+                <Login />
               )
             }
           />
           <Route
             path="profile"
             element={<ProtectedRoute
-              loggedIn={loggedIn}
+              loggedIn={isLoggedIn}
               component={Profile}
               handleChangeUserInfo={handleChangeUserInfo}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
               handleSignOut={handleSignOut}
-              setIsPreloaderVisible={setIsPreloaderVisible}
-              isPreloaderVisible={isPreloaderVisible}
             />
             }
           />

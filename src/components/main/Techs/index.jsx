@@ -20,7 +20,7 @@ export default function Techs() {
         <ul className="techs__list">
           {TECHS_ITEMS.map((item) => (
             <Tech
-              techName={item.techName}
+              techName={item.techName} key={item.techName}
             >
               <item.techImage color="white" size="30px"/>
             </Tech>

@@ -16,8 +16,8 @@ export default function Profile(
     setErrorMessage,
     loggedIn,
     handleSignOut,
-    setIsPreloaderVisible,
-    isPreloaderVisible
+    // setIsPreloaderVisible,
+    // isPreloaderVisible
   }
 ) {
   const { values, handleChange, errors, setErrors, resetForm, setIsValid, isValid } = useFormAndValidation();
@@ -26,7 +26,7 @@ export default function Profile(
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setIsPreloaderVisible(true);
+    // setIsPreloaderVisible(true);
     handleChangeUserInfo(values);
   }
 
@@ -89,10 +89,10 @@ export default function Profile(
               <h2 className="profile__title">Привет, {currentUser.userName}!</h2>
             </div>
             <div className="profile__form">
-            {
+            {/* {
               isPreloaderVisible &&
               <Preloader />
-            }
+            } */}
               <CustomForm
                 nameForm="form-profile"
                 buttonText="Редактировать"
@@ -114,7 +114,7 @@ export default function Profile(
                     error={errors.name}
                     option="profile"
                     value={values.name || ""}
-                    disabled={isPreloaderVisible}
+                    // disabled={isPreloaderVisible}
                   />
                   <Validation
                     errorMessage={errors.name}
@@ -127,7 +127,7 @@ export default function Profile(
                     error={errors.email}
                     option="profile"
                     value={values.email || ""}
-                    disabled={isPreloaderVisible}
+                    // disabled={isPreloaderVisible}
                   />
                   <Validation
                     errorMessage={errors.email}

@@ -1,6 +1,5 @@
-// 'use strict';
-import { connect } from './connect.js';
-import BaseApi from './BaseApi.js';
+import BaseApi from "./BaseApi";
+import { connect } from "./connect";
 
 class MainApi extends BaseApi {
   constructor() {

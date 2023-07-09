@@ -14,8 +14,8 @@ export default function Register(
     handleRegister, 
     errorMessage, 
     setErrorMessage,
-    setIsPreloaderVisible,
-    isPreloaderVisible 
+    // setIsPreloaderVisible,
+    // isPreloaderVisible 
   }
 ) {
   const currentUser = useContext(CurrentUserContext);
@@ -23,7 +23,7 @@ export default function Register(
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setIsPreloaderVisible(true);
+    // setIsPreloaderVisible(true);
     if (!isValid) {
       return;
     };
@@ -73,10 +73,10 @@ export default function Register(
             <h2 className="register__title">Добро пожаловать!</h2>
           </div>
           <div className="register__form">
-          {
+          {/* {
               isPreloaderVisible &&
               <Preloader />
-            }
+            } */}
             <CustomForm
               nameForm="form-register"
               isValid={isValid}
@@ -94,7 +94,7 @@ export default function Register(
                   minLength="2"
                   maxLength="30"
                   error={errors.name}
-                  disabled={isPreloaderVisible}
+                  // disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.name}
@@ -105,7 +105,7 @@ export default function Register(
                   name="email"
                   type="email"
                   error={errors.email}
-                  disabled={isPreloaderVisible}
+                  // disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.email}

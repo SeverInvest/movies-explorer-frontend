@@ -1,48 +1,51 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import "./style.scss";
 import CustomLink from '../../common/CustomLink';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLike, setDisike } from "../../../services/fetch";
 
 export default function MoviesCard({
   card,
-  option,
-  savedMovies,
-  handleSaveMovie = null,
-  handleDeleteMovie = null,
+  // option,
+  // savedMovies,
+  // handleLikeVideo = null,
+  // handleDislikeVideo = null,
 }) {
 
-  const getLike = () => savedMovies.some(item => item.movieId === card._id);
-  const getMovieId = () => savedMovies.find(item => item.movieId === card._id);
-  const [isLike, setIsLike] = useState(getLike());
+  const dispatch = useDispatch();
+  const userVideos = useSelector(state => state.user.videos);
+  const videos = useSelector(state => state.videos.videos);
 
-  useEffect(() => {
-    setIsLike(getLike())
-    // eslint-disable-next-line
-  }, [savedMovies])
 
   const handleLikeClick = () => {
-    if (isLike) {
-      handleDeleteMovie(getMovieId()._id);
-      setIsLike(false);
-
-    } else {
-      handleSaveMovie({
-        language: card.language,
-        director: card.director,
-        duration: card.duration,
-        year: card.year,
-        description: card.description,
-        image: card.image,
-        trailerLink: card.trailerLink,
-        movieId: card._id,
-        name: card.name
+    if (!userVideos.includes(card)) {
+      handleLikeVideo({
+        card,
       })
-      setIsLike(true);
+    } else {
+      handleDislikeVideo({
+        card,
+      })
     }
   }
 
-  const handleDeleteClick = () => {
-    handleDeleteMovie(card._id);
-  }
+  async function handleLikeVideo({ card }) {
+    try {
+      console.log(card);
+      setLike(dispatch, card)
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  async function handleDislikeVideo({ card }) {
+    try {
+      console.log(card);
+      setDisike(dispatch, card)
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const secondsToHm = (d) => {
     d = Number(d);
@@ -53,24 +56,19 @@ export default function MoviesCard({
     return hDisplay + " " + mDisplay;
   }
 
-  const cardLikeClassName = `card__button card__button_heart ${isLike ? "card__button_heart_active" : ""}`;
+  const cardLikeClassName = `card__button card__button_heart ${userVideos.includes(card) ? "card__button_heart_active" : ""}`;
 
   return (
     <li className="card">
       <div className="card__container">
         <div className="card__info">
-          <p className="card__name">{card.name}</p>
-          <p className="card__duration">{secondsToHm(card.duration)}</p>
+          <p className="card__name">{videos[card].nameVideo}</p>
+          <p className="card__duration">{secondsToHm(videos[card].duration)}</p>
         </div>
-        {
-          option === "movies" ?
-            <button className={cardLikeClassName} type="button" aria-label="Лайк" onClick={handleLikeClick} />
-            :
-            <button className="card__button card__button_delete" type="button" aria-label="Удалить фильм" onClick={handleDeleteClick} />
-        }
+        <button className={cardLikeClassName} type="button" aria-label="Лайк" onClick={handleLikeClick} />
       </div>
       <CustomLink
-        linkTo={card.trailerLink}
+        linkTo={videos[card].videoLink}
         textLink=""
         className="card__link-img"
         target="_blank"
@@ -78,8 +76,8 @@ export default function MoviesCard({
       >
         <img
           className="card__photo"
-          src={card.image}
-          alt={card.name} />
+          src={videos[card].imageLink}
+          alt={videos[card].nameVideo} />
       </CustomLink>
     </li >
   );

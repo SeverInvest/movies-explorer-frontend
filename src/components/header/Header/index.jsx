@@ -5,12 +5,13 @@ import { useResize } from "../../../hooks/useResize";
 import SideBar from '../../common/SideBar';
 import Logo from '../../common/Logo';
 import MenuOrBurger from '../MenuOrBurger';
+import { useSelector } from 'react-redux';
 
 export default function Header({
-  loggedIn = false,
+  // loggedIn = false,
   option, //main, movies, saved-movies, profile
 }) {
-
+  const isLogggedIn = useSelector(state => state.user.isLoggedIn);
   const [hamburgerOn, setHamburgerOn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { typeScreen } = useResize();
@@ -30,7 +31,7 @@ export default function Header({
       <div className="header__container">
         <Logo />
         <>
-          {(loggedIn) ?
+          {(isLogggedIn) ?
             <>
               <MenuOrBurger option={option} typeScreen={typeScreen} setHamburgerOn={setHamburgerOn} />
             </>

@@ -22,7 +22,7 @@ export default function SavedMovies({
   const [cardsCountVisible, setCardsCountVisible] = useState(pagination);
   const [cardsFinded, setCardsFinded] = useState(savedMovies);
   const [cardsFindedVisible, setCardsFindedVisible] = useState([]);
-  const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
+  // const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
 
   function handleSearch(search, isToggle) {
     function _arg1Filter(itemName) {
@@ -44,9 +44,9 @@ export default function SavedMovies({
   };
 
   async function onSearch(search, isToggle) {
-    setIsPreloaderVisible(true);
+    // setIsPreloaderVisible(true);
     handleSearch(search, isToggle);
-    setIsPreloaderVisible(false);
+    // setIsPreloaderVisible(false);
   };
 
   useEffect(() => {
@@ -79,12 +79,12 @@ export default function SavedMovies({
           <div className="saved-movies__container">
             <SearchForm
               onSearch={onSearch}
-              isPreloaderVisible={isPreloaderVisible}
+              // isPreloaderVisible={isPreloaderVisible}
             />
-            {
+            {/* {
               isPreloaderVisible &&
               <Preloader />
-            }
+            } */}
             {
               cardsCount === 0 ?
                 <p className="saved-movies__unsuccess-search"> Ничего не найдено </p>
