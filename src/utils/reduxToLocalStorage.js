@@ -1,10 +1,31 @@
 
 export function loadState() {
   try {
-    return JSON.parse(localStorage.getItem("redux"));
+    const redux = localStorage.getItem("redux");
+    if (!redux || JSON.parse(redux).countKeys === 0) {
+      return {
+        videos: {
+          videos: {},
+          isLoading: false,
+          error: "",
+          keys: [],
+          countKeys: 0
+        },
+        user: {
+          videos: [],
+          isLoading: false,
+          error: "",
+          userId: "",
+          userName: "",
+          userEmail: "",
+          isLoggedIn: false,
+        }
+      };
+    }
+    return JSON.parse(redux);
+
   } catch (e) {
     console.log(e);
-    return undefined;
   }
 }
 

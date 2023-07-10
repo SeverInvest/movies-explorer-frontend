@@ -27,7 +27,6 @@ export default function Login() {
       return;
     };
     const response = await login(dispatch, values.email, values.password);
-    console.log(response.data.token);
     localStorage.setItem("jwt", response.data.token);
     await me(dispatch);
     navigate("/videos", { replace: true });
