@@ -1,49 +1,47 @@
 import CustomLink from "../../common/CustomLink"
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import CustomForm from "../../common/CustomForm";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../../header/Header';
 import "./style.scss";
-import Preloader from "../../movies/Preloader";
+import { useSelector, useDispatch } from 'react-redux';
+import { logOut } from "../../../store/slices/userSlice";
+import { setChangeUser } from "../../../services/fetch";
 
-export default function Profile(
-  {
-    handleChangeUserInfo,
-    errorMessage,
-    setErrorMessage,
-    loggedIn,
-    handleSignOut,
-    // setIsPreloaderVisible,
-    // isPreloaderVisible
-  }
-) {
+export default function Profile() {
+  const dispatch = useDispatch();
   const { values, handleChange, errors, setErrors, resetForm, setIsValid, isValid } = useFormAndValidation();
-  const currentUser = useContext(CurrentUserContext);
-  const [hasChanged, setHasChanged] = useState(false);
+   const [hasChanged, setHasChanged] = useState(false);
+  const userName = useSelector(state => state.user.userName);
+  const userEmail = useSelector(state => state.user.userEmail);
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
     // setIsPreloaderVisible(true);
-    handleChangeUserInfo(values);
+    setChangeUser(dispatch, values.name, values.email)
   }
+
+  function handleSignOut() {
+    dispatch(logOut());
+    localStorage.clear();
+  };
 
   useEffect(() => {
     resetForm(
       {
-        name: currentUser.userName,
-        email: currentUser.userEmail
+        name: userName,
+        email: userEmail
       }
     );
     setIsValid(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
+  }, [userName, userEmail]);
 
 
   useEffect(() => {
-    if (values.name === currentUser.userName && values.email === currentUser.userEmail) {
+    if (values.name === userName && values.email === userEmail) {
       setIsValid(false);
     }
     // eslint-disable-next-line 
@@ -51,7 +49,8 @@ export default function Profile(
 
   // при изменении полей формы - сбрасывается ошибка, пришедшая из API
   function handleChangeAndClearErrorMessage(e) {
-    setErrorMessage("");
+    // setErrorMessage("");
+    //TODO убрать ошибку прилетевшую из API
     handleChange(e);
   }
 
@@ -81,12 +80,12 @@ export default function Profile(
 
   return (
     <>
-      <Header loggedIn={loggedIn} option="profile" />
+      <Header option="profile" />
       <section className="profile" aria-label="Форма изменения личных данных">
         <div className="profile__container">
           <div className="profile__info">
             <div className="profile__header">
-              <h2 className="profile__title">Привет, {currentUser.userName}!</h2>
+              <h2 className="profile__title">Привет, {userName}!</h2>
             </div>
             <div className="profile__form">
             {/* {
@@ -135,7 +134,7 @@ export default function Profile(
                 </div>
                 <div className="profile__error-message">
                   <Validation
-                    errorMessage={errorMessage}
+                    // errorMessage={errorMessage} TODO Ошибка прилетевашая из API
                   />
                 </div>
               </CustomForm>

@@ -10,7 +10,6 @@ export default function CustomSwitch({
   children,
   ...restProps
 }) {
-console.log("setToggle: ", setToggle.toString());
   const imgTumbler = isToggle ? images.smalltumbon : images.smalltumboff
 
   return (

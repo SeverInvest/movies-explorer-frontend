@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react';
 import "./style.scss";
 import CustomLink from '../../common/CustomLink';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,10 +5,6 @@ import { setLike, setDisike } from "../../../services/fetch";
 
 export default function MoviesCard({
   card,
-  // option,
-  // savedMovies,
-  // handleLikeVideo = null,
-  // handleDislikeVideo = null,
 }) {
 
   const dispatch = useDispatch();
@@ -31,7 +26,6 @@ export default function MoviesCard({
 
   async function handleLikeVideo({ card }) {
     try {
-      console.log(card);
       setLike(dispatch, card)
     } catch (error) {
       console.log(error.message);
@@ -40,7 +34,6 @@ export default function MoviesCard({
 
   async function handleDislikeVideo({ card }) {
     try {
-      console.log(card);
       setDisike(dispatch, card)
     } catch (error) {
       console.log(error.message);

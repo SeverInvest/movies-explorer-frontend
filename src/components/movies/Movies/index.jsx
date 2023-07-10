@@ -22,7 +22,6 @@ export default function Movies() {
   const videosError = useSelector(state => state.videos.error); // ошибка при импорте из БД
   const videosIsImported = useSelector(state => state.videos.isImported); // импорт из БД завершен.
   const userVideos = useSelector(state => state.user.videos); // все избранные видео текущего пользователя
-  // const isLogggedIn = useSelector(state => state.user.isLogggedIn);
 
   const { pagination } = usePagination();
 
@@ -115,7 +114,6 @@ export default function Movies() {
         <section className="movies__section" aria-label="Фильмы">
           <div className="movies__container">
             <SearchForm
-              // disabledToggle={videosCountKeys === 0}
               onSearch={onSearch}
               initialValues={{
                 search: searchText,
@@ -140,11 +138,7 @@ export default function Movies() {
                   </p>
                   :
                   <MoviesCardList
-                    // option="movies"
                     cards={cardsFindedVisible}
-                  // savedMovies={savedMovies}
-                  // handleLikeVideo={handleLikeVideo}
-                  // handleDislikeVideo={handleDislikeVideo}
                   />
             }
             {isVisibleButton &&

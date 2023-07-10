@@ -2,13 +2,10 @@ import CustomButton from "../../common/CustomButton";
 import CustomSwitch from "../../common/CustomSwitch";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import "./style.scss";
-// import Validation from "../../common/Validation";
 
 export default function SearchForm({
   initialValues = {},
   onSearch,
-  // disabledToggle = false,
-  // isPreloaderVisible = false
 }) {
   const { values, handleChange, setValues } = useFormAndValidation({ initialValues });
 

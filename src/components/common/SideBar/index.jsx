@@ -2,7 +2,6 @@ import "./style.scss";
 import CustomLink from "../../common/CustomLink";
 import CustomButton from "../../common/CustomButton";
 import HeaderMovies from "../../header/HeaderMovies";
-import HeaderSavedMovies from "../../header/HeaderSavedMovies";
 import HeaderAccount from "../../header/HeaderAccount";
 import images from "../../../images";
 import { useEffect } from 'react';
@@ -61,7 +60,6 @@ export default function SideBar({
             />
           }
           <HeaderMovies option={option} sideBar={true} onClick={onClose} />
-          <HeaderSavedMovies option={option} sideBar={true} onClick={onClose} />
         </div>
         <HeaderAccount onClick={onClose} />
       </nav>

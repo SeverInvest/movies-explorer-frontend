@@ -2,11 +2,7 @@ import MoviesCard from "../MoviesCard";
 import "./style.scss";
 
 export default function MoviesCardList({
-  cards = [], 
-  // option = "", 
-  // savedMovies = [], 
-  // handleLikeVideo = null, 
-  // handleDislikeVideo = null
+  cards = [],
 }) {
   return (
     <section aria-label="Раздел с карточками фильмов" className="cards">
@@ -15,10 +11,6 @@ export default function MoviesCardList({
           <MoviesCard
             key={card}
             card={card}
-            // option={option}
-            // savedMovies={savedMovies}
-            // handleLikeVideo={handleLikeVideo}
-            // handleDislikeVideo={handleDislikeVideo}
           />
         ))}
       </ul>

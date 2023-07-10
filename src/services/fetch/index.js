@@ -32,7 +32,6 @@ export async function setLike(dispatch, videoId) {
   }
 }
 
-
 export async function setDisike(dispatch, videoId) {
   try {
     const response = await endpoints.setDislikeVideo(dispatch, videoId);
@@ -42,15 +41,6 @@ export async function setDisike(dispatch, videoId) {
     dispatch(actionFetchVideosError(error.message));
   }
 }
-// export async function getLikeVideos(dispatch) {
-//   try {
-//     dispatch(actionFetchVideosLoading());
-//     const response = await endpoints.getVideos(dispatch);
-//     dispatch(actionFetchVideosSuccess(response.data))
-//   } catch (error) {
-//     dispatch(actionFetchVideosError(error.message));
-//   }
-// }
 
 export async function me(dispatch) {
   try {
@@ -69,6 +59,29 @@ export async function login(dispatch, email, password) {
   try {
     dispatch(fetchUserLoading(true));
     return await endpoints.loginUser(dispatch, email, password);
+  } catch (error) {
+    dispatch(fetchUserError(error.message));
+  } finally {
+    dispatch(fetchUserLoading(false));
+  }
+}
+
+export async function register(dispatch, name, email, password) {
+  try {
+    dispatch(fetchUserLoading(true));
+    return await endpoints.registerUser(dispatch, name, email, password);
+  } catch (error) {
+    dispatch(fetchUserError(error.message));
+  } finally {
+    dispatch(fetchUserLoading(false));
+  }
+}
+
+export async function setChangeUser(dispatch, name, email) {
+try {
+    dispatch(fetchUserLoading(true));
+    const response = await endpoints.patchUser(dispatch, name, email);
+    dispatch(fetchUserSuccess(response.data))
   } catch (error) {
     dispatch(fetchUserError(error.message));
   } finally {

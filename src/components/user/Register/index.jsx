@@ -1,44 +1,50 @@
 import CustomLink from "../../common/CustomLink"
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import { useDispatch, useSelector } from 'react-redux';
 import CustomForm from "../../common/CustomForm";
 import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
+import { register, login, me } from "../../../services/fetch";
 import "./style.scss";
 import Preloader from "../../movies/Preloader";
+import { useNavigate } from 'react-router-dom';
+import { fetchUserError } from "../../../store/slices/userSlice";
 
-export default function Register(
-  { 
-    handleRegister, 
-    errorMessage, 
-    setErrorMessage,
-    // setIsPreloaderVisible,
-    // isPreloaderVisible 
-  }
-) {
-  const currentUser = useContext(CurrentUserContext);
+export default function Register() {
+
   const { values, handleChange, errors, setErrors, resetForm, setIsValid, isValid } = useFormAndValidation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const errorMessage = useSelector(state => state.user.error);
+  const isPreloaderVisible = useSelector(state => state.user.isLoading);
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    // setIsPreloaderVisible(true);
     if (!isValid) {
       return;
     };
-    handleRegister(values);
+    const resRegister = await register(dispatch, values.name, values.email, values.password);
+    console.log(resRegister);
+    const resLogin = await login(dispatch, values.email, values.password);
+    console.log(resLogin)
+    localStorage.setItem("jwt", resLogin.data.token);
+    await me(dispatch);
+    navigate("/videos", { replace: true });
   }
 
   useEffect(() => {
     resetForm();
     setIsValid(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
+  }, [isLoggedIn]);
 
   // при изменении полей формы - сбрасывается ошибка, пришедшая из API
   function handleChangeAndClearErrorMessage(e) {
-    setErrorMessage("");
+    dispatch(fetchUserError(""));
+    setErrors("");
     handleChange(e);
   }
 
@@ -73,10 +79,10 @@ export default function Register(
             <h2 className="register__title">Добро пожаловать!</h2>
           </div>
           <div className="register__form">
-          {/* {
+            {
               isPreloaderVisible &&
               <Preloader />
-            } */}
+            }
             <CustomForm
               nameForm="form-register"
               isValid={isValid}
@@ -94,7 +100,7 @@ export default function Register(
                   minLength="2"
                   maxLength="30"
                   error={errors.name}
-                  // disabled={isPreloaderVisible}
+                disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.name}
@@ -105,7 +111,7 @@ export default function Register(
                   name="email"
                   type="email"
                   error={errors.email}
-                  // disabled={isPreloaderVisible}
+                disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.email}
