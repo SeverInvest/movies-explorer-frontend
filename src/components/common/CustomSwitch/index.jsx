@@ -3,14 +3,14 @@ import images from "../../../images";
 
 export default function CustomSwitch({
   className = "",
-  setIsToggle = null,
+  setToggle = null,
   text = "",
   isToggle = false,
   disabled = false,
   children,
   ...restProps
 }) {
-
+console.log("setToggle: ", setToggle.toString());
   const imgTumbler = isToggle ? images.smalltumbon : images.smalltumboff
 
   return (
@@ -20,7 +20,7 @@ export default function CustomSwitch({
         type="checkbox"
         className="switch__input"
         {...restProps}
-        onClick={() => setIsToggle(!isToggle)}
+        onClick={() => setToggle(!isToggle)}
         disabled={disabled}
       />
       <img

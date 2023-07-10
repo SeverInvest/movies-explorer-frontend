@@ -1,15 +1,18 @@
+// import endpoints from "../services/endpoints";
 
 export function loadState() {
   try {
     const redux = localStorage.getItem("redux");
     if (!redux || JSON.parse(redux).countKeys === 0) {
+   
       return {
         videos: {
           videos: {},
           isLoading: false,
           error: "",
           keys: [],
-          countKeys: 0
+          countKeys: 0,
+          isImported: false
         },
         user: {
           videos: [],

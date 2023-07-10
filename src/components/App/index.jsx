@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import Main from '../main/Main';
 import Movies from '..//movies/Movies';
@@ -10,12 +10,15 @@ import PageError from '../PageError';
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import mainApi from "../../utils/MainApi";
 import ProtectedRoute from '../ProtectedRoute';
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { logOut } from "../../store/slices/userSlice";
+// import { useLocalStorage } from "../../hooks/useLocalStorage";
 // import { useSessionStorage } from "../../hooks/useSessionStorage";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function App() {
 
+
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
   const [currentUser, setCurrentUser] = useState({ userName: "", userEmail: "", userId: "" });
@@ -25,16 +28,16 @@ export default function App() {
 
   const navigate = useNavigate();
 
-  async function handleGetSavedMovies() {
-    try {
-      setErrorMessageSavedMovies("");
-      const data = await mainApi.getAllSavedMovies();
-      setSavedMovies(data);
-    } catch (error) {
-      console.log(error.message);
-      setErrorMessageSavedMovies(error.message);
-    }
-  };
+  // async function handleGetSavedMovies() {
+  //   try {
+  //     setErrorMessageSavedMovies("");
+  //     const data = await mainApi.getAllSavedMovies();
+  //     setSavedMovies(data);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     setErrorMessageSavedMovies(error.message);
+  //   }
+  // };
 
   async function handleDeleteMovie(movieId) {
     try {
@@ -82,6 +85,7 @@ export default function App() {
   function handleSignOut() {
     setCurrentUser({ userName: "", userEmail: "", userId: "" });
     // setLoggedIn(false);
+    dispatch(logOut());
     localStorage.clear();
     setSavedMovies([]);
     // setMovies([]);
@@ -119,10 +123,10 @@ export default function App() {
             element={
               <ProtectedRoute
                 loggedIn={isLoggedIn}
-                savedMovies={savedMovies}
-                errorMessageSavedMovies={errorMessageSavedMovies}
-                handleGetSavedMovies={handleGetSavedMovies}
-                handleDeleteMovie={handleDeleteMovie}
+                // savedMovies={savedMovies}
+                // errorMessageSavedMovies={errorMessageSavedMovies}
+                // handleGetSavedMovies={handleGetSavedMovies}
+                // handleDeleteMovie={handleDeleteMovie}
 
                 component={SavedMovies}
               />

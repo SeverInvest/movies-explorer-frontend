@@ -14,12 +14,17 @@ export default function SearchForm({
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await onSearch(values.search, values.isToggle);
+    await onSearch(values.search, values.isToggleDuration, values.isToggleLike);
   }
 
-  const setIsToggle = async (newIsToggle) => {
-    setValues({ ...values, isToggle: newIsToggle });
-    await onSearch(values.search, newIsToggle);
+  const setIsToggleDuration = async (newIsToggleDuration) => {
+    setValues({ ...values, isToggleDuration: newIsToggleDuration });
+    await onSearch(values.search, newIsToggleDuration, values.isToggleLike);
+  }
+
+  const setIsToggleLike = async (newIsToggleLike) => {
+    setValues({ ...values, isToggleLike: newIsToggleLike });
+    await onSearch(values.search, values.isToggleDuration, newIsToggleLike);
   }
 
   return (
@@ -41,8 +46,6 @@ export default function SearchForm({
           autoFocus
           autoComplete="off"
           value={values.search || ""}
-        // required
-        // disabled={isPreloaderVisible}
         />
         <CustomButton
           type="submit"
@@ -52,15 +55,20 @@ export default function SearchForm({
         />
       </div>
       <CustomSwitch
-        setIsToggle={setIsToggle}
-        isToggle={values.isToggle || false}
+        name="isToggleDuration"
+        setToggle={setIsToggleDuration}
+        isToggle={values.isToggleDuration || false}
         text="До 40 минут"
         className="search-form__switch-text"
-      // disabled={disabledToggle}
       />
-      {/* <Validation
-        errorMessage={errors.search}
-      /> */}
+      <CustomSwitch
+        name="isToggleLike"
+        setToggle={setIsToggleLike}
+        isToggle={values.isToggleLike || false}
+        text="Избранное"
+        className="search-form__switch-text"
+      />
+
     </form>
   );
 }

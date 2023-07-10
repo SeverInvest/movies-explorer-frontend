@@ -24,12 +24,12 @@ export default function SavedMovies({
   const [cardsFindedVisible, setCardsFindedVisible] = useState([]);
   // const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
 
-  function handleSearch(search, isToggle) {
+  function handleSearch(search, isToggleDuration) {
     function _arg1Filter(itemName) {
       return !!search ? itemName.toLowerCase().includes(search.toLowerCase()) : false
     };
     function _arg2Filter(duration) {
-      return isToggle ? duration <= DURATION_FILM : true;
+      return isToggleDuration ? duration <= DURATION_FILM : true;
     };
     setCardsFinded(savedMovies.filter(
       (item) => {
@@ -43,9 +43,9 @@ export default function SavedMovies({
     setCardsCountVisible(cardsCountVisible + pagination);
   };
 
-  async function onSearch(search, isToggle) {
+  async function onSearch(search, isToggleDuration) {
     // setIsPreloaderVisible(true);
-    handleSearch(search, isToggle);
+    handleSearch(search, isToggleDuration);
     // setIsPreloaderVisible(false);
   };
 

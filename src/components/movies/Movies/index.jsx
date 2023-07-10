@@ -3,7 +3,7 @@ import MoviesCardList from "../MoviesCardList";
 import "./style.scss";
 import CustomButton from "../../common/CustomButton";
 import Preloader from "../Preloader";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { usePagination } from "../../../hooks/usePagination";
 import Header from '../../header/Header';
@@ -15,38 +15,55 @@ import { fetchVideos } from "../../../services/fetch";
 export default function Movies() {
 
   const dispatch = useDispatch();
-  const videos = useSelector(state => state.videos.videos);
-  const videosKeys = useSelector(state => state.videos.keys);
-  const videosCountKeys = useSelector(state => state.videos.countKeys);
-  const videosIsLoading = useSelector(state => state.videos.isLoading);
-  const videosError = useSelector(state => state.videos.error);
+  const videos = useSelector(state => state.videos.videos); // массив всех видео
+  const videosKeys = useSelector(state => state.videos.keys); // id всех видео
+  const videosCountKeys = useSelector(state => state.videos.countKeys); //количество видео всего в БД
+  const videosIsLoading = useSelector(state => state.videos.isLoading); // загрузка (включение прелоадера)
+  const videosError = useSelector(state => state.videos.error); // ошибка при импорте из БД
+  const videosIsImported = useSelector(state => state.videos.isImported); // импорт из БД завершен.
+  const userVideos = useSelector(state => state.user.videos); // все избранные видео текущего пользователя
   // const isLogggedIn = useSelector(state => state.user.isLogggedIn);
 
   const { pagination } = usePagination();
 
-  const [cardsCount, setCardsCount] = useLocalStorage("cardsCount", 0);
-  const [cardsCountVisible, setCardsCountVisible] = useLocalStorage("cardsCountVisible", pagination);
-  const [cardsFinded, setCardsFinded] = useLocalStorage("cardsFinded", []);
-  const [cardsFindedVisible, setCardsFindedVisible] = useLocalStorage("cardsFindedVisible", []);
+  const [cardsCount, setCardsCount] = useLocalStorage("cardsCount", 0); // количество найденных видео
+  const [cardsCountVisible, setCardsCountVisible] = useLocalStorage("cardsCountVisible", pagination); //кол-во отображаемых видео на экране
+  const [cardsFinded, setCardsFinded] = useLocalStorage("cardsFinded", []); // массив найденных видео
+  const [cardsFindedVisible, setCardsFindedVisible] = useLocalStorage("cardsFindedVisible", []); // массив отображаемых видео на экране
   const [searchText, setSearchText] = useLocalStorage("searchText", "");
-  const [searchToggle, setSearchToggle] = useLocalStorage("searchToggle", false);
-  const [isVisibleButton, setIsVisibleButton] = useLocalStorage("isVisibleButton", false);
+  const [searchToggleDuration, setSearchToggleDuration] = useLocalStorage("searchToggleDuration", false); // переключатель длительности 
+  const [searchToggleLike, setSearchToggleLike] = useLocalStorage("searchToggleLike", false); // переключатель избранного
+  const [isVisibleButton, setIsVisibleButton] = useLocalStorage("isVisibleButton", false); // кнопка "Ещё"
 
   useEffect(() => {
-    fetchVideos(dispatch);
-  }, [dispatch]);
+    if (videosCountKeys === 0) {
+      fetchVideos(dispatch);
+    }
+    // eslint-disable-next-line
+  }, []);
 
-  function handleSearch(search = "", isToggle = false) {
+  useEffect(() => {
+    if (videosIsImported) {
+      handleSearch(searchText, searchToggleDuration, searchToggleLike);
+    };
+    // eslint-disable-next-line
+  }, [videosIsImported]);
+
+
+  async function handleSearch(search = "", isToggleDuration = false, isToggleLike = false) {
     const _arg1Filter = (key) => {
       return !!search ? videos[key].nameVideo.toLowerCase().includes(search.toLowerCase()) : false
     };
     const _arg2Filter = (key) => {
-      return isToggle ? videos[key].duration <= DURATION_FILM : true;
+      return isToggleDuration ? videos[key].duration <= DURATION_FILM : true;
     };
+    const _arg3Filter = (key) => {
+      return isToggleLike ? userVideos.includes(key) : true;
+    }
     if (search === "") {
       setCardsFinded(videosKeys.filter(
         (key) => {
-          return _arg2Filter(key)
+          return _arg2Filter(key) && _arg3Filter(key);
         }
       ));
     } else {
@@ -54,21 +71,21 @@ export default function Movies() {
         (key) => {
           return _arg1Filter(key)
             && _arg2Filter(key)
+            && _arg3Filter(key);
         }
       ));
     };
   };
 
-  useEffect(() => { handleSearch() }, []);
-
   const handleButtonMore = () => {
     setCardsCountVisible(cardsCountVisible + pagination);
   }
 
-  function onSearch(search, isToggle) {
+  function onSearch(search, isToggleDuration, isToggleLike) {
     setSearchText(search);
-    setSearchToggle(isToggle);
-    handleSearch(search, isToggle, videos);
+    setSearchToggleDuration(isToggleDuration);
+    setSearchToggleLike(isToggleLike);
+    handleSearch(search, isToggleDuration, isToggleLike, videos);
   }
 
   useEffect(() => {
@@ -100,7 +117,11 @@ export default function Movies() {
             <SearchForm
               // disabledToggle={videosCountKeys === 0}
               onSearch={onSearch}
-              initialValues={{ search: searchText, isToggle: searchToggle }}
+              initialValues={{
+                search: searchText,
+                isToggleDuration: searchToggleDuration,
+                isToggleLike: searchToggleLike,
+              }}
 
             />
             {
@@ -121,9 +142,9 @@ export default function Movies() {
                   <MoviesCardList
                     // option="movies"
                     cards={cardsFindedVisible}
-                    // savedMovies={savedMovies}
-                    // handleLikeVideo={handleLikeVideo}
-                    // handleDislikeVideo={handleDislikeVideo}
+                  // savedMovies={savedMovies}
+                  // handleLikeVideo={handleLikeVideo}
+                  // handleDislikeVideo={handleDislikeVideo}
                   />
             }
             {isVisibleButton &&

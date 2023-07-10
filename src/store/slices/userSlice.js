@@ -31,6 +31,9 @@ const userSlice = createSlice({
     setUserVideo(state, action) {
       state.videos = action.payload.videos;
     },
+    logOut(state) {
+      state.isLoggedIn = false;
+    }
   }
 })
 
@@ -39,6 +42,7 @@ export const {
   fetchUserSuccess,
   fetchUserError,
   setUserVideo,
+  logOut,
 } = userSlice.actions;
 
 export default userSlice.reducer;

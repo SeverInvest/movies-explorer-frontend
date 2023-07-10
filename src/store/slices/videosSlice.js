@@ -5,7 +5,8 @@ const initialState = {
   isLoading: false,
   error: "",
   keys: [],
-  countKeys: 0
+  countKeys: 0,
+  isImported: false
 }
 
 const buildSlice = (payload) => {
@@ -35,6 +36,7 @@ const videosSlice = createSlice({
       state.videos = { ...(state.videos || {}), ...buildSlice(action.payload) };
       state.keys = Object.keys(state.videos).map((key) => key);
       state.countKeys = state.keys.length;
+      state.isImported = true;
     },
     actionFetchVideosError(state, action) {
       state.isLoading = false;
