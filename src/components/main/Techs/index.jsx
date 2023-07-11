@@ -11,7 +11,7 @@ export default function Techs() {
         </div>
         <div className="techs__container">
           <h2 className="techs__container-header">
-            10 технологий
+            {TECHS_ITEMS.length} технологий
           </h2>
           <p className="techs__container-text">
             На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.
@@ -20,7 +20,7 @@ export default function Techs() {
         <ul className="techs__list">
           {TECHS_ITEMS.map((item) => (
             <Tech
-              techName={item.techName} key={item.techName}
+              techName={item.techName} techLink={item.techLink} key={item.techName}
             >
               <item.techImage color="white" size="30px"/>
             </Tech>

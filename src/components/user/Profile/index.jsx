@@ -9,6 +9,8 @@ import "./style.scss";
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut } from "../../../store/slices/userSlice";
 import { setChangeUser } from "../../../services/fetch";
+import Preloader from "../../movies/Preloader";
+import { fetchUserError } from "../../../store/slices/userSlice";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -16,10 +18,11 @@ export default function Profile() {
    const [hasChanged, setHasChanged] = useState(false);
   const userName = useSelector(state => state.user.userName);
   const userEmail = useSelector(state => state.user.userEmail);
+  const isPreloaderVisible = useSelector(state => state.user.isLoading);
+  const errorMessage = useSelector(state => state.user.error);
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    // setIsPreloaderVisible(true);
     setChangeUser(dispatch, values.name, values.email)
   }
 
@@ -49,8 +52,7 @@ export default function Profile() {
 
   // при изменении полей формы - сбрасывается ошибка, пришедшая из API
   function handleChangeAndClearErrorMessage(e) {
-    // setErrorMessage("");
-    //TODO убрать ошибку прилетевшую из API
+    dispatch(fetchUserError(""));
     handleChange(e);
   }
 
@@ -88,10 +90,10 @@ export default function Profile() {
               <h2 className="profile__title">Привет, {userName}!</h2>
             </div>
             <div className="profile__form">
-            {/* {
+            {
               isPreloaderVisible &&
               <Preloader />
-            } */}
+            }
               <CustomForm
                 nameForm="form-profile"
                 buttonText="Редактировать"
@@ -113,7 +115,7 @@ export default function Profile() {
                     error={errors.name}
                     option="profile"
                     value={values.name || ""}
-                    // disabled={isPreloaderVisible}
+                    disabled={isPreloaderVisible}
                   />
                   <Validation
                     errorMessage={errors.name}
@@ -126,7 +128,7 @@ export default function Profile() {
                     error={errors.email}
                     option="profile"
                     value={values.email || ""}
-                    // disabled={isPreloaderVisible}
+                    disabled={isPreloaderVisible}
                   />
                   <Validation
                     errorMessage={errors.email}
@@ -134,7 +136,7 @@ export default function Profile() {
                 </div>
                 <div className="profile__error-message">
                   <Validation
-                    // errorMessage={errorMessage} TODO Ошибка прилетевашая из API
+                    errorMessage={errorMessage}
                   />
                 </div>
               </CustomForm>

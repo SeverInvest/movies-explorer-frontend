@@ -15,7 +15,7 @@ import endpoints from "../endpoints";
 export async function fetchVideos(dispatch) {
   try {
     dispatch(actionFetchVideosLoading());
-    const response = await endpoints.getVideos(dispatch);
+    const response = await endpoints.getVideos();
     dispatch(actionFetchVideosSuccess(response.data))
   } catch (error) {
     dispatch(actionFetchVideosError(error.message));
@@ -24,7 +24,7 @@ export async function fetchVideos(dispatch) {
 
 export async function setLike(dispatch, videoId) {
   try {
-    const response = await endpoints.setLikeVideo(dispatch, videoId);
+    const response = await endpoints.setLikeVideo(videoId);
     dispatch(actionSetVideoLike(response.data.video));
     dispatch(setUserVideo(response.data.user));
   } catch (error) {
@@ -34,7 +34,7 @@ export async function setLike(dispatch, videoId) {
 
 export async function setDisike(dispatch, videoId) {
   try {
-    const response = await endpoints.setDislikeVideo(dispatch, videoId);
+    const response = await endpoints.setDislikeVideo(videoId);
     dispatch(actionSetVideoLike(response.data.video));
     dispatch(setUserVideo(response.data.user));
   } catch (error) {
@@ -45,7 +45,7 @@ export async function setDisike(dispatch, videoId) {
 export async function me(dispatch) {
   try {
     dispatch(fetchUserLoading(true));
-    const response = await endpoints.getMe(dispatch);
+    const response = await endpoints.getMe();
     dispatch(fetchUserSuccess(response.data))
     return response;
   } catch (error) {
@@ -58,7 +58,7 @@ export async function me(dispatch) {
 export async function login(dispatch, email, password) {
   try {
     dispatch(fetchUserLoading(true));
-    return await endpoints.loginUser(dispatch, email, password);
+    return await endpoints.loginUser(email, password);
   } catch (error) {
     dispatch(fetchUserError(error.message));
   } finally {
@@ -69,7 +69,7 @@ export async function login(dispatch, email, password) {
 export async function register(dispatch, name, email, password) {
   try {
     dispatch(fetchUserLoading(true));
-    return await endpoints.registerUser(dispatch, name, email, password);
+    return await endpoints.registerUser(name, email, password);
   } catch (error) {
     dispatch(fetchUserError(error.message));
   } finally {
@@ -80,7 +80,7 @@ export async function register(dispatch, name, email, password) {
 export async function setChangeUser(dispatch, name, email) {
 try {
     dispatch(fetchUserLoading(true));
-    const response = await endpoints.patchUser(dispatch, name, email);
+    const response = await endpoints.patchUser(name, email);
     dispatch(fetchUserSuccess(response.data))
   } catch (error) {
     dispatch(fetchUserError(error.message));

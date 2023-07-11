@@ -10,6 +10,7 @@ export default function MoviesCard({
   const dispatch = useDispatch();
   const userVideos = useSelector(state => state.user.videos);
   const videos = useSelector(state => state.videos.videos);
+  // const videosLike = useSelector(state => state.videos.videos.users);
 
 
   const handleLikeClick = () => {
@@ -58,7 +59,10 @@ export default function MoviesCard({
           <p className="card__name">{videos[card].nameVideo}</p>
           <p className="card__duration">{secondsToHm(videos[card].duration)}</p>
         </div>
-        <button className={cardLikeClassName} type="button" aria-label="Лайк" onClick={handleLikeClick} />
+        <div className="card__like-container">
+          <button className={cardLikeClassName} type="button" aria-label="Лайк" onClick={handleLikeClick} />
+          <p className="card__like-count">{videos[card].users.length}</p>
+        </div>
       </div>
       <CustomLink
         linkTo={videos[card].videoLink}

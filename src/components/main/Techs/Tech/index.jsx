@@ -1,8 +1,12 @@
-export default function Tech({ techName, children, ...restProps }) {
+import CustomLink from "../../../common/CustomLink";
+
+export default function Tech({ techName, techLink, children, ...restProps }) {
   return (
-    <li className="techs__item">
+    <li >
+      <CustomLink linkTo={techLink} className="techs__item">
       {children}
       <p className="techs__text">{techName}</p>
+      </CustomLink>
       </li>
   );
 }
