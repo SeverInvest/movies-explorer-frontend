@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="footer__section">
         <div className="footer__group-header">
           <p className="footer__text">
-            Учебный проект Яндекс.Практикум х BeatFilm.
+            Учебный проект Яндекс.Практикум.
           </p>
         </div>
         <div className="footer__group-footer">

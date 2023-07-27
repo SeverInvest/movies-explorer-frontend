@@ -23,7 +23,7 @@
     border: none;
     position: fixed;
     top: 15px;
-    right: 30px;
+    right: 20px;
     width: 44px;
     height: 44px;
   }
@@ -80,9 +80,9 @@
   .side-bar {
     min-width: 320px;
 
-    &__button-close {
-      right: 14px;
-    }
+    // &__button-close {
+    //   right: 14px;
+    // }
 
     &__menu {
       min-width: 320px;

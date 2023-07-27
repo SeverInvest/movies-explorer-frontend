@@ -6,9 +6,9 @@ import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
 import { useEffect } from 'react';
-import { register, login, me } from "../../../services/fetch";
+import { register, login, me, fetchVideosAndUsers } from "../../../services/fetch";
 import "./style.scss";
-import Preloader from "../../movies/Preloader";
+import Preloader from "../../common/Preloader";
 import { useNavigate } from 'react-router-dom';
 import { fetchUserError } from "../../../store/slices/userSlice";
 
@@ -26,13 +26,19 @@ export default function Register() {
     if (!isValid) {
       return;
     };
-    const resRegister = await register(dispatch, values.name, values.email, values.password);
-    console.log(resRegister);
-    const resLogin = await login(dispatch, values.email, values.password);
-    console.log(resLogin)
-    localStorage.setItem("jwt", resLogin.data.token);
-    await me(dispatch);
-    navigate("/videos", { replace: true });
+    let token;
+    const newUser = await register(dispatch, values.name, values.email, values.password);
+    if (!!newUser) {
+      console.log(newUser)
+      const resLogin = await login(dispatch, values.email, values.password);
+      token = resLogin.data.token;
+      localStorage.setItem("jwt", resLogin.data.token);
+    }
+    if (token) {
+      await me(dispatch);
+      await fetchVideosAndUsers(dispatch);
+      navigate("/videos", { replace: true });
+    }
   }
 
   useEffect(() => {
@@ -100,7 +106,7 @@ export default function Register() {
                   minLength="2"
                   maxLength="30"
                   error={errors.name}
-                disabled={isPreloaderVisible}
+                  disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.name}
@@ -111,7 +117,7 @@ export default function Register() {
                   name="email"
                   type="email"
                   error={errors.email}
-                disabled={isPreloaderVisible}
+                  disabled={isPreloaderVisible}
                 />
                 <Validation
                   errorMessage={errors.email}

@@ -8,6 +8,7 @@ const initialState = {
   userName: "",
   userEmail: "",
   isLoggedIn: false,
+  userRoles: [],
 }
 
 const userSlice = createSlice({
@@ -24,6 +25,7 @@ const userSlice = createSlice({
       state.userName = action.payload.name;
       state.userEmail = action.payload.email;
       state.isLoggedIn = true;
+      state.userRoles = action.payload.roles;
     },
     fetchUserError(state, action) {
       state.error = action.payload;
@@ -31,8 +33,8 @@ const userSlice = createSlice({
     setUserVideo(state, action) {
       state.videos = action.payload.videos;
     },
-    logOut(state) {
-      state.isLoggedIn = false;
+    resetUser() {
+      return { ...initialState };
     }
   }
 })
@@ -42,7 +44,7 @@ export const {
   fetchUserSuccess,
   fetchUserError,
   setUserVideo,
-  logOut,
+  resetUser,
 } = userSlice.actions;
 
 export default userSlice.reducer;

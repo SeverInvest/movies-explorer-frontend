@@ -1,0 +1,21 @@
+.users-cards {
+  margin: 0 auto;
+  padding: 20px 0 0;
+  width: 100%;
+  max-width: 610px;
+  min-width: fit-content;
+  
+  &__list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .users-cards {
+    max-width: 300px;
+  }
+}

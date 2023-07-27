@@ -6,7 +6,7 @@ import './index.scss';
 import App from './components/App';
 import { debounce } from "debounce";
 import { store } from "./store";
-import { saveState } from "./utils/reduxToLocalStorage";
+import { saveState } from "./utils";
 store.subscribe(
   debounce(() => {
     saveState(store.getState());
@@ -14,11 +14,9 @@ store.subscribe(
 );
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
   <BrowserRouter>
     <Provider store={store}>
       <App />
     </Provider>
   </BrowserRouter>
-  // </React.StrictMode>
 );

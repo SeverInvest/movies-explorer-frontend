@@ -1,9 +1,22 @@
 import "./style.scss";
 
-function Validation({ errorMessage }) {
-  const success = errorMessage === "Изменения профиля сохранены" ? "error_green" : "";
+function Validation({ errorMessage, classNameValidation = "", children, ...restProps }) {
+
+  const classNames = [];
+
+  classNames.push("error");
+  classNames.push(classNameValidation);
+  classNames.push(errorMessage ? "error_visible" : "");
+  classNames.push(errorMessage === "Изменения профиля сохранены" ? "error_green" : "");
+
   return (
-    <span className={`error ${errorMessage ? "error_visible" : ""} ${success}`}>{errorMessage}</span>
+    <span
+      className={classNames.join(" ")}
+      {...restProps}
+    >
+      {errorMessage}
+      {children}
+    </span>
   );
 }
 

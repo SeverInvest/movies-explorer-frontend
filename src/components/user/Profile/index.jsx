@@ -7,15 +7,17 @@ import { useEffect, useState } from 'react';
 import Header from '../../header/Header';
 import "./style.scss";
 import { useSelector, useDispatch } from 'react-redux';
-import { logOut } from "../../../store/slices/userSlice";
 import { setChangeUser } from "../../../services/fetch";
-import Preloader from "../../movies/Preloader";
-import { fetchUserError } from "../../../store/slices/userSlice";
+import Preloader from "../../common/Preloader";
+import { fetchUserError, resetUser } from "../../../store/slices/userSlice";
+import { actionResetVideos } from "../../../store/slices/videosSlice";
+import { actionResetPopup } from "../../../store/slices/popupSlice";
+import { actionResetUsers } from "../../../store/slices/usersSlice";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const { values, handleChange, errors, setErrors, resetForm, setIsValid, isValid } = useFormAndValidation();
-   const [hasChanged, setHasChanged] = useState(false);
+  const [hasChanged, setHasChanged] = useState(false);
   const userName = useSelector(state => state.user.userName);
   const userEmail = useSelector(state => state.user.userEmail);
   const isPreloaderVisible = useSelector(state => state.user.isLoading);
@@ -27,7 +29,10 @@ export default function Profile() {
   }
 
   function handleSignOut() {
-    dispatch(logOut());
+    dispatch(resetUser());
+    dispatch(actionResetVideos());
+    dispatch(actionResetPopup());
+    dispatch(actionResetUsers());
     localStorage.clear();
   };
 
@@ -90,10 +95,10 @@ export default function Profile() {
               <h2 className="profile__title">Привет, {userName}!</h2>
             </div>
             <div className="profile__form">
-            {
-              isPreloaderVisible &&
-              <Preloader />
-            }
+              {
+                isPreloaderVisible &&
+                <Preloader />
+              }
               <CustomForm
                 nameForm="form-profile"
                 buttonText="Редактировать"

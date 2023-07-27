@@ -1,6 +1,6 @@
 // 'use strict';
 import axios from "axios";
-import { connect } from '../../utils/connect';
+import { connect } from '../../utils';
 
 const api = axios.create({
   baseURL: connect.baseUrl,

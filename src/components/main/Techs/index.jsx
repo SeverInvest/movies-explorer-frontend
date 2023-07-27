@@ -1,5 +1,5 @@
 import "./style.scss";
-import { TECHS_ITEMS } from "../../../utils/constants";
+import { TECHS_ITEMS } from "../../../utils";
 import Tech from "./Tech";
 
 export default function Techs() {

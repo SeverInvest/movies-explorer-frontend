@@ -13,7 +13,7 @@
   &__container {
     box-sizing: border-box;
     margin: 0 auto;
-    padding: 0px 70px;
+    padding: 0px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,14 +31,14 @@
     }
 
     &_middle {
-      margin-left: 62px;
+      margin-left: 72px;
       column-gap: 16px;
     }
   }
 
   &__text {
     font-weight: 500;
-    font-size: 13px;
+    font-size: 18px;
     line-height: 1.4;
     color: #FFFFFF;
     border-bottom: 1px solid #DADADA;
@@ -69,7 +69,7 @@
   }
 
 
-  &__link-movies {
+  &__link-videos {
     font-weight: 400;
     font-size: 13px;
     line-height: 1.4;
@@ -98,9 +98,9 @@
 @media screen and (max-width: 768px) {
   .header {
 
-    &__container {
-      padding: 0px 30px;
-    }
+    // &__container {
+    //   padding: 0px 30px;
+    // }
 
     &__nav-btn {
       background: #202020;
@@ -109,11 +109,9 @@
       &_main {
         background: #073042;
       }
-
     }
 
     &__nav-btn-img {
-      // background: #202020;
       height: 40px;
       width: 40px;
     }
@@ -123,28 +121,28 @@
 @media screen and (max-width: 480px) {
   .header {
 
-    &__container {
-      padding: 0px 14px;
-    }
+    // &__container {
+    //   padding: 0px 14px;
+    // }
 
-    &__navigation {
-      &_right {
-        column-gap: 14px;
-      }
-    }
+  //   &__navigation {
+  //     &_right {
+  //       column-gap: 14px;
+  //     }
+  //   }
 
-    &__link {
-      font-size: 10px;
+  //   &__link {
+  //     font-size: 10px;
 
-      &_rect {
-        line-height: 26px;
-        width: 54px;
-        height: 26px;
-      }
+  //     &_rect {
+  //       line-height: 26px;
+  //       width: 54px;
+  //       height: 26px;
+  //     }
 
-      &_normal {
-        line-height: 1.6;
-      }
-    }
+  //     &_normal {
+  //       line-height: 1.6;
+  //     }
+  //   }
   }
 }

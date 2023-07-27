@@ -1,6 +1,7 @@
 import images from "../../../images";
 import CustomButton from '../../common/CustomButton';
-import HeaderMovies from '../HeaderMovies';
+import HeaderVideos from '../HeaderVideos';
+import HeaderUsers from '../HeaderUsers';
 import HeaderAccount from "../HeaderAccount";
 
 export default function MenuOrBurger({
@@ -12,7 +13,8 @@ export default function MenuOrBurger({
         {(typeScreen === "desktop") ?
           <>
             <nav className="header__navigation header__navigation_middle">
-              <HeaderMovies option={option} />
+              <HeaderVideos option={option} />
+              <HeaderUsers option={option} />
             </nav>
 
             <nav className="header__navigation">

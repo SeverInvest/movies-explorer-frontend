@@ -1,0 +1,150 @@
+@import "../../../mixins";
+@import "../../../vars";
+
+.card {
+  box-sizing: border-box;
+  padding: 6px;
+  padding-left: 22px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #2F2F2F;
+  column-gap: 10px;
+  position: relative;
+
+  &__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    justify-content: stretch;
+    box-sizing: border-box;
+  }
+
+  &__like-and-name-container {
+    display: flex;
+    column-gap: 10px;
+    height: 100%;
+    min-height: 33px;
+  }
+
+  &__name {
+    align-self: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #FFF;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  &__attributes {
+    padding-bottom: 3px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    list-style: none;
+    gap: 6px;
+  }
+
+  &__attribute-container {
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+  }
+
+  &__icon-attribute {
+    min-width: 22px;
+    min-height: 22px;
+  }
+
+  &__text-attribute {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 1.2;
+    color: #8B8B8B;
+  }
+
+  &__button {
+    padding: 0;
+    width: 22px;
+    height: 22px;
+    background-color: rgba(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    transition: opacity .3s ease-in-out;
+
+    &:hover {
+      opacity: .6;
+    }
+  }
+
+  &__remove-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    z-index: 2;
+  }
+
+  &__tooltip {
+    position: absolute;
+    top: 10px;
+    right: 195px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+  }
+
+  &__link-img {
+    margin: 0;
+    padding: 0;
+    width: 220px;
+    min-width: 220px;
+    height: 122px;
+    background: #202020;
+  }
+
+  &__photo {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .card {
+    margin: 0 auto;
+    padding: 0 0 14px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    max-width: 300px;
+
+    &__container {
+      padding: 0 12px;
+    }
+
+    &__name {
+      padding-top: 0;
+      font-size: 12px;
+    }
+
+    &__link-img {
+      width: 300px;
+      height: 168px;
+      order: -1;
+      margin: 0 auto;
+    }
+
+    &__tooltip {
+      right: auto;
+      left: 10px;
+    }
+  }
+}

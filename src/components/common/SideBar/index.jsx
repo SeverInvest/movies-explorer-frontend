@@ -1,7 +1,8 @@
 import "./style.scss";
 import CustomLink from "../../common/CustomLink";
 import CustomButton from "../../common/CustomButton";
-import HeaderMovies from "../../header/HeaderMovies";
+import HeaderVideos from "../../header/HeaderVideos";
+import HeaderUsers from "../../header/HeaderUsers";
 import HeaderAccount from "../../header/HeaderAccount";
 import images from "../../../images";
 import { useEffect } from 'react';
@@ -59,7 +60,8 @@ export default function SideBar({
               onClick={onClose}
             />
           }
-          <HeaderMovies option={option} sideBar={true} onClick={onClose} />
+          <HeaderVideos option={option} sideBar={true} onClick={onClose} />
+          <HeaderUsers option={option} sideBar={true} onClick={onClose} />
         </div>
         <HeaderAccount onClick={onClose} />
       </nav>

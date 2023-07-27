@@ -1,0 +1,38 @@
+.popup-alarm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 80%;
+
+  &__button {
+    background-color: #4285F4;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 20px;
+
+  }
+
+  &__message {
+    max-height: 40px;
+    min-height: 40px;
+    height: 100%;
+    margin: 15px auto;
+    padding: 0;
+    font-size: 16px;
+    text-align: center;
+    line-height: 1.2;
+    overflow: hidden;
+
+    &_green {
+      color: green;
+    }
+
+    &_red {
+      color: red;
+    }
+  }
+
+}

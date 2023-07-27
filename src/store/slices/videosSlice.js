@@ -1,56 +1,44 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { buildSlice } from "../../utils";
 
 const initialState = {
   videos: {},
   isLoading: false,
   error: "",
   keys: [],
-  countKeys: 0,
-  isImported: false
+  countKeys: 0
 }
 
-const buildSlice = (payload) => {
-  let tempObj = {};
-  if (!!payload && Array.isArray(payload) && payload.length > 0) {
-    for (let item in payload) {
-      tempObj = {
-        ...tempObj, ...{ [payload[item]._id]: payload[item] }
-      }
-    };
-      return tempObj;
-  } else {
-    return { [payload._id]: payload };
-  };
-};
+const deleteVideo = (obj, id) => {
+  const { [id]: foo, ...rest } = obj;
+  return rest;
+}
 
 const videosSlice = createSlice({
   name: "videos",
   initialState,
   reducers: {
-    actionFetchVideosLoading(state) {
-      state.isLoading = true;
+    actionFetchVideosLoading(state, action) {
+      state.isLoading = action.payload;
     },
     actionFetchVideosSuccess(state, action) {
-      state.isLoading = false;
       state.error = "";
       state.videos = { ...(state.videos || {}), ...buildSlice(action.payload) };
       state.keys = Object.keys(state.videos).map((key) => key);
       state.countKeys = state.keys.length;
-      state.isImported = true;
     },
     actionFetchVideosError(state, action) {
-      state.isLoading = false;
       state.error = action.payload;
     },
-    actionSetVideoLike(state, action) {
-      state.isLoading = false;
-      state.videos = { ...(state.videos || {}), ...buildSlice(action.payload) };
+    actionFetchRemoveVideo(state, action) {
+      state.error = "";
+      state.videos = deleteVideo(state.videos, action.payload);
+      state.keys = Object.keys(state.videos).map((key) => key);
+      state.countKeys = state.keys.length;
     },
-    actionSetVideoDisike(state, action) {
-      state.isLoading = false;
-      state.videos = { ...(state.videos || {}), ...buildSlice(action.payload) };
-    },
-
+    actionResetVideos() {
+      return { ...initialState };
+    }
   }
 })
 
@@ -58,7 +46,8 @@ export const {
   actionFetchVideosLoading,
   actionFetchVideosSuccess,
   actionFetchVideosError,
-  actionSetVideoLike
+  actionFetchRemoveVideo,
+  actionResetVideos,
 } = videosSlice.actions;
 
 export default videosSlice.reducer;

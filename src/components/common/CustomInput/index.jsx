@@ -5,6 +5,7 @@ export default function CustomInput({
   textLabel,
   error,
   option = "",
+  autocomplete = "on",
   children,
   ...restProps
 }) {
@@ -17,6 +18,7 @@ export default function CustomInput({
         name={name}
         id={name}
         required
+        autocomlete={autocomplete}
         {...restProps}
       />
     </label>

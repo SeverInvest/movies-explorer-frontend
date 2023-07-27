@@ -9,8 +9,8 @@ import useFormAndValidation from "../../../hooks/useFormAndValidation";
 import Validation from "../../common/Validation";
 import CustomInput from "../../common/CustomInput";
 import Logo from "../../common/Logo";
-import { login, me } from "../../../services/fetch";
-import Preloader from "../../movies/Preloader";
+import { login, me, fetchVideosAndUsers } from "../../../services/fetch";
+import Preloader from "../../common/Preloader";
 import { fetchUserError } from "../../../store/slices/userSlice";
 
 export default function Login() {
@@ -29,6 +29,7 @@ export default function Login() {
     const response = await login(dispatch, values.email, values.password);
     localStorage.setItem("jwt", response.data.token);
     await me(dispatch);
+    await fetchVideosAndUsers(dispatch);
     navigate("/videos", { replace: true });
   }
 

@@ -3,10 +3,8 @@
 
 .page {
   background-color: #202020;
-  /*color: var(--color-light);*/
 
   @include padding-margin-null-auto();
-  // @include theme-dark();
 
   box-sizing: border-box;
 

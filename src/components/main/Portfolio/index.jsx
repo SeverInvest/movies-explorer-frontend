@@ -1,4 +1,4 @@
-import listProjects from '../../../utils/list-projects';
+import { listProjects } from '../../../utils';
 import Project from '../Project';
 import "./style.scss";
 

@@ -8,8 +8,7 @@ import MenuOrBurger from '../MenuOrBurger';
 import { useSelector } from 'react-redux';
 
 export default function Header({
-  // loggedIn = false,
-  option, //main, movies, saved-movies, profile
+  option, //[main, videos, profile, users]
 }) {
   const isLogggedIn = useSelector(state => state.user.isLoggedIn);
   const [hamburgerOn, setHamburgerOn] = useState(false);

@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useResize } from "./useResize";
-import { PAGINATION_MIN, PAGINATION_MAX } from "../utils/constants";
+import { CONSTANTS } from "../utils";
 
 export function usePagination() {
 
-  const [pagination, setPagination] = useState(PAGINATION_MAX);
+  const [pagination, setPagination] = useState(CONSTANTS.PAGINATION_MAX);
   const { typeScreen } = useResize();
 
   useEffect(() => {
     if (typeScreen === "desktop") {
-      setPagination(PAGINATION_MAX);
+      setPagination(CONSTANTS.PAGINATION_MAX);
     } else {
-      setPagination(PAGINATION_MIN);
+      setPagination(CONSTANTS.PAGINATION_MIN);
     }
   }, [typeScreen]);
 
