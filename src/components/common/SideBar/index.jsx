@@ -3,6 +3,7 @@ import CustomLink from "../../common/CustomLink";
 import CustomButton from "../../common/CustomButton";
 import HeaderVideos from "../../header/HeaderVideos";
 import HeaderUsers from "../../header/HeaderUsers";
+import HeaderHabr from "../../header/HeaderHabr";
 import HeaderAccount from "../../header/HeaderAccount";
 import images from "../../../images";
 import { useEffect } from 'react';
@@ -62,6 +63,7 @@ export default function SideBar({
           }
           <HeaderVideos option={option} sideBar={true} onClick={onClose} />
           <HeaderUsers option={option} sideBar={true} onClick={onClose} />
+          <HeaderHabr option={option} sideBar={true} onClick={onClose} />
         </div>
         <HeaderAccount onClick={onClose} />
       </nav>

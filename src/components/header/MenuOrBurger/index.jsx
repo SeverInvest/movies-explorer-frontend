@@ -2,6 +2,7 @@ import images from "../../../images";
 import CustomButton from '../../common/CustomButton';
 import HeaderVideos from '../HeaderVideos';
 import HeaderUsers from '../HeaderUsers';
+import HeaderHabr from '../HeaderHabr';
 import HeaderAccount from "../HeaderAccount";
 
 export default function MenuOrBurger({
@@ -15,6 +16,7 @@ export default function MenuOrBurger({
             <nav className="header__navigation header__navigation_middle">
               <HeaderVideos option={option} />
               <HeaderUsers option={option} />
+              <HeaderHabr option={option} />
             </nav>
 
             <nav className="header__navigation">
